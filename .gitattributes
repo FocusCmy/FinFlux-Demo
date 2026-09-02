@@ -1,0 +1,9 @@
+# Hash-sealed Agent and Skill entrypoints must have identical bytes on every OS.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.zip binary
