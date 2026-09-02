@@ -1,0 +1,19 @@
+{
+  "protocol": "FINFLUX_RESEARCH_QUALITY_REPORT_V0.1",
+  "generated_at": "2026-08-26T19:28:23.449557+00:00",
+  "item_count": 40,
+  "provider_counts": {
+    "eastmoney_report": 20,
+    "worldbank": 20
+  },
+  "provider_count": 2,
+  "schema_error_count": 0,
+  "schema_errors": {},
+  "duplicate_id_count": 0,
+  "duplicate_ids": [],
+  "required_field_completeness_rate": 1.0,
+  "restricted_content_leak_count": 0,
+  "restricted_content_leaks": [],
+  "point_in_time_safe_count": 30,
+  "status": "PASS"
+}

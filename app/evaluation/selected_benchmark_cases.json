@@ -1,0 +1,35 @@
+{
+  "protocol": "FINFLUX_CONTROLLED_BENCHMARK_PLAN_V1.0",
+  "purpose": "用三类真实来源种子Case对比规则基线、单Agent与AgentTeams；模型系统必须逐条显式执行，不允许批量失控。",
+  "max_cases_per_execution": 1,
+  "max_provider_tokens_per_case": 120000,
+  "human_gate_required_before_next_case": true,
+  "cases": [
+    {
+      "seed_case_id": "SEED-EQUITY-001-NONE-LABEL",
+      "asset_class": "equity",
+      "scenario": "blocked",
+      "expected_recommendation": "BLOCK",
+      "source_record_locator": "cases[0]/603799.SH/2026-05-19"
+    },
+    {
+      "seed_case_id": "SEED-FUTURES-005-CLOSE-FOR-SETTLEMENT",
+      "asset_class": "futures",
+      "scenario": "blocked",
+      "expected_recommendation": "BLOCK",
+      "source_record_locator": "row[5]/IF2608/20260814"
+    },
+    {
+      "seed_case_id": "SEED-OPTION-001-STALE-UNIT",
+      "asset_class": "option",
+      "scenario": "blocked",
+      "expected_recommendation": "BLOCK",
+      "source_record_locator": "adjustment_terms[0]/strike=3.7"
+    }
+  ],
+  "systems": {
+    "rule": "本地确定性Manager路由，不调用模型",
+    "single-agent": "只接收独立执行器导出的供应商usage与结果证据，不接受手填结论",
+    "agentteams": "通过FinFlux后端逐条提交真实AgentTeams Run；上一条Human Gate未关闭时拒绝继续"
+  }
+}

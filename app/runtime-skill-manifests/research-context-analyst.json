@@ -1,0 +1,28 @@
+{
+  "protocol": "FINFLUX_WORKER_SKILL_MANIFEST_V1.0",
+  "role": "research-context-analyst",
+  "package_root": "..",
+  "entrypoint": {
+    "path": "bounded_worker_task.py",
+    "sha256": "6587802a3da60dc38ba76ea35fa755f0e7c649431b0d6e34f89680c03319a340"
+  },
+  "skills": [
+    {
+      "skill_id": "retrieve-research-context",
+      "version": "1.0.0",
+      "callable": "skill_retrieve_research_context",
+      "callable_sha256": "8b8e39e2bd86aac50bf4c67c1d54d727ecca8a8b2d18b0dc7351452574c76eec",
+      "instruction_path": "agentteams-skills/retrieve-research-context/SKILL.md",
+      "instruction_sha256": "ebf4ee0c85b555e12001ac98092986eb6bbc8f3a7246e016e350f1bd7fa6a35f"
+    },
+    {
+      "skill_id": "verify-research-context",
+      "version": "1.0.0",
+      "callable": "skill_verify_research_context",
+      "callable_sha256": "85799c957c51a36ac9c0f4b01d4c25de7d8b466f2be4063108b06ea9b9c17861",
+      "instruction_path": "agentteams-skills/verify-research-context/SKILL.md",
+      "instruction_sha256": "91dad03c0c66aee53d645ce51467fd5c792df425c706a9d3c8dfaefc1cb9ddfc"
+    }
+  ],
+  "manifest_sha256": "69181a23a7f2af3daca3df34176e4a564836fa4faae73ebb22d5963368c9deb2"
+}

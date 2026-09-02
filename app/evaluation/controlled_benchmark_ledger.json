@@ -1,0 +1,54 @@
+{
+  "ledger_sha256": "2a9a3bd8c589cbdc39c3732ea9d63decdab70126209edf9f646fc93d28fe4d2c",
+  "plan_sha256": "b4234a43d805080e70f3a99622e6b0fa0dba5dd25589ed274e7410cb72602db8",
+  "protocol": "FINFLUX_CONTROLLED_BENCHMARK_LEDGER_V1.0",
+  "results": [
+    {
+      "actual_recommendation": "BLOCK",
+      "actual_route": "FULL_TEAM_REVIEW",
+      "evidence": {
+        "decision_sha256": "6acb8191c0f42d241e637308dd5fa8e6e485366c77963f69d059ed2d59ae7018"
+      },
+      "expected_recommendation": "BLOCK",
+      "latency_ms": 0.144,
+      "model_calls": 0,
+      "provider_tokens": 0,
+      "result_sha256": "18a66de10b1de5fb43cb62526deb0e45e163003f60eb206e74d55f07575e493b",
+      "seed_case_id": "SEED-EQUITY-001-NONE-LABEL",
+      "status": "EXECUTED",
+      "system": "rule"
+    },
+    {
+      "actual_recommendation": "BLOCK",
+      "actual_route": "FULL_TEAM_REVIEW",
+      "evidence": {
+        "decision_sha256": "04320ea525f26fa64012b488b58e3c52e7a87f9ab9a778637340e32bbb3c3289"
+      },
+      "expected_recommendation": "BLOCK",
+      "latency_ms": 0.188,
+      "model_calls": 0,
+      "provider_tokens": 0,
+      "result_sha256": "d96d9f4fc3d27c8fd41add50d315be24cc2a686b0458b1732f552e3508c6cfee",
+      "seed_case_id": "SEED-FUTURES-001-CLOSE-FOR-SETTLEMENT",
+      "status": "EXECUTED",
+      "system": "rule"
+    },
+    {
+      "actual_recommendation": "BLOCK",
+      "actual_route": "FULL_TEAM_REVIEW",
+      "evidence": {
+        "decision_sha256": "0e58f057c701a5d3e84d21c9c32b5347af81d45de0a51153fc94bc3d21190a28"
+      },
+      "expected_recommendation": "BLOCK",
+      "latency_ms": 0.136,
+      "model_calls": 0,
+      "provider_tokens": 0,
+      "result_sha256": "44bf0620eb88cf6405c8d21c7f39c04ed8e905b09a3725d0e86d17fef1ea34b6",
+      "seed_case_id": "SEED-OPTION-001-STALE-UNIT",
+      "status": "EXECUTED",
+      "system": "rule"
+    }
+  ],
+  "truth_boundary": "NOT_EXECUTED保持显式；single-agent只接受机器导出证据；AgentTeams一次只允许一个Case且必须完成Human Gate。",
+  "updated_at_utc": "2026-08-29T18:37:28.151539+00:00"
+}

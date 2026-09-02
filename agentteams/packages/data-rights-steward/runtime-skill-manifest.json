@@ -1,0 +1,24 @@
+{
+  "protocol": "FINFLUX_WORKER_SKILL_MANIFEST_V1.0",
+  "role": "data-rights-steward",
+  "package_root": ".",
+  "entrypoint": {
+    "path": "bounded_worker_task.py",
+    "sha256": "29688f5f8c1989d4962d9879fa91aac09ec5da584153d58150c62ccf52479187"
+  },
+  "skills": [
+    {
+      "skill_id": "classify-data-rights",
+      "version": "1.0.0",
+      "instruction_path": "skills/classify-data-rights/SKILL.md",
+      "instruction_sha256": "44011a79e612d3e109c33ac71abbb10bb18847648ada57e9bdf2a3178a7d9aef"
+    },
+    {
+      "skill_id": "enforce-confidentiality-boundary",
+      "version": "1.0.0",
+      "instruction_path": "skills/enforce-confidentiality-boundary/SKILL.md",
+      "instruction_sha256": "43e22307b2175238843dc9747a4b6d0bd0068b209c6ef18ea1fdc27dd515b16a"
+    }
+  ],
+  "manifest_sha256": "367a89b6f0d7da563ca337e6edf95b010266dd4f82bd37d6569f97d5525fa2ce"
+}

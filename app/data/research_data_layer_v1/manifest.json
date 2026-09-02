@@ -1,0 +1,63 @@
+{
+  "protocol": "FINFLUX_RESEARCH_CACHE_MANIFEST_V0.1",
+  "dataset_version": "research-cache-v1",
+  "generated_at": "2026-08-26T19:28:23.453906+00:00",
+  "item_count": 40,
+  "items_sha256": "db378ad14eba4af82bd4c593cf7153c5646083c21202cf71377c8a740e2988f7",
+  "provider_counts": {
+    "eastmoney_report": 20,
+    "worldbank": 20
+  },
+  "content_type_counts": {
+    "RESEARCH_DOCUMENT": 30,
+    "OFFICIAL_STATISTIC": 10
+  },
+  "rights_state_counts": {
+    "REVIEW_REQUIRED": 20,
+    "ATTRIBUTION_REQUIRED": 20
+  },
+  "raw_files": [
+    {
+      "path": "raw/eastmoney_report/stock-000001-2026-01-01-2026-08-27-600b8849b4eb.json",
+      "sha256": "600b8849b4eb67331b898f80a766277227d2f6a42ec7280d158e1b1be0273635",
+      "bytes": 5553
+    },
+    {
+      "path": "raw/eastmoney_report/stock-300750-2026-01-01-2026-08-27-e88e74707926.json",
+      "sha256": "e88e7470792608f9f959f5285644e7847fb2fdc43037465f6bad20a4cac687f3",
+      "bytes": 14182
+    },
+    {
+      "path": "raw/eastmoney_report/stock-600030-2026-01-01-2026-08-27-20bf6d5a2aa3.json",
+      "sha256": "20bf6d5a2aa377c734a96164cc62b98af54354c8714d5caf62c8669b075a0b2e",
+      "bytes": 14276
+    },
+    {
+      "path": "raw/eastmoney_report/stock-600519-2026-01-01-2026-08-27-8a8d2d16452e.json",
+      "sha256": "8a8d2d16452ed52e350141e537721d1ccaf8128b04e6e8d5217e2a6b2a2f0c5c",
+      "bytes": 14055
+    },
+    {
+      "path": "raw/eastmoney_report/stock-601318-2026-01-01-2026-08-27-183220c54b42.json",
+      "sha256": "183220c54b421d3edf5c305d9b0f66442d8cc6fb6bcd7a1072b3beb8175d8070",
+      "bytes": 14128
+    },
+    {
+      "path": "raw/worldbank/documents-financial-stability-2025-01-01-10-0b894352df1a.json",
+      "sha256": "0b894352df1adbd1a8c8ca22310c2fef1cc52247b4e3ab35c9307e772d8c6803",
+      "bytes": 11503
+    },
+    {
+      "path": "raw/worldbank/indicator-CHN-FP.CPI.TOTL.ZG-2018-2026-c45a99135ae4.json",
+      "sha256": "c45a99135ae4dc88a772e930b6304b7996c0598f9681adb7a0082ad659ee6747",
+      "bytes": 1896
+    },
+    {
+      "path": "raw/worldbank/indicator-CHN-NY.GDP.MKTP.KD.ZG-2018-2026-ea537d024cc2.json",
+      "sha256": "ea537d024cc21e42f82ca05b79bb5f04579ae6c15ff8091d11cd2c1c92597a4e",
+      "bytes": 1785
+    }
+  ],
+  "quality_report": "quality_report.json",
+  "manifest_sha256": "7551a890af90b367b0d9bd3d2f15352f1fc4f1cf048f260e74fbc3da5b80ed99"
+}

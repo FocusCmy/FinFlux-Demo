@@ -1,0 +1,71 @@
+{
+  "contract_version": "0.2.0",
+  "equity": {
+    "name": "EquityCorporateActionContract",
+    "supported_uses": ["return_analysis", "factor_research", "backtest_input"],
+    "field_for_use": {
+      "return_analysis": "qfq",
+      "factor_research": "qfq",
+      "backtest_input": "qfq"
+    },
+    "required_semantics": [
+      "adjustment_type_matches_real_series",
+      "corporate_action_event_row_is_preserved",
+      "trade_date_is_unique",
+      "source_and_version_are_recorded"
+    ],
+    "block_when": [
+      "requested_none_but_series_behaves_as_qfq",
+      "raw_event_row_exists_but_normalized_event_row_is_missing"
+    ]
+  },
+  "fund": {
+    "name": "FundNavAdmissionContract",
+    "supported_uses": ["holding_valuation", "total_return_analysis"],
+    "field_for_use": {
+      "holding_valuation": "unit_nav",
+      "total_return_analysis": "cumulative_nav"
+    },
+    "required_semantics": [
+      "fund_code_is_preserved",
+      "nav_date_is_explicit",
+      "nav_field_matches_declared_use",
+      "source_and_version_are_recorded"
+    ],
+    "block_when": ["unit_nav_and_cumulative_nav_are_silently_interchanged"]
+  },
+  "futures": {
+    "name": "FuturesSettlementContract",
+    "supported_uses": ["daily_settlement_pnl", "margin_input"],
+    "required_semantics": [
+      "instrument_is_a_real_contract",
+      "price_field_matches_declared_use",
+      "contract_multiplier_is_versioned",
+      "trade_date_and_night_session_are_explicit"
+    ],
+    "field_for_use": {
+      "daily_settlement_pnl": "settle",
+      "margin_input": "settle"
+    },
+    "block_when": ["close_is_mapped_to_daily_settlement_pnl"]
+  },
+  "option": {
+    "name": "OptionContractIdentityContract",
+    "supported_uses": ["covered_position_and_exposure", "greeks", "margin_input"],
+    "required_semantics": [
+      "contract_code",
+      "trading_code",
+      "underlying",
+      "call_or_put",
+      "expiry",
+      "exercise_price",
+      "contract_unit",
+      "adjustment_version"
+    ],
+    "block_when": [
+      "adjusted_contract_version_is_ignored",
+      "stale_contract_unit_is_used",
+      "adjusted_and_standard_contracts_share_a_lossy_key"
+    ]
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "registry_id": "finflux-research-provider-registry",
+  "version": "1.0.0",
+  "updated_at": "2026-08-27T00:00:00+08:00",
+  "policy": {
+    "provider_set_locked_for_v1": true,
+    "new_provider_requires_data_owner_rfc": true,
+    "default_content_rights": "REVIEW_REQUIRED",
+    "default_fulltext_storage": "DENY",
+    "model_generated_content_is_ground_truth": false
+  },
+  "providers": [
+    {
+      "provider_id": "finrpt",
+      "display_name": "FinRpt",
+      "provider_tier": "BENCHMARK_REFERENCE",
+      "roles": ["RESEARCH_DATASET", "REPORT_GENERATION_REFERENCE", "EVALUATION_BENCHMARK"],
+      "content_types": ["RESEARCH_DOCUMENT", "RESEARCH_CLAIM"],
+      "official_references": [
+        "https://ojs.aaai.org/index.php/AAAI/article/view/37014",
+        "https://github.com/jinsong8/FinRpt",
+        "https://huggingface.co/datasets/jinsong8/FinRpt"
+      ],
+      "coverage_note": "Dataset coverage ends in early November 2024; not a live truth source.",
+      "rights_state": "ATTRIBUTION_REQUIRED",
+      "license_note": "Dataset page declares CC BY 4.0; upstream item rights still require field-level review.",
+      "storage_policy": "PINNED_DATASET_VERSION",
+      "implementation_status": "PLANNED"
+    },
+    {
+      "provider_id": "eastmoney_report",
+      "display_name": "EastMoney Report Provider",
+      "provider_tier": "MARKET_RESEARCH",
+      "roles": ["DOMESTIC_REPORT_INDEX", "ANALYST_RESEARCH", "MARKET_NEWS_INDEX"],
+      "content_types": ["RESEARCH_DOCUMENT", "NEWS_RELEASE", "RESEARCH_CLAIM"],
+      "reference_implementations": [
+        "https://github.com/akfamily/akshare/blob/main/docs/data/stock/stock.md"
+      ],
+      "reference_functions": ["stock_research_report_em"],
+      "coverage_note": "First release implements research-report metadata; news and information feeds require separate endpoint and rights verification.",
+      "rights_state": "REVIEW_REQUIRED",
+      "license_note": "Public accessibility does not establish redistribution rights. Store metadata and links by default.",
+      "storage_policy": "METADATA_FIRST",
+      "operational_controls": ["RATE_LIMIT", "CACHE", "EXPONENTIAL_BACKOFF", "CIRCUIT_BREAKER", "CONTRACT_TEST"],
+      "implementation_status": "IMPLEMENTED_METADATA_CACHE_2026_08_27"
+    },
+    {
+      "provider_id": "worldbank",
+      "display_name": "World Bank",
+      "provider_tier": "OFFICIAL_PRIMARY",
+      "roles": ["OFFICIAL_STATISTICS", "OFFICIAL_DOCUMENTS", "POLICY_RESEARCH"],
+      "content_types": ["OFFICIAL_STATISTIC", "RESEARCH_DOCUMENT", "NEWS_RELEASE"],
+      "endpoints": [
+        {"name": "Indicators API", "url": "https://api.worldbank.org/v2/", "protocol": "REST"},
+        {"name": "Documents and Reports API", "url": "https://search.worldbank.org/api/v3/wds", "protocol": "REST"},
+        {"name": "Data Catalog API", "url": "https://ddh-openapi.worldbank.org/", "protocol": "REST"}
+      ],
+      "rights_state": "ATTRIBUTION_REQUIRED",
+      "license_note": "Respect dataset-level license and World Bank Open Access/citation terms.",
+      "storage_policy": "VERSIONED_AUTHORIZED_CONTENT",
+      "implementation_status": "IMPLEMENTED_DOCUMENT_METADATA_AND_INDICATORS_2026_08_27"
+    },
+    {
+      "provider_id": "imf",
+      "display_name": "International Monetary Fund",
+      "provider_tier": "OFFICIAL_PRIMARY",
+      "roles": ["OFFICIAL_STATISTICS", "FLAGSHIP_REPORTS", "COUNTRY_REPORTS", "POLICY_NEWS"],
+      "content_types": ["OFFICIAL_STATISTIC", "RESEARCH_DOCUMENT", "NEWS_RELEASE"],
+      "endpoints": [
+        {"name": "IMF Data API", "url": "https://data.imf.org/en/Resource-Pages/IMF-API", "protocol": "SDMX"},
+        {"name": "DataMapper API", "url": "https://www.imf.org/external/datamapper/api/", "protocol": "REST"},
+        {"name": "Publications", "url": "https://www.imf.org/en/publications", "protocol": "CATALOG"},
+        {"name": "Social Hub and RSS", "url": "https://www.imf.org/en/social-hub", "protocol": "RSS"}
+      ],
+      "rights_state": "REVIEW_REQUIRED",
+      "license_note": "Apply resource-specific IMF copyright and usage terms; metadata is ingested before full text.",
+      "storage_policy": "METADATA_FIRST_WITH_VINTAGE",
+      "implementation_status": "PLANNED"
+    },
+    {
+      "provider_id": "bis",
+      "display_name": "Bank for International Settlements",
+      "provider_tier": "OFFICIAL_PRIMARY",
+      "roles": ["OFFICIAL_STATISTICS", "CENTRAL_BANK_RESEARCH", "SPEECHES", "STATISTICAL_RELEASES"],
+      "content_types": ["OFFICIAL_STATISTIC", "RESEARCH_DOCUMENT", "NEWS_RELEASE"],
+      "endpoints": [
+        {"name": "BIS Statistics API", "url": "https://stats.bis.org/api/v1/", "protocol": "SDMX"},
+        {"name": "BIS RSS", "url": "https://www.bis.org/rss/index.htm", "protocol": "RSS"}
+      ],
+      "rights_state": "ATTRIBUTION_REQUIRED",
+      "license_note": "Apply BIS statistics terms and document-specific notices; retain source attribution.",
+      "storage_policy": "VERSIONED_AUTHORIZED_CONTENT",
+      "implementation_status": "PLANNED"
+    },
+    {
+      "provider_id": "ecb",
+      "display_name": "European Central Bank",
+      "provider_tier": "OFFICIAL_PRIMARY",
+      "roles": ["OFFICIAL_STATISTICS", "ECONOMIC_RESEARCH", "POLICY_RELEASES", "SPEECHES"],
+      "content_types": ["OFFICIAL_STATISTIC", "RESEARCH_DOCUMENT", "NEWS_RELEASE"],
+      "endpoints": [
+        {"name": "ECB Data API", "url": "https://data-api.ecb.europa.eu/service/", "protocol": "SDMX"},
+        {"name": "ECB RSS", "url": "https://www.ecb.europa.eu/home/html/rss.en.html", "protocol": "RSS"},
+        {"name": "ECB MID RSS", "url": "https://mid.ecb.europa.eu/rss/mid.xml", "protocol": "RSS"}
+      ],
+      "rights_state": "ATTRIBUTION_REQUIRED",
+      "license_note": "Public statistics may be reused with attribution; modified statistics must be identified. Author-named papers require explicit permission for republication.",
+      "storage_policy": "STATISTICS_VERSIONED_DOCUMENTS_METADATA_FIRST",
+      "implementation_status": "PLANNED"
+    }
+  ]
+}

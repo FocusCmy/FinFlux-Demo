@@ -1,0 +1,24 @@
+{
+  "protocol": "FINFLUX_WORKER_SKILL_MANIFEST_V1.0",
+  "role": "evidence-investigator",
+  "package_root": ".",
+  "entrypoint": {
+    "path": "bounded_worker_task.py",
+    "sha256": "29688f5f8c1989d4962d9879fa91aac09ec5da584153d58150c62ccf52479187"
+  },
+  "skills": [
+    {
+      "skill_id": "evidence-integrity",
+      "version": "1.0.0",
+      "instruction_path": "skills/evidence-integrity/SKILL.md",
+      "instruction_sha256": "08212a7015185bda003a96b63cc19cb25d6cd0412d363afce97d261f02218c6b"
+    },
+    {
+      "skill_id": "rights-gate",
+      "version": "1.0.0",
+      "instruction_path": "skills/rights-gate/SKILL.md",
+      "instruction_sha256": "b67bf00436c3c6ba5aee8725f3aa8fb3a13017a924fd608f3509c57e8f2380c6"
+    }
+  ],
+  "manifest_sha256": "3b5953e2dc84e40fe8ac7437ff55804c6bd70c42ddd43151c32753399ebbb3a9"
+}

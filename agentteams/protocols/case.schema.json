@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FinChange Review Case",
+  "type": "object",
+  "required": ["case_id", "asset_class", "trigger", "declared_downstream_use", "evidence", "expected_route", "human_gate"],
+  "properties": {
+    "case_id": {"type": "string"},
+    "asset_class": {"enum": ["equity", "futures", "option"]},
+    "trigger": {"type": "string"},
+    "declared_downstream_use": {"type": "string"},
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["evidence_id", "path", "sha256_source"],
+        "properties": {
+          "evidence_id": {"type": "string"},
+          "path": {"type": "string"},
+          "sha256_source": {"type": "string"}
+        }
+      }
+    },
+    "expected_route": {"enum": ["FULL_TEAM_REVIEW", "HUMAN_REVIEW_WITHOUT_IMPACT", "CODE_ONLY_PASS"]},
+    "human_gate": {"type": "boolean"},
+    "truth_boundary": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}
+

@@ -1,0 +1,31 @@
+apiVersion: agentteams.io/v1beta1
+kind: Team
+metadata:
+  name: finchange-cross-asset-review
+spec:
+  description: 股票、期货、期权真实数据与研究证据的金融语义准入、权利核验与独立复核团队
+  teamName: finchange-cross-asset-review
+  peerMentions: true
+  heartbeatEvery: 15m
+  workerMembers:
+    - name: finchange-case-lead
+      role: team_leader
+    - name: evidence-investigator
+      role: worker
+    - name: semantic-impact-analyst
+      role: worker
+    - name: downstream-impact-analyst
+      role: worker
+    - name: data-rights-steward
+      role: worker
+    - name: research-context-analyst
+      role: worker
+    - name: runtime-resilience-auditor
+      role: worker
+    - name: independent-validator
+      role: worker
+    - name: result-composer
+      role: worker
+  humanMembers:
+    - name: finchange-data-owner
+      role: coordinator

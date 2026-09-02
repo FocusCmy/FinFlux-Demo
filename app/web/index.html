@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FinFlux 控制台 · 金融语义准入与受控演化引擎</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+
+    <!-- ============ 左侧导航 ============ -->
+    <aside class="sidebar" aria-label="主导航">
+      <a class="brand" href="#/live" aria-label="FinFlux 首页">
+        <span class="brand-hex"><i class="ri-exchange-funds-line" aria-hidden="true"></i></span>
+        <span class="brand-copy"><b>FinFlux</b><small>金融语义准入引擎</small></span>
+      </a>
+
+      <nav class="side-nav">
+        <p class="nav-group-label">现场主链路</p>
+        <a class="nav-item" href="#/live" data-route="live">
+          <i class="ri-upload-cloud-2-line" aria-hidden="true"></i>
+          <span class="nav-copy"><b>1. Case 工作台</b><small>Evidence &amp; Intent</small></span>
+        </a>
+        <a class="nav-item" href="#/collaboration" data-route="collaboration">
+          <i class="ri-node-tree" aria-hidden="true"></i>
+          <span class="nav-copy"><b>2. AgentTeams 协作</b><small>Manager &amp; Workers</small></span>
+        </a>
+        <a class="nav-item" href="#/evidence" data-route="evidence">
+          <i class="ri-archive-stack-line" aria-hidden="true"></i>
+          <span class="nav-copy"><b>3. DataPass 与 Human</b><small>Decision &amp; Approval</small></span>
+        </a>
+        <a class="nav-item" href="#/changes" data-route="changes">
+          <i class="ri-git-compare-line" aria-hidden="true"></i>
+          <span class="nav-copy"><b>4. 演化与审计</b><small>Lineage &amp; Audit</small></span>
+        </a>
+        <p class="nav-group-label nav-group-secondary">验证与运维</p>
+        <a class="nav-item" href="#/trace" data-route="trace">
+          <i class="ri-fingerprint-line" aria-hidden="true"></i>
+          <span class="nav-copy"><b>Trace 与恢复</b><small>Trace &amp; Recovery</small></span>
+        </a>
+        <a class="nav-item" href="#/evaluation" data-route="evaluation">
+          <i class="ri-bar-chart-box-line" aria-hidden="true"></i>
+          <span class="nav-copy"><b>评测与边界</b><small>Evaluation &amp; Limits</small></span>
+        </a>
+        <a class="nav-item" href="#/skills" data-route="skills">
+          <i class="ri-flashlight-line" aria-hidden="true"></i>
+          <span class="nav-copy"><b>Skill 注册表</b><small>Skill Registry</small></span>
+        </a>
+        <a class="nav-item" href="#/settings" data-route="settings">
+          <i class="ri-settings-4-line" aria-hidden="true"></i>
+          <span class="nav-copy"><b>系统设置</b><small>System Settings</small></span>
+        </a>
+      </nav>
+
+      <div class="side-footer">
+        <div class="side-health">
+          <span class="dot dot-amber pulse-dot"></span>
+          <div><b>系统状态</b><small>后端实时检测 · 未运行不补数据</small></div>
+        </div>
+        <div class="side-user">
+          <i class="ri-shield-user-line" aria-hidden="true"></i>
+          <div><b>FinFlux Admin</b><small>审查员 · Data Owner</small></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ============ 主区域 ============ -->
+    <div class="main">
+      <!-- 顶部状态栏（全页面常驻） -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <p class="eyebrow" id="page-crumb">FINFLUX CONSOLE</p>
+          <h1 id="page-title">运行与协作</h1>
+        </div>
+        <div class="topbar-metrics">
+          <div class="metric">
+            <span class="metric-k">Run ID</span>
+            <span class="metric-v mono" id="topbar-run-id">NO-LIVE-RUN</span>
+            <button class="copy-btn" type="button" data-copy="NO-LIVE-RUN" title="复制 Run ID"><i class="ri-file-copy-line"></i></button>
+          </div>
+          <div class="metric"><span class="metric-k">平台</span><span class="metric-v mono">AgentTeams v1.2.2</span></div>
+          <div class="metric"><span class="metric-k">模型</span><span class="metric-v mono">服务端配置</span></div>
+          <div class="metric metric-token">
+            <span class="metric-k">真实模型 Token（本 Run）</span>
+            <span class="metric-v mono" id="topbar-token-text">0</span>
+            <span class="token-track" style="display:none"><span class="token-fill" id="topbar-token-bar" style="width:0%"></span></span>
+            <span class="metric-pct mono" id="topbar-token-pct">0 calls</span>
+          </div>
+          <div class="metric"><span class="metric-k">事件预算</span><span class="metric-v mono" id="topbar-events">0 / 30</span></div>
+          <div class="metric"><span class="metric-k">墙钟</span><span class="metric-v mono" id="topbar-wallclock">0 / 600s</span></div>
+          <div class="metric"><span class="status-badge status-amber pulse" id="topbar-status"><i class="dot"></i>NO_LIVE_RUN</span></div>
+        </div>
+      </header>
+
+      <nav class="stage-nav" aria-label="现场演示四阶段">
+        <a href="#/live" data-stage-route="live"><span>01</span><b>Case 工作台</b><small>证据 + 任务 → CaseEnvelope</small></a>
+        <a href="#/collaboration" data-stage-route="collaboration"><span>02</span><b>多Agent 决策台</b><small>路由 → 独立产物 → 汇聚</small></a>
+        <a href="#/evidence" data-stage-route="evidence"><span>03</span><b>DataPass 与 Human</b><small>建议 → 授权 → 报告</small></a>
+        <a href="#/changes" data-stage-route="changes"><span>04</span><b>演化与审计</b><small>版本 → 修订Run → 可回放</small></a>
+      </nav>
+
+      <!-- 视图容器（hash 路由渲染） -->
+      <main class="main-scroll" id="main-scroll">
+        <div id="view"></div>
+      </main>
+    </div>
+  </div>
+
+  <div id="toast-host" aria-live="polite"></div>
+  <div id="modal-host"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/views-live.js"></script>
+  <script src="js/views-collaboration.js"></script>
+  <script src="js/views-evidence.js"></script>
+  <script src="js/views-changes.js"></script>
+  <script src="js/views-trace.js"></script>
+  <script src="js/views-evaluation.js"></script>
+  <script src="js/views-skills.js"></script>
+  <script src="js/views-humangate.js"></script>
+  <script src="js/views-settings.js"></script>
+  <script src="js/router.js"></script>
+</body>
+</html>

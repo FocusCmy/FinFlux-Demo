@@ -1,0 +1,14 @@
+{
+  "protocol": "FINFLUX_MANAGER_SKILL_MANIFEST_V1.0",
+  "skill_id": "manager-route-case",
+  "version": "1.0.0",
+  "entrypoint": {
+    "path": "app/manager_routing.py",
+    "sha256": "e24264347ac8da9c94f8cf1c12a6659507c649ce6e17c00364bb5e1f383bfa96"
+  },
+  "instruction": {
+    "path": "app/agentteams-skills/manager-route-case/SKILL.md",
+    "sha256": "790b7af08c3847e74f223e43d79c078e6f9de22d6b318ed6f2cb029b47c23a45"
+  },
+  "manifest_sha256": "d28139e5be51912d6d5a2df0c38617b6f860dffcadb3b88c6c222c3a8688d49b"
+}

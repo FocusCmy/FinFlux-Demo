@@ -1,0 +1,20 @@
+{
+  "protocol": "FINFLUX_WORKER_SKILL_MANIFEST_V1.0",
+  "role": "independent-validator",
+  "package_root": "..",
+  "entrypoint": {
+    "path": "bounded_worker_task.py",
+    "sha256": "6587802a3da60dc38ba76ea35fa755f0e7c649431b0d6e34f89680c03319a340"
+  },
+  "skills": [
+    {
+      "skill_id": "independent-evidence-validator",
+      "version": "1.0.0",
+      "callable": "skill_independent_evidence_validator",
+      "callable_sha256": "f1509f2ce8063fff6acd184fa30cad7be9e5738490c4f36880f20e1fdaa4016f",
+      "instruction_path": "agentteams-skills/independent-evidence-validator/SKILL.md",
+      "instruction_sha256": "8c4451536957def481623b4758e622456eeb6f1cccf1d799c8000ae350548300"
+    }
+  ],
+  "manifest_sha256": "25865d17e118d7fd46b7f177ca0a0e1f67174cba41fb4021535dfeace896c9fd"
+}

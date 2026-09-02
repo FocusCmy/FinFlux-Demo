@@ -1,0 +1,38 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Credentials and local runtime configuration
+.env
+*.env
+!.env.example
+agentteams/.env
+config/*.env
+!config/*.env.example
+
+# Mutable runtime state: never publish Human decisions, prompts or token ledgers
+app/runtime/
+app/output/
+app/submission_artifacts/
+agentteams/runtime-workspace/
+agentteams/build/
+agentteams/evidence/
+.openviking/
+.cache/
+artifacts/
+tmp/
+
+# Generated packages and local media
+*.log
+*.tmp
+*.zip
+*.webm
+*.mp4

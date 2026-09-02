@@ -1,0 +1,3164 @@
+[
+  {
+    "record_id": "FUTURES-001",
+    "asset_class": "futures",
+    "instrument": "IC2608",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "234dc81ce1bc1fdf0edb743f92c3f13e194f65be3afb8747dc8ebee32416b93c",
+    "result_sha256": "5ccfb5585ca337792f9e1a08fec21eb56f3c80d67a5cfc29a49c509f58b90869"
+  },
+  {
+    "record_id": "FUTURES-002",
+    "asset_class": "futures",
+    "instrument": "IC2609",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "f8d340d14b0319b4b1b3bede34028ee67bcab56c37f47e9eebe0c9fc18538227",
+    "result_sha256": "b69521519c8806d238061cc3c80c10081a3f1da564ccebb62b3a2be76ad89fc6"
+  },
+  {
+    "record_id": "FUTURES-003",
+    "asset_class": "futures",
+    "instrument": "IC2612",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "26c58bc10438078be02a84c817223fc30a9ee392f9f668221a6377107f084b87",
+    "result_sha256": "c71541ede351372ea13008195abb91fdce12a32e0baa5b887982768b6f13a2cb"
+  },
+  {
+    "record_id": "FUTURES-004",
+    "asset_class": "futures",
+    "instrument": "IC2703",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "22cc8641e8a1faa6aa2a0640ae4ac0691b8425bd827173b3a23c847d39938f6c",
+    "result_sha256": "02dadef111fefaf4108103e5d8fe4c94a42c03a897f93c961d190b5ac6d9f0d5"
+  },
+  {
+    "record_id": "FUTURES-005",
+    "asset_class": "futures",
+    "instrument": "IF2608",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "46e53707a4c9c6d9dc1ed5201f4c01d61f4a269b5505ff9c56e91077307edb11",
+    "result_sha256": "722a87557bde4674a1f634e276bc50a8e4431e6a54fcd703c02f8009a5e981a1"
+  },
+  {
+    "record_id": "FUTURES-006",
+    "asset_class": "futures",
+    "instrument": "IF2609",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "c9ada5b7d29f4f04b58a7df52e24a83340758e64469943ecde23aa087e2d9c0f",
+    "result_sha256": "2f1e91408c24a8e8cd88738f5fb29502f08f9bbf5b5e6b3f4412fea6b2d471c6"
+  },
+  {
+    "record_id": "FUTURES-007",
+    "asset_class": "futures",
+    "instrument": "IF2612",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "1bef37868efef4e1eb763236453651b4c39702686f7acb0a144d5ef76a793023",
+    "result_sha256": "0d3293ef9e39aec4963d7f08b7724bfd2d085ebe2351bdc5e9579f2a409023de"
+  },
+  {
+    "record_id": "FUTURES-008",
+    "asset_class": "futures",
+    "instrument": "IF2703",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "e866a70b1c6a9d2c639c41fd98acf5cb2087049b943aea8d8fb222665ac5010e",
+    "result_sha256": "f5a147868e44d5636d5921a623ddcfa9546f973ef3f67c6a8b160c45e840900f"
+  },
+  {
+    "record_id": "FUTURES-009",
+    "asset_class": "futures",
+    "instrument": "IH2608",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "9743c3785531e1ade5af1b6c816f52e4862d0dd97514abafee507c8650d96d8b",
+    "result_sha256": "3b6677d25df8deb4e48cc029159e8d4539cd9b6730d390097db0d13a4bd29873"
+  },
+  {
+    "record_id": "FUTURES-010",
+    "asset_class": "futures",
+    "instrument": "IH2609",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "73b3a77389b49f276efb1c9302973d852ca05d96e42bdff4631087bc2f817364",
+    "result_sha256": "ec008a1ec1f1a84d309199570d51225d74e23c6edae749927fbbcaa3be817f4f"
+  },
+  {
+    "record_id": "FUTURES-011",
+    "asset_class": "futures",
+    "instrument": "IH2612",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "c9f984d3372200fcce3bd2471e8b1ea3636b569d19b3692dc122b13e4914c87c",
+    "result_sha256": "6f5cf4c14d61c4e33be1ed9945707e4d47e4c62b2809c0d67298196937ff2967"
+  },
+  {
+    "record_id": "FUTURES-012",
+    "asset_class": "futures",
+    "instrument": "IH2703",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "9fcec1ce3194a855af2b03d5474d99ad2dd97d1a664b686b183f3be7a1d4016b",
+    "result_sha256": "255308e6ff99275ca8c33d8e552b757dc305d6549a691b7d8688fcce34cfc4e1"
+  },
+  {
+    "record_id": "FUTURES-013",
+    "asset_class": "futures",
+    "instrument": "IM2608",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "a0c535dd96ce2eba1936a70cb0fe00536d89ca715b92b6562214422a0b7e6ded",
+    "result_sha256": "ff4419ffed53f51b280d154a920fbbb3c6d93e665f036e105495027a308e3422"
+  },
+  {
+    "record_id": "FUTURES-014",
+    "asset_class": "futures",
+    "instrument": "IM2609",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "829f1b6827ccf62d8e9b2e19f51c818bd4b025875a2b2fcb536b00cac7b400f7",
+    "result_sha256": "047282ea5fc6ce21c25aa684583792661f593ff9caa63df41210f45b901db458"
+  },
+  {
+    "record_id": "FUTURES-015",
+    "asset_class": "futures",
+    "instrument": "IM2612",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "668a0bf7ccddf24ef0877a149b1ac9ab8ad51cd838ec71243fbf24c458610e2c",
+    "result_sha256": "6daa6ec00fd82612dbbb6bc62997fccad6f877cffc6cf342956f1fc19b7c81a8"
+  },
+  {
+    "record_id": "FUTURES-016",
+    "asset_class": "futures",
+    "instrument": "IM2703",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "2f76570f5575858f74815d4db3e43c743fd6326fa67b9ebc957c0bc3ee4a8f87",
+    "result_sha256": "ec2bdb7fa25b3f0ad2195bcd1a21559ba7ec485761d9c7267d725df0f7c04003"
+  },
+  {
+    "record_id": "FUTURES-017",
+    "asset_class": "futures",
+    "instrument": "T2609",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "113f1250cc3e9c577e6b3ad69dfa1cda40a0be556e85b7852f29c848c116d5ac",
+    "result_sha256": "a739d5c409261dc107a6d4e073716229f04a673b07418169ec34cc2603539e9e"
+  },
+  {
+    "record_id": "FUTURES-018",
+    "asset_class": "futures",
+    "instrument": "T2612",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "982760ec9a2ecfdb69bb216730f9801bde538901342471ae16311b9293fd4199",
+    "result_sha256": "02b19ea0129ac0a742b2a02ccc59ccc07cdb74d8c47cf7d8e1fb453bd7f18210"
+  },
+  {
+    "record_id": "FUTURES-019",
+    "asset_class": "futures",
+    "instrument": "T2703",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "28482a6bedcf204ac1a4501243ecb92a17fa5543f61ccf5fbfcdf31ec7b59a01",
+    "result_sha256": "7068329d595f4c80ec164b4f1f13e8c5dfd2a670e78267490ca7fa263ca3a48c"
+  },
+  {
+    "record_id": "FUTURES-020",
+    "asset_class": "futures",
+    "instrument": "TF2609",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "11c637d0fb2b0b7aa1f6272edec25407891da8c8e3ef1aa7a0b55678a5b69f37",
+    "result_sha256": "9ea7c5781ec18e99195c3e7d12cad0325947574d538b734524f70e7754af7cc1"
+  },
+  {
+    "record_id": "FUTURES-021",
+    "asset_class": "futures",
+    "instrument": "TF2612",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "ac3d1e0180cb3d703d20c78fa13ba18635ffed2791dfdaff776adf05c5a4a4c9",
+    "result_sha256": "42048aaf05b3843de6448a3a41f5f404f6a0e895ea6721e48f17078dbfe84f8e"
+  },
+  {
+    "record_id": "FUTURES-022",
+    "asset_class": "futures",
+    "instrument": "TF2703",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "5ff256566e9666b9719cfa6e0efe2366fa67dd97d7176bf39bbb2d846365dff4",
+    "result_sha256": "30dfdd0b7df88e3fce600d14132385f8518d391e67ce68649b5e84c10944f9c1"
+  },
+  {
+    "record_id": "FUTURES-023",
+    "asset_class": "futures",
+    "instrument": "TL2609",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "fc83ed834c7b9d6b9c3af9f381752e10f09eb1887b0191f045f914a6218a3b70",
+    "result_sha256": "78db08713815dc1d7d38f65b5f04d20cd395da7f53fe27338c438cd8fa9a7b99"
+  },
+  {
+    "record_id": "FUTURES-024",
+    "asset_class": "futures",
+    "instrument": "TL2612",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "a944336ff56162f0bd636169f7cf165b841fa079c301564bb1d22bde35a56aea",
+    "result_sha256": "0c8b46b3fbaf0ad7e14ca5aefbd49882b891acb1031f6f257814875f157c47f8"
+  },
+  {
+    "record_id": "FUTURES-025",
+    "asset_class": "futures",
+    "instrument": "TL2703",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "e92f78233fd6d26354fc3ba72adb68437a55affee2ccbb08eb6ce69991b392df",
+    "result_sha256": "48f8cb39c5a1cafacccdcaa4db707bf42364ca415b8f1d59f275e806f8c31565"
+  },
+  {
+    "record_id": "FUTURES-026",
+    "asset_class": "futures",
+    "instrument": "TS2609",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "532b1fe248199ed0b19a7821fc17d8a856d418fdc75c7e58854009359f997bf7",
+    "result_sha256": "873a4a7f001f050e0feb247a2ff5b9579ca801f0a0009c08873843727ef05abf"
+  },
+  {
+    "record_id": "FUTURES-027",
+    "asset_class": "futures",
+    "instrument": "TS2612",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "25b8318649d3282019b3a7ca4476152f4b3d2bc1dc81aadab41ab760d7d303aa",
+    "result_sha256": "825e48af6fdbeaf552f1a2c4f222bf0911c13c78076c01d39f55246623f510c3"
+  },
+  {
+    "record_id": "FUTURES-028",
+    "asset_class": "futures",
+    "instrument": "TS2703",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "8c8e4661105fb532e5f6558029c94cee658378f8bf5c04f5f3386ad0b57a1630",
+    "result_sha256": "f1e53c8cb9cc01b89579e91281665c8650f9e52e8d2e45e3e59072a675cba2db"
+  },
+  {
+    "record_id": "FUTURES-029",
+    "asset_class": "futures",
+    "instrument": "IC2608",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "ac01f4bd729a2220ee4754f8edd35ae64236975cc3c3723f3a3bbcea0192837e",
+    "result_sha256": "8b44ad2a58f2c4410524c37bdc8c28c814d5ecf6961ecb3425322fd2e368e9b2"
+  },
+  {
+    "record_id": "FUTURES-030",
+    "asset_class": "futures",
+    "instrument": "IC2609",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "ffd3fe61ce0806786297b03d47dd08e35a0e38284c076428a1b714d0bf5080fc",
+    "result_sha256": "7ca0380c74997fea637996db5f29d63ed463459a4e636dad14f79dd6cbb61080"
+  },
+  {
+    "record_id": "FUTURES-031",
+    "asset_class": "futures",
+    "instrument": "IC2612",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "30f055e710bbc619c938cde31733b1c4448b75a06a26defd3343743e5255952a",
+    "result_sha256": "ff87a928d28a902020afd0b71c2e14450c74a160f81d883d5c39652ea8d707ec"
+  },
+  {
+    "record_id": "FUTURES-032",
+    "asset_class": "futures",
+    "instrument": "IC2703",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "73050e2b5f7f3d226def8b740141c295ced1e38ec7682d87beba2fddc058cd3a",
+    "result_sha256": "fb1d40aa60175d984fded44f49cf90fc74f5ec761a5089fb75efe3e24a4ad953"
+  },
+  {
+    "record_id": "FUTURES-033",
+    "asset_class": "futures",
+    "instrument": "IF2608",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "d7df91627eb51ea9ce68f28d4b1482a6462b3fb162c73200c78efd8b75647bcb",
+    "result_sha256": "6fb34fb3d30f5062d7eec83b6c425dd994b83e02c4a84fc9efb7d7bda5c421d8"
+  },
+  {
+    "record_id": "FUTURES-034",
+    "asset_class": "futures",
+    "instrument": "IF2609",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "7ae1ed331b00221feef595713ed171cff1db4cb36eccff09a7039eb63bf806b8",
+    "result_sha256": "bdd1a25e25ee82ce2a1fe1ea4327198de76036ab8593556066f66df5c983041e"
+  },
+  {
+    "record_id": "FUTURES-035",
+    "asset_class": "futures",
+    "instrument": "IF2612",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "6ef860f21201b303c96629803c2b7300fe481ddf330085a22b01f1dc8bbaac10",
+    "result_sha256": "2843668fb4cb3523d12302e3730ee5aa36cf7a3cad06f3df9d3040871a8ed2c3"
+  },
+  {
+    "record_id": "FUTURES-036",
+    "asset_class": "futures",
+    "instrument": "IF2703",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "19cf5c860438a453fa4c003d40bae847f1064b084158c2cbd1af8db4b591f6ab",
+    "result_sha256": "491fd774fabe3f9a1dd4fa7e10998f65378504d6f8560eccd543ab2c6558b2ac"
+  },
+  {
+    "record_id": "FUTURES-037",
+    "asset_class": "futures",
+    "instrument": "IH2608",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "8e60ed0dace22bf56c6b784b1422d4fe582867edd0c168874cede42f7dd860a8",
+    "result_sha256": "c4cb09594c600a6f0b22f5a7791ae05ac0f1b092d6e25fbe84cbee211d7b06a8"
+  },
+  {
+    "record_id": "FUTURES-038",
+    "asset_class": "futures",
+    "instrument": "IH2609",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "8df423fdf12fc7014efd224e39c3a55333148866e4956fac4f356a9f7e414222",
+    "result_sha256": "a261cf9c36cd5ebb75dd09d848713041b459b5f9d2d4e54941f887450b036d07"
+  },
+  {
+    "record_id": "FUTURES-039",
+    "asset_class": "futures",
+    "instrument": "IH2612",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "2425aae8352af85270e1506d125f628e63be8d4de1505e73d046e40192b222aa",
+    "result_sha256": "4fc66933bae9062d8d00dc00f46396c1dd87c4f89f4c5b2cb4720bb51ec003b0"
+  },
+  {
+    "record_id": "FUTURES-040",
+    "asset_class": "futures",
+    "instrument": "IH2703",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "d01c45f2bf9e6087cdbc179f567bbc2408d79a645954dbba813d1a1f61523a87",
+    "result_sha256": "b46a51ba03874920d4329828ffa51c48b5fe89981b2f60fe2bdab45d51897005"
+  },
+  {
+    "record_id": "FUTURES-041",
+    "asset_class": "futures",
+    "instrument": "IM2608",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "ebcab73fa5170096ac0bf986619f0cb3dffd77da5c4c1c116019054ff1c685da",
+    "result_sha256": "cf95de4a6fb9c131347af6366994ae2803039cd5b6aabb4e0a026b1ce80d360c"
+  },
+  {
+    "record_id": "FUTURES-042",
+    "asset_class": "futures",
+    "instrument": "IM2609",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "e068af7df637d74773eb5af7068a4ef6e98fa0fa9a0c291b1083eda9a25bb9d4",
+    "result_sha256": "dcc29e42abc986e399428a0984b99bb474e32da750af14648fc0eff0879d0634"
+  },
+  {
+    "record_id": "FUTURES-043",
+    "asset_class": "futures",
+    "instrument": "IM2612",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "ec2e7750b085174bf4e486d38e25b72b434b627a9f2335be7cae4a696d93713e",
+    "result_sha256": "aefce0a56db5a8daa3a4c89bec6a897b285bf8acd81e4929567935be2e9be4e5"
+  },
+  {
+    "record_id": "FUTURES-044",
+    "asset_class": "futures",
+    "instrument": "IM2703",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "49a32d8dddbf74254546dc787ae5bfdf911a897501e1ef78769056aaa68d8885",
+    "result_sha256": "08d2ba9fc7b8e00610e7dd343552fbca6eb7542717c8fbd62d7992ca5faeb1fb"
+  },
+  {
+    "record_id": "FUTURES-045",
+    "asset_class": "futures",
+    "instrument": "T2609",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "0c8a3cc86a1ce807b536962dc25a9eb3118d56373e6b5d673fdc0b7b74badf22",
+    "result_sha256": "880aa35a9d04937f2135e43554a1d3e1ad7e87263d8e510bbed75c24364e8aa2"
+  },
+  {
+    "record_id": "FUTURES-046",
+    "asset_class": "futures",
+    "instrument": "T2612",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "472addb4fc4748167aece4ab3e68a6e77edcbfd46cdc7a9ae1c89f7f5ad69a86",
+    "result_sha256": "7433e675cb3c0d63dca4f2fb551d7ddca475f356a160d09ddda59a57b699a15f"
+  },
+  {
+    "record_id": "FUTURES-047",
+    "asset_class": "futures",
+    "instrument": "T2703",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "6f99f5d11485ffb9b84ef4eed7286a5ec7c6934a946c03e0ad8a3529ba229a2c",
+    "result_sha256": "ac8d09d63218b98fa4ee433149c9e5870841c5717a9d506d4174ee3bbb6a7e7c"
+  },
+  {
+    "record_id": "FUTURES-048",
+    "asset_class": "futures",
+    "instrument": "TF2609",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "c75144b64b54369bf8cc71a52f6b6c1d47c09a3497447523e4c7b59c60719a16",
+    "result_sha256": "a025435d61b868ab92d2d4f6c482e10b8166fc8610b8f377dd21abfb478dbba1"
+  },
+  {
+    "record_id": "FUTURES-049",
+    "asset_class": "futures",
+    "instrument": "TF2612",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "69cafaa45899eb8086ab752cd810c977c325719907b5575f4f703d595624bb02",
+    "result_sha256": "b9073f0478cdd4196ccc3f2f5c65be6e14769d89df3c6daa36138edcf74faafa"
+  },
+  {
+    "record_id": "FUTURES-050",
+    "asset_class": "futures",
+    "instrument": "TF2703",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "settle",
+      "pre_settle"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "a2e360e923af3b63ad95c0027db7ac45ad876ee31c788d2afa430c822fabd902",
+    "result_sha256": "0dfc322ee811b678ea8a0f56d892292ddedc16aad7c475dde08e9b800063a297"
+  },
+  {
+    "record_id": "EQUITY-001",
+    "asset_class": "equity",
+    "instrument": "000001",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "a4fcf0e3cc7ec6ba0763d3ebc9fd310cbbcf6909e7d3d2fb78d7e66016de0fc5",
+    "result_sha256": "ae74ea88dec3688d605f66e299ae8dc4318ca76c171fa1c949bcba52ea56b663"
+  },
+  {
+    "record_id": "EQUITY-002",
+    "asset_class": "equity",
+    "instrument": "000009",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "425682a6cdaf5865f6e4dbef90e9e919d2391185918741f1d661634ed350d06b",
+    "result_sha256": "17465227b79b234717ff40efa4dd1853c388b634e547d1cbdae965c777f89c5c"
+  },
+  {
+    "record_id": "EQUITY-003",
+    "asset_class": "equity",
+    "instrument": "000011",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "d998dceefc41095ceb9e834c7ea3935b742c07fe92d8a9104c40b95b6d79c84f",
+    "result_sha256": "1ae8e559b6f544f88bdfa795458af0f16c5bf39ac2253e785585d55b716d6508"
+  },
+  {
+    "record_id": "EQUITY-004",
+    "asset_class": "equity",
+    "instrument": "000012",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "52f9a108e3e4774c0158f53bd4373ae0b1419e429001af50860616119ecac814",
+    "result_sha256": "cdd5ec2cd0806844cbf0dd8e8cf13193d23ba47e02a004f632bdc88a5ef9daf4"
+  },
+  {
+    "record_id": "EQUITY-005",
+    "asset_class": "equity",
+    "instrument": "000019",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "a0de7700d120f1edbfc7636efefdc5fb59f233b4e2b8a477131cb88973975b0e",
+    "result_sha256": "b52dcb03f2ce8f0b3b756f8bfebf9caea4c2d1b676ed8123607c57b743e36035"
+  },
+  {
+    "record_id": "EQUITY-006",
+    "asset_class": "equity",
+    "instrument": "000021",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "0f24a053be9c151a6ebf82cdebd5a330baa8bcc7ace9b084c176f173ccc7bb5d",
+    "result_sha256": "61e37a87dd3f6c327937652b5970b6357666a9e5e6e61d52c3710b0a30b19e61"
+  },
+  {
+    "record_id": "EQUITY-007",
+    "asset_class": "equity",
+    "instrument": "000025",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "2d213ea7bfbc8b38f16948dc8f4572d2372f73f0ac7133f44ce726c8ff6170e6",
+    "result_sha256": "09e8e8e4fabae4b953ca8fa622a9734c328b246b3781850713f8981de28dee96"
+  },
+  {
+    "record_id": "EQUITY-008",
+    "asset_class": "equity",
+    "instrument": "000026",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "94ff9fc10b79d46ab1b6a5edc4e1346cf658742e638628e3c8f211778b29811a",
+    "result_sha256": "c01454ea1a1321ca999ed1e7ae1308c7f63c97b7fcf662bcde92604bf348f7af"
+  },
+  {
+    "record_id": "EQUITY-009",
+    "asset_class": "equity",
+    "instrument": "000027",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "fdb3479e08a83882c0f03055d309b9117b93f280e585b1beafc19cbcc301f8ff",
+    "result_sha256": "6ee003b79f8733b2361c27b657561513a6ba236bf2d9f76e3665cc5720209ec4"
+  },
+  {
+    "record_id": "EQUITY-010",
+    "asset_class": "equity",
+    "instrument": "000028",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "28f827d490c823d1f85e10250015c1dac3d3901cbcff8f0e78dfaa2ad4a90acf",
+    "result_sha256": "c575585066d44d8602f07aa84cf8c89de249b9beacd8ec5dc62c0c2d9d8ebb09"
+  },
+  {
+    "record_id": "EQUITY-011",
+    "asset_class": "equity",
+    "instrument": "000029",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "16486dd2714f941c1d2da887375bb50056a728f3ea7e40a89d884a2a6499e63d",
+    "result_sha256": "ad59168eadffcef2109ad3af0d03197186fac103eabbf1ab7b76ab2b048df88f"
+  },
+  {
+    "record_id": "EQUITY-012",
+    "asset_class": "equity",
+    "instrument": "000030",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "8bd4bf2fa2dfca3994457b0fce65b21ae9d1cb877f538285940d6f80b53baf9b",
+    "result_sha256": "295e20c3e8354a1545343e41eb5f9e5a0b2e684bed2ebabcf6803449919218ad"
+  },
+  {
+    "record_id": "EQUITY-013",
+    "asset_class": "equity",
+    "instrument": "000032",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "bfc336bb65c67c44aaaeb29f22686df6f721dc18b1df23d364ca421a151c89de",
+    "result_sha256": "aa4e32d833144e76e4b092ca4979a8a20869bc0442276992b464df597c024a21"
+  },
+  {
+    "record_id": "EQUITY-014",
+    "asset_class": "equity",
+    "instrument": "000034",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "16687f44afdd8f71eeb926c7dc45b4246110ef2dd9f02c2b7458b020d1e4c62a",
+    "result_sha256": "62f077ceeb442147ee5e94c1d71d3b22cb6fe3c20dd50eb97af82696f91606a1"
+  },
+  {
+    "record_id": "EQUITY-015",
+    "asset_class": "equity",
+    "instrument": "000035",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "d32800eaa54c89092b1cd5fc1434a4d673327da24611ed0a1d1d728736ec140d",
+    "result_sha256": "f1434b71c618ceee99e6ffc038a4f68cc0fa0f0f55fea6b15caa809a974b60f5"
+  },
+  {
+    "record_id": "EQUITY-016",
+    "asset_class": "equity",
+    "instrument": "000037",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "06ff1b3f8032f8bdbda6cd6af2dad351535739d32249cb1aa4c6d04fd4391a06",
+    "result_sha256": "f6d1c28e03d52d3eff74ac816b8761042385a13d684a451946236f92ea3f4d66"
+  },
+  {
+    "record_id": "EQUITY-017",
+    "asset_class": "equity",
+    "instrument": "000039",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "6d9dff7e0ae0af5fc19f0919fe2758f8fa5f58bcd00fec22ba115d4d59eabca7",
+    "result_sha256": "c267b97103a8c02829e365c3ef85db2448c9e92904cd4e669d31bd3da23c5a22"
+  },
+  {
+    "record_id": "EQUITY-018",
+    "asset_class": "equity",
+    "instrument": "000045",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "c3a489dfe091a08828e299aef88e7a89a3ff41101dd7b0eb890b289db001afbf",
+    "result_sha256": "ba505f650bc99e08786f72f11cdaa5b8029e2f64c94b6fb73e3c5c746845d10f"
+  },
+  {
+    "record_id": "EQUITY-019",
+    "asset_class": "equity",
+    "instrument": "000049",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "d5ba771264f85b8f2704d3e4afb70f85ebc976db7f7a9987c5dc81b1bc147f84",
+    "result_sha256": "74d0b15990b12e615a15b64f507bdeb8fc9e93838781caded5cff93625ed67d6"
+  },
+  {
+    "record_id": "EQUITY-020",
+    "asset_class": "equity",
+    "instrument": "000058",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "c941603c3ea0fffe8f892a4c919663f67db5a3356f2395b8d3dc7054b95018d7",
+    "result_sha256": "685ec69b165ba65c5508ed9e93b76d6832471b39b6946dc6228b95d4f85d2810"
+  },
+  {
+    "record_id": "EQUITY-021",
+    "asset_class": "equity",
+    "instrument": "000060",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "60642edd0e94a56a06f43c5fec061a93d39d4c039dbc2a340f34f304fc15ba47",
+    "result_sha256": "336ea25c156f89c6821c5a897aea0cb626979f183c13b5d6e115e0fa19da3ab1"
+  },
+  {
+    "record_id": "EQUITY-022",
+    "asset_class": "equity",
+    "instrument": "000061",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "72249ecf3cd268ae1360590ac827c9a6253263bfd9e217f75bab93affb6b619f",
+    "result_sha256": "689e136bcd169a2fb8a3b28e41fa88579d14bd40493316e7d0e867580fc018b0"
+  },
+  {
+    "record_id": "EQUITY-023",
+    "asset_class": "equity",
+    "instrument": "000062",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "810f86c723089b7ef94a7dd4bbb2c360683d771d085b871c9dd3aa7625b3fd44",
+    "result_sha256": "21fca6e1bb1804cdda521ed85f36d3eb7f4a06f4114b9f1e2af3f79dae14293b"
+  },
+  {
+    "record_id": "EQUITY-024",
+    "asset_class": "equity",
+    "instrument": "000063",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "8f9b411967c64dc26be27876580e4a18ac8c8d74bd3026e6805a131ddf6955c9",
+    "result_sha256": "9093734104b4c7be11372292fe646e3c1b230d4d5f61915d81197e4d51350595"
+  },
+  {
+    "record_id": "EQUITY-025",
+    "asset_class": "equity",
+    "instrument": "000065",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "984e4a9bc8e1385d5669f0f2fcfc7dace19780912970ab0c66c8f01526925a62",
+    "result_sha256": "b22f2161bf10b8ea6860317e9281d72a131b7ae711f2282887581e89145abae1"
+  },
+  {
+    "record_id": "EQUITY-026",
+    "asset_class": "equity",
+    "instrument": "000088",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "8d33280d3bfa4fa05850c9a4a7e09d47b9d4df825608947b138a977abe3e7b7b",
+    "result_sha256": "05e20b50a0d3dad47bd097ecbc4a017513fa768f4c53e0c1043baec8ece32f43"
+  },
+  {
+    "record_id": "EQUITY-027",
+    "asset_class": "equity",
+    "instrument": "000089",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "a283e3a896b3d7b4112623df3041b3e208577a416e3c5dacae14524d9c497fb2",
+    "result_sha256": "39a6235e9ed4fb3c8a3bcf2a4c8d0ec6371d5dba7245ede5cce69ea2b1c60914"
+  },
+  {
+    "record_id": "EQUITY-028",
+    "asset_class": "equity",
+    "instrument": "000090",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "6a4fd365312e8e542b4591a8bd5b5d46e48541bcde4bb72d307c099a75805ea4",
+    "result_sha256": "fd528bb23341223937fc995dd24a13906157c5a72807fd04d6f95e26d4d78aac"
+  },
+  {
+    "record_id": "EQUITY-029",
+    "asset_class": "equity",
+    "instrument": "000096",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "14f11a3f6fc60a2044985bd1c0ff51a85be5bcfa03b14119a22260e984d96729",
+    "result_sha256": "4bca9e054820aa62dd95be3579f6e9f28fac450fbc6abc5a17ee6729b22a1dba"
+  },
+  {
+    "record_id": "EQUITY-030",
+    "asset_class": "equity",
+    "instrument": "000099",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "7f6d79fbd00f3fcff024e16ed092a5c62d6add184baad23cd0aa66f751be572e",
+    "result_sha256": "2dc692d9e7802fd7ca98fb91857209b58c2c1fafa55e135900fef42171828f6a"
+  },
+  {
+    "record_id": "EQUITY-031",
+    "asset_class": "equity",
+    "instrument": "000100",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "906082670dff53153d51afd4819d676c84e33548296874e9d49190a03cb0476c",
+    "result_sha256": "1ad846a328dc0f0ebe391fe69fda2f89ffb64636e1071acea535b24fa2222238"
+  },
+  {
+    "record_id": "EQUITY-032",
+    "asset_class": "equity",
+    "instrument": "000153",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "34aed714ddaac3bde073db6cf1c2b29b78f002b68400d9375dfbd3b231306521",
+    "result_sha256": "4409f9e2e90ddf8c539db2c4411387f6004495ecb460971e0e9f777305dae2d6"
+  },
+  {
+    "record_id": "EQUITY-033",
+    "asset_class": "equity",
+    "instrument": "000156",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "8901d8d347a15a8130345e1dc3c66fe554d2dad9e8b30c26f034aa6eec03c148",
+    "result_sha256": "484384ca5b4b83915fd00c5b8b1092ffc1c802fe3074e4b8e71d007cdc525835"
+  },
+  {
+    "record_id": "EQUITY-034",
+    "asset_class": "equity",
+    "instrument": "000157",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "16c9eee17228aed3f4b61839c805cdc6c36e1ac936ca7d15b9e62f02ba84bf6f",
+    "result_sha256": "794b920da5d307aa6fe48c29ee5e362308b4253cafd4c83270af2e31380c4c6a"
+  },
+  {
+    "record_id": "EQUITY-035",
+    "asset_class": "equity",
+    "instrument": "000158",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "81fd9524c5ed7c5bd5520b693aacc9b8f72d28be1d5a992e4c568acc9885baed",
+    "result_sha256": "8cc6db2b88b78cc150d398300b89e4233caa41056da679313a15323307be920c"
+  },
+  {
+    "record_id": "EQUITY-036",
+    "asset_class": "equity",
+    "instrument": "000159",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "dc45e698d6ec55b975bc0313ec98a3a0c81595511d45dc164206f47282a49758",
+    "result_sha256": "348435245c54874a148a05bc645fd5e469bdfc84f5b1f1e4c8177432f2e6cae2"
+  },
+  {
+    "record_id": "EQUITY-037",
+    "asset_class": "equity",
+    "instrument": "000166",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "b60a7371acb45eaded27a6b9237a211feaca9e2a55e1595d2687a0b0a0583efe",
+    "result_sha256": "7a4e0f2645f23ddfda2640a90c82b4fbe07ed18a0cd2ffe05421d02a825c8cd1"
+  },
+  {
+    "record_id": "EQUITY-038",
+    "asset_class": "equity",
+    "instrument": "000333",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "d85be92a235e4d910433f6df4b6cad487595d8e430e3a4e7dd59f6627d97c3bc",
+    "result_sha256": "5503b647868b62f407520020d8c9e7a8f0b0c33cd490d3d0dcac75642d9403d5"
+  },
+  {
+    "record_id": "EQUITY-039",
+    "asset_class": "equity",
+    "instrument": "000338",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "49f4539bd8b3481b84ca2f871c5a3f4927b70a9ddcd86eaebe94199bbe48f2c4",
+    "result_sha256": "457dce7f6d4bc53188f7e19801529d5b0a495d737b72a86213e52cb594c26fb6"
+  },
+  {
+    "record_id": "EQUITY-040",
+    "asset_class": "equity",
+    "instrument": "000400",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "01de0a8f31413a56fcd5cd8697ad4c68ccacde1604c5beca601283b2f11b95fe",
+    "result_sha256": "29f1131c2e274928a973e5f589de84c6d6383d55a9c372b806317b305a7b2c53"
+  },
+  {
+    "record_id": "EQUITY-041",
+    "asset_class": "equity",
+    "instrument": "000401",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "0f2618df3c026d1ff6eda7618000d5bb67a9d852b33f919ef89abed7f68a1872",
+    "result_sha256": "947bb3c4dd99efa20fca192ad6f67ac42183d7b4accad475c42ab854ceea5f47"
+  },
+  {
+    "record_id": "EQUITY-042",
+    "asset_class": "equity",
+    "instrument": "000404",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "4c442f28161a8ec9929e341d17ce089a3f171e78003465bf0fdba77b73eb9bfd",
+    "result_sha256": "2a76b3c3177d3f56ed170e41239ab505a7448007673db18adc64aa245ac6d66f"
+  },
+  {
+    "record_id": "EQUITY-043",
+    "asset_class": "equity",
+    "instrument": "000407",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "d38403bfe574a7d2f7bc0612209f8733b23ba3913594fa60b5079e4d9fcd4fc2",
+    "result_sha256": "b57cf98c5b23246ea05a426983471d4ce9a5bd76ab3c0a35c3e1ad898e390168"
+  },
+  {
+    "record_id": "EQUITY-044",
+    "asset_class": "equity",
+    "instrument": "000408",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "22a49970fc84bb28b677361423051f25237273fd9a7672ab7073516a2e7bd284",
+    "result_sha256": "c2307268a2889f93b28e4a4fedb40eaf5477fe278840dcbd3675e1f4d8402985"
+  },
+  {
+    "record_id": "EQUITY-045",
+    "asset_class": "equity",
+    "instrument": "000411",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "971595cb766179f436cbad7098a91218490f7410acf7a884f6aa33d5a3d2d8d7",
+    "result_sha256": "1ad9fc9639986ac88aad71836bcf81b7e08b5d7db724357f10de245df92ceb8c"
+  },
+  {
+    "record_id": "EQUITY-046",
+    "asset_class": "equity",
+    "instrument": "000417",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "d2047d00d0dc6e10d809cb0304a2b4ae4b872ea0b49e2f2ae0fa38c5d7bf9cb4",
+    "result_sha256": "9e01ebb67dbdcd133cf743c1fd35b8827ae783399565161648558e83eb9f2cf2"
+  },
+  {
+    "record_id": "EQUITY-047",
+    "asset_class": "equity",
+    "instrument": "000419",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "2d3da5df7ceffee43421bdf1ae6017f00c85560be5604822d829da001902c15f",
+    "result_sha256": "0236d20b86b7dbd523832ab5337211ab87e1ed839d69acacd2b812610169d86e"
+  },
+  {
+    "record_id": "EQUITY-048",
+    "asset_class": "equity",
+    "instrument": "000421",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "c70eb15e798c801cd78a4ed0117e964baa13374cc32a542e5c3592662703bcd1",
+    "result_sha256": "cccd5307a4aafc05b52244bccba740a862cf02d98ec379ad1ba3f86d2c254fbd"
+  },
+  {
+    "record_id": "EQUITY-049",
+    "asset_class": "equity",
+    "instrument": "000422",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "0ff7f0ca237118f9ebc92803a837bc4e984e710d56ea1a8939603db0deb73fb0",
+    "result_sha256": "0e45f4fd97ce60087c724edd1ea5651ca3f7dc3e3445e6b98b68decac2771d49"
+  },
+  {
+    "record_id": "EQUITY-050",
+    "asset_class": "equity",
+    "instrument": "000423",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "plan_status",
+      "proposal_date",
+      "record_date",
+      "ex_date"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "c1bb9a94119ecc8c5b1f3ca987190fbfd1c04833bebcbf336b0db29facc44ba5",
+    "result_sha256": "eb71d594d4895a789f7d348ce5cd13fe2236cc3785d8641fa4be8c99a9fe2c61"
+  },
+  {
+    "record_id": "FUND-001",
+    "asset_class": "fund",
+    "instrument": "000001",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "8bf880b9aae42a6c6a119fb7d0f24f5bb55d1aaedfcf1da6e5cc6a7d9b9f909a",
+    "result_sha256": "8f816ab9760cf72b014946548772a75d8d179e66b69c66efd32262b01473d2ab"
+  },
+  {
+    "record_id": "FUND-002",
+    "asset_class": "fund",
+    "instrument": "000003",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "fae07fc772c2b50f787c57ba367b08b629797b60d277980d29c2f0c3b0089fdc",
+    "result_sha256": "8466631231ef16b50afb75857a5f89faa0fc0867e21349e3e45f8d888452aa1c"
+  },
+  {
+    "record_id": "FUND-003",
+    "asset_class": "fund",
+    "instrument": "000004",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "9ca872a81d004a761cf351d6806603ebcb54a3b0f0a7e32209d0a8bbb935e7b7",
+    "result_sha256": "b22d47501145443312433ab6f81eb3522cc635255b72b67a17fe96d7c37ce846"
+  },
+  {
+    "record_id": "FUND-004",
+    "asset_class": "fund",
+    "instrument": "000005",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "3865daaaf86c8a747eb50d19652d2975a2b12243eb5b7c73081670123e56ffbf",
+    "result_sha256": "5f54c244a4920682c18f2cb930a5c30a5e1faa1ef754bff7abca3ed882f14fc9"
+  },
+  {
+    "record_id": "FUND-005",
+    "asset_class": "fund",
+    "instrument": "000006",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "8b3d57eacfd7c458615fe137532bb32b9b2dbf2e10db8a294edf8eaa90c290b2",
+    "result_sha256": "34ce9c06c84b3cd6d97626c6c4c4b6c6e0bf9afdd3bf67f719315bcdc4801306"
+  },
+  {
+    "record_id": "FUND-006",
+    "asset_class": "fund",
+    "instrument": "000008",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "35d685e88c2b192d070c79f51d4fea538057e2aa7b4ec17bc5991eab92061a77",
+    "result_sha256": "2f2f8c50cb5a050480c2fd1ec62895c44db2d7831393b4d2efc8f7dd65958b37"
+  },
+  {
+    "record_id": "FUND-007",
+    "asset_class": "fund",
+    "instrument": "000011",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "1cd5f6afa61104e7c12262530cb3a6731e345a74e65d616b79cbce4a9bc6c30e",
+    "result_sha256": "1b647a97c113ca565b51305a22ac41b6761be515552a7f70561f2042ccc239fd"
+  },
+  {
+    "record_id": "FUND-008",
+    "asset_class": "fund",
+    "instrument": "000014",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "acbaf3e9c092777ad10d455a59fb93ff5620a17cd43ea9ca0865c6dc195a7bea",
+    "result_sha256": "b4579270aaf2faad2eb696262f652ffb54b3e452bd4fb1bbec860be548037a61"
+  },
+  {
+    "record_id": "FUND-009",
+    "asset_class": "fund",
+    "instrument": "000015",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "d2bc859655ea92e4fdd5996c5d84d6ca705d175baab3525faa580bde008346f4",
+    "result_sha256": "13cc1e3680d41a5d8576e0720f12b9dec5908684b7e7ee51930534a591f21b15"
+  },
+  {
+    "record_id": "FUND-010",
+    "asset_class": "fund",
+    "instrument": "000016",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "0d88c1d4eceaebad58173fc442ee8e47b015e8b0a4722e3a698f512e2b7d58a9",
+    "result_sha256": "e4ef375840c4b511fd4d36c03d86fd7c195693a90a401ded6d109ccb5ea32185"
+  },
+  {
+    "record_id": "FUND-011",
+    "asset_class": "fund",
+    "instrument": "000017",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "95248e20af83e071a904126ec4b63215f0e2cb964da8b3c9d11d2ffbd5227b8c",
+    "result_sha256": "50e7d59b627a20a304b3657a805750052b06f7c81f9be8b89eb858979ee15b84"
+  },
+  {
+    "record_id": "FUND-012",
+    "asset_class": "fund",
+    "instrument": "000020",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "ad429999efc44020acbad8a4a6155f3c6c4436aea37b31b308a9d441e0a743fd",
+    "result_sha256": "dbfc260f8bba9845fdee93efb7462e92f47149bd295835f32af3c94cdb6bbdfc"
+  },
+  {
+    "record_id": "FUND-013",
+    "asset_class": "fund",
+    "instrument": "000021",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "1d264f5dfa77522b1cca7b6857c4df9816e16c50a816bf084529d97d9eeaeca7",
+    "result_sha256": "ad6e2e50ee227d1370238d4c5a8f1192a3d74601c9c71ac48e6540a12f9eb770"
+  },
+  {
+    "record_id": "FUND-014",
+    "asset_class": "fund",
+    "instrument": "000024",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "fef823f3543bd512b77e56d862f8d01324929cde864f4555d887ad330c4ad198",
+    "result_sha256": "3141cbb2d8d320f90779260c8e6ba4066756c405ba96421b3bc77b05026e97f2"
+  },
+  {
+    "record_id": "FUND-015",
+    "asset_class": "fund",
+    "instrument": "000025",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "b9988e050c0f7a43f62a156cdc78cfefd96814740840062c17ccad1795dc8c5b",
+    "result_sha256": "79aa0364fa5858ce69023bda84e47be41f75216f8c3bb1b074d1f102b7dd498b"
+  },
+  {
+    "record_id": "FUND-016",
+    "asset_class": "fund",
+    "instrument": "000028",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "537150758cf3ab2c395f7b481972fb839e7fc7b4eff04a36acea478517ad7e13",
+    "result_sha256": "00592e1d8cadc92ca9c6b7f898c454a4ae7d0b62825f9c0341a20a4ea0686723"
+  },
+  {
+    "record_id": "FUND-017",
+    "asset_class": "fund",
+    "instrument": "000029",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "cb2115037dcc28bb0049d2c22fc2ad210fad31eb5368fa300e2df3f0e0aa7694",
+    "result_sha256": "286d0806373c22af347601c2336d1cce695d8776c0399bfa6ffb1626054b5183"
+  },
+  {
+    "record_id": "FUND-018",
+    "asset_class": "fund",
+    "instrument": "000030",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "ee8586adea73b312d1cd400c0f54e48dafc38ed18f1de64dd81a36dda048ad98",
+    "result_sha256": "a659736a192b18d27ff4f966ca211e017294911ee35c279c9586a5e374cfbb6f"
+  },
+  {
+    "record_id": "FUND-019",
+    "asset_class": "fund",
+    "instrument": "000031",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "144b5a20d95c0bc6e94a10d77c93d6294858d6da7b7c1b029546ebedef5c043b",
+    "result_sha256": "3af498a39c470ac973bdd196be2ec97be70aaf0c81281dd2c21c2a2504e0e8f1"
+  },
+  {
+    "record_id": "FUND-020",
+    "asset_class": "fund",
+    "instrument": "000032",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "d51f07ab6c8e6f024b54790c628275c7a8f9875c69bd7571844b1603d67554a3",
+    "result_sha256": "42264077f2ca8bb943aa23411c00ad5e1476058b7642dd790c1b80ab536e2539"
+  },
+  {
+    "record_id": "FUND-021",
+    "asset_class": "fund",
+    "instrument": "000033",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "5d2449ac46615811a32d8e14ca5929c8217c2d4957c4b0d26247e4133abd5e5d",
+    "result_sha256": "f0fdf1471b1bb4f3cbc91c6a6ca385e180894f5327c4f8c3cf4aea4a728d0aa5"
+  },
+  {
+    "record_id": "FUND-022",
+    "asset_class": "fund",
+    "instrument": "000037",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "9aae8524ed8fb3eab1bfd8501edada63907c2f4d40219dc3f1ed15010d19eb7a",
+    "result_sha256": "7cb50bac499754c86a9d0b0400de077976e0ae9ecd2624c729d02194dde5aaa4"
+  },
+  {
+    "record_id": "FUND-023",
+    "asset_class": "fund",
+    "instrument": "000039",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "efee6b8a98989b8cf21bd8c2056fb53b4ae2565d72a53bba30c4a4ddcad6512d",
+    "result_sha256": "da81a7d2058637bb82d3245d198b9d5db2f3df6c48dfa9adf265431293a8d5e6"
+  },
+  {
+    "record_id": "FUND-024",
+    "asset_class": "fund",
+    "instrument": "000041",
+    "decision": "WAIT",
+    "reason_codes": [
+      "MISSING_UNIT_NAV"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [
+      "unit_nav"
+    ],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "0d6600fedb15e5d420fa1a8362ce439a00d3c0c8e773e786b0132f5266e1a210",
+    "result_sha256": "2e0957672dd235210405729c63487a45ef50f9b2b8d06968f54832cc8b34946f"
+  },
+  {
+    "record_id": "FUND-025",
+    "asset_class": "fund",
+    "instrument": "000042",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "468c9296e5711301367df148bade0d9c807792a3d0a8f150491adbd7359884a3",
+    "result_sha256": "730a5ff3d0647e93e3966d425ccebb5166625f40ade9b0701ec4455ce2fedd94"
+  },
+  {
+    "record_id": "FUND-026",
+    "asset_class": "fund",
+    "instrument": "000043",
+    "decision": "WAIT",
+    "reason_codes": [
+      "MISSING_UNIT_NAV"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [
+      "unit_nav"
+    ],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "cb3dd4be43f301febc3f94b7e8201b9ee6f747cb526a9992d43a92bae751667b",
+    "result_sha256": "a0a8b7e949172d573d4809a613f908fdc966eb0ad512f6a349166f1e97512d6f"
+  },
+  {
+    "record_id": "FUND-027",
+    "asset_class": "fund",
+    "instrument": "000044",
+    "decision": "WAIT",
+    "reason_codes": [
+      "MISSING_UNIT_NAV"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [
+      "unit_nav"
+    ],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "17c5907414ae4a13746db72b63b1933e3d8797e1aafaf313c1d1269d5ceb4b8a",
+    "result_sha256": "75a0fef3c1708ab8940d6cd91c587f326a6c0e23f170ab49391562f2c0ea4a61"
+  },
+  {
+    "record_id": "FUND-028",
+    "asset_class": "fund",
+    "instrument": "000045",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "bcd827071f74df19043b23944b138a8937585cabac184228717aac32b75e49a4",
+    "result_sha256": "a26bfd628e273ae3ddeff201650dcc97ce3a77cd404488f8f666201c4dc97074"
+  },
+  {
+    "record_id": "FUND-029",
+    "asset_class": "fund",
+    "instrument": "000046",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "3e4b666af48a95b3ca3486ecdecb63ac5ec2805ee4e2a0d9f5c318af5097a996",
+    "result_sha256": "c637e736520b87df5e979ea1322091d14dfa0e5be4069ea34b2f85f97ac82231"
+  },
+  {
+    "record_id": "FUND-030",
+    "asset_class": "fund",
+    "instrument": "000047",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "dcd370dba339f79d14eafee8fea2089e431127332efe94d00f8cf118c7d38ec9",
+    "result_sha256": "7e0335238bec39d97e5c8dc32202ca8ce676c0a31aa0b001ea032e7e9f149035"
+  },
+  {
+    "record_id": "FUND-031",
+    "asset_class": "fund",
+    "instrument": "000048",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "a55aaa05b77d47688a26542c670a69f14dae2c3ec825fb69f26a872fc804ed4d",
+    "result_sha256": "bee62b8f30b3134947063006489c195e78d5fe74e8d3eace2b6716f11cec05ba"
+  },
+  {
+    "record_id": "FUND-032",
+    "asset_class": "fund",
+    "instrument": "000051",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "4dae0eb2550b3e16b808df06d980e2fa4359ef4b6e0b4391d4bf224b2e6398bf",
+    "result_sha256": "c81e524e4928055a2e4671a3580af70aca67aba9e9267d10c8b5c91bfd7d55e3"
+  },
+  {
+    "record_id": "FUND-033",
+    "asset_class": "fund",
+    "instrument": "000053",
+    "decision": "WAIT",
+    "reason_codes": [
+      "MISSING_UNIT_NAV"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [
+      "unit_nav"
+    ],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "dd16261b3c594bf376c21cc8c3516dfeb8098a04082642150f943b1f331d6850",
+    "result_sha256": "d10f95639046db50baf59ca08102f990fd384200234e2a2ee74e32c5fbdd504b"
+  },
+  {
+    "record_id": "FUND-034",
+    "asset_class": "fund",
+    "instrument": "000054",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "110e32e6ee5792e664cfdeac6a2e0e3987c419d792a3b8498387c878bc3fb239",
+    "result_sha256": "48d17f4ba0597f3e678a587780b0ffa4bedcc095d6ada3d135a1bf11764d50ee"
+  },
+  {
+    "record_id": "FUND-035",
+    "asset_class": "fund",
+    "instrument": "000055",
+    "decision": "WAIT",
+    "reason_codes": [
+      "MISSING_UNIT_NAV"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [
+      "unit_nav"
+    ],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "5d4c8de800d263d70e62027ad232822687f4e8c3de4a8b7ba19294bbcc3a216e",
+    "result_sha256": "4794eae928b8644ed1685f004f900299fed2356b2d247effc3ecaf9d3534580f"
+  },
+  {
+    "record_id": "FUND-036",
+    "asset_class": "fund",
+    "instrument": "000056",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "fc37dcac0a86c286dfe93aa66179a687a2c7c04fec0025a6c4df367ff91e5a48",
+    "result_sha256": "f9ce476fe2e043f53681274922c8a552ce15459520b26aaaca5e84b74c9dc93a"
+  },
+  {
+    "record_id": "FUND-037",
+    "asset_class": "fund",
+    "instrument": "000057",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "815f006560b1b58fadd902af1c13907cb5648f8df62847a8a62916531daca50c",
+    "result_sha256": "2472fa67f4a6ebcb580da8dee22985c10e49c3f89f58a5d5413cef26d82a9013"
+  },
+  {
+    "record_id": "FUND-038",
+    "asset_class": "fund",
+    "instrument": "000058",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "8847ffce7e7aa0a569ae11af7916c76259b204d9830971d589d428b1a35c3f70",
+    "result_sha256": "de72a0584e507f3772c002174766d43f7e8bc89f7c413951f5b0d269d0aff50d"
+  },
+  {
+    "record_id": "FUND-039",
+    "asset_class": "fund",
+    "instrument": "000059",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "6493bd148e340f43f2415fdef406b0b6c82cab5a0ac000b6a869e79e2d36727f",
+    "result_sha256": "b4cbbb1766b48d1ac342f98cd684123882a79b8d7d3609b1ac980813d4592740"
+  },
+  {
+    "record_id": "FUND-040",
+    "asset_class": "fund",
+    "instrument": "000061",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "b2998f613f522316482632b38d3d0c5435589a04f56efe29ea8a94e3f2333607",
+    "result_sha256": "066132edf3949f3c98425222d05831476d6aa36bdb8452d3db58b3feaaa4a0c2"
+  },
+  {
+    "record_id": "FUND-041",
+    "asset_class": "fund",
+    "instrument": "000063",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "0d7d46d94c647aa093997d2fd989141cd32d084831ee8db8127bf8a9c0e7f30a",
+    "result_sha256": "bb290670cb60c06de9713fcc64042c8e328ee63342e52d83ee782805b8eafa2f"
+  },
+  {
+    "record_id": "FUND-042",
+    "asset_class": "fund",
+    "instrument": "000064",
+    "decision": "WAIT",
+    "reason_codes": [
+      "MISSING_UNIT_NAV"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [
+      "unit_nav"
+    ],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "829c5265753612034c452e1ac4376aeab40c5fa3ac94e908b50d142bb1c571f2",
+    "result_sha256": "54bf0863fecfe9e4ce97f4eef69f502c5a03435049f9c155eb3a72703eb424d8"
+  },
+  {
+    "record_id": "FUND-043",
+    "asset_class": "fund",
+    "instrument": "000065",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "496f59c89ffc814748693e65cf8be0709e802616f1f0c42169d58fe95c1b974f",
+    "result_sha256": "ab28b8cd2ac221016ede974c044066798b9558c2f080f0ccab35b7f1177be330"
+  },
+  {
+    "record_id": "FUND-044",
+    "asset_class": "fund",
+    "instrument": "000066",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "c621f618d36d17240b0536d6beccd514108662a7ff571921faf776162dc1dd72",
+    "result_sha256": "740b2b5eddd95311a6f3ee0328ebd1b3da74a8065892a65321270f48edc87257"
+  },
+  {
+    "record_id": "FUND-045",
+    "asset_class": "fund",
+    "instrument": "000067",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "9c87d3ad5c8f7445e444e3462c3dfd72f10289c65277452d3a05b6a36c420a44",
+    "result_sha256": "4e2db6aba11c1eb734d2ffdcee272dcba8009072da9e7f0f04fd3882a3d22655"
+  },
+  {
+    "record_id": "FUND-046",
+    "asset_class": "fund",
+    "instrument": "000068",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "70848954e28b4b9402cab35fa8fcab6107a0307b74606dd1fe25a5089f01eedc",
+    "result_sha256": "435166adc8c177f7005c1c0b44a73c812eac131410aecf246de18d458a987c97"
+  },
+  {
+    "record_id": "FUND-047",
+    "asset_class": "fund",
+    "instrument": "000069",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "6a2a311350f3bf8b4b310122a06e6198a908cfd3c31831dec75f228333e75ab2",
+    "result_sha256": "cefaf07bdffdedcb7631d8880d9aee212282d77da2aa9d74a108dc93e695b992"
+  },
+  {
+    "record_id": "FUND-048",
+    "asset_class": "fund",
+    "instrument": "000070",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "013b687f978e36e9a2d4f0972dc015020e6a647482dc60fb0ee2184abafc3d0d",
+    "result_sha256": "835675533d7ca898c71fb1df61e9e19ec03b316847f0d5b19bc9c2fab32760f0"
+  },
+  {
+    "record_id": "FUND-049",
+    "asset_class": "fund",
+    "instrument": "000071",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "cedf751ef9a0c3d7a31d3e1a86402b5848d2f3bcef9d0296aed1b1d9b4c74a1d",
+    "result_sha256": "3229a6b11e130791eea240e3e7ca1b96cee2bb2ffd69f4b060347da72cfa0ca7"
+  },
+  {
+    "record_id": "FUND-050",
+    "asset_class": "fund",
+    "instrument": "000072",
+    "decision": "PASS",
+    "reason_codes": [
+      "SOURCE_FIELDS_AND_DECLARED_PURPOSE_ALIGNED"
+    ],
+    "required_fields": [
+      "instrument",
+      "observation_date",
+      "unit_nav"
+    ],
+    "missing_fields": [],
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "policy_version": "finflux-deterministic-source-precheck@1.0.0",
+    "input_sha256": "5158dc0e599d732d72d155e846eb59ed1dba207174d5a5c8ea46bcb6fcef1bb3",
+    "result_sha256": "23565bf7421fa2e0265c72e2d020116e7e2af975abfd0b60c48d117d7d7f93d7"
+  }
+]

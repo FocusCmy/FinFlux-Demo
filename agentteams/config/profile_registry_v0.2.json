@@ -1,0 +1,292 @@
+{
+  "protocol": "FINFLUX_PROFILE_REGISTRY_V0.2",
+  "schema_version": "0.2.0",
+  "profiles": [
+    {
+      "profile_id": "equity_corporate_action",
+      "profile_version": "0.2.0",
+      "asset_class": "equity",
+      "display_name": "股票公司行动与复权语义核验",
+      "semantic_contract": {
+        "contract_id": "EquityCorporateActionContract",
+        "version": "0.2.0"
+      },
+      "declared_purposes": [
+        {
+          "purpose_id": "return_analysis",
+          "label": "收益率分析",
+          "target_decision": "判断公司行动事件前后收益率是否可比",
+          "default_accountable_role": "量化研究负责人"
+        },
+        {
+          "purpose_id": "factor_research",
+          "label": "因子研究",
+          "target_decision": "判断复权序列能否进入因子计算",
+          "default_accountable_role": "量化研究负责人"
+        },
+        {
+          "purpose_id": "backtest_input",
+          "label": "回测输入",
+          "target_decision": "判断行情序列能否进入策略回测",
+          "default_accountable_role": "投研数据负责人"
+        }
+      ],
+      "evidence_requirements": [
+        {
+          "evidence_type": "equity_corporate_action_bundle",
+          "min_count": 1,
+          "content_hash_required": true,
+          "description": "包含原始行情、公司行动记录、复权声明与来源版本的不可变证据包"
+        }
+      ],
+      "accepted_evidence_types": [
+        "equity_corporate_action_bundle",
+        "supporting_research_bundle"
+      ],
+      "required_outputs": [
+        "EvidenceResult",
+        "SemanticImpactResult",
+        "IndependentValidation",
+        "DataPassDraft",
+        "HumanDecision"
+      ],
+      "display_fields": [
+        {"field_id": "instrument", "label": "证券", "value_type": "string", "description": "发生公司行动的证券标识"},
+        {"field_id": "event_date", "label": "事件日期", "value_type": "date", "description": "除权除息或其他公司行动的生效日期"},
+        {"field_id": "declared_adjustment", "label": "声明复权方式", "value_type": "string", "description": "调用方请求或数据标签声明的复权方式"},
+        {"field_id": "observed_adjustment", "label": "实际序列表现", "value_type": "string", "description": "由真实序列和公司行动事件确定性复核的语义"},
+        {"field_id": "return_difference", "label": "收益率差异", "value_type": "percentage_points", "description": "不同语义映射对收益率计算的确定性影响"},
+        {"field_id": "event_row_integrity", "label": "事件行完整性", "value_type": "status", "description": "公司行动事件行是否在标准化后保留"}
+      ],
+      "profile_sha256": "ce7a42bdba51aa24fcb79e13960ac513b2589c752385e5470e889a6d7d6d0103"
+    },
+    {
+      "profile_id": "futures_settlement",
+      "profile_version": "0.2.0",
+      "asset_class": "futures",
+      "display_name": "期货逐日结算语义核验",
+      "semantic_contract": {
+        "contract_id": "FuturesSettlementContract",
+        "version": "0.2.0"
+      },
+      "declared_purposes": [
+        {
+          "purpose_id": "daily_settlement_pnl",
+          "label": "逐日结算盈亏",
+          "target_decision": "判断价格字段能否用于交易所逐日结算口径",
+          "default_accountable_role": "期货估值负责人"
+        },
+        {
+          "purpose_id": "margin_input",
+          "label": "保证金计算",
+          "target_decision": "判断价格与合约乘数能否进入保证金计算",
+          "default_accountable_role": "风险管理负责人"
+        }
+      ],
+      "evidence_requirements": [
+        {
+          "evidence_type": "futures_settlement_bundle",
+          "min_count": 1,
+          "content_hash_required": true,
+          "description": "包含合约、交易日、收盘价、结算价、合约乘数与来源版本的不可变证据包"
+        }
+      ],
+      "accepted_evidence_types": [
+        "futures_settlement_bundle",
+        "supporting_research_bundle"
+      ],
+      "required_outputs": [
+        "EvidenceResult",
+        "SemanticImpactResult",
+        "IndependentValidation",
+        "DataPassDraft",
+        "HumanDecision"
+      ],
+      "display_fields": [
+        {"field_id": "instrument", "label": "期货合约", "value_type": "string", "description": "交易所合约标识"},
+        {"field_id": "trade_date", "label": "交易日", "value_type": "date", "description": "本次核验适用的交易日"},
+        {"field_id": "declared_purpose", "label": "业务用途", "value_type": "string", "description": "价格字段将服务的业务决策"},
+        {"field_id": "candidate_price_field", "label": "候选价格字段", "value_type": "string", "description": "接入方案拟使用的价格字段"},
+        {"field_id": "contract_price_field", "label": "契约要求字段", "value_type": "string", "description": "声明用途对应语义契约要求的价格字段"},
+        {"field_id": "impact_cny_per_contract", "label": "每手确定性影响", "value_type": "currency", "description": "字段差异与合约乘数计算出的每手金额影响"}
+      ],
+      "profile_sha256": "654f5008ca7c36333b9129343e1765ea0423c3fb28f249ef188da8de0521fd8a"
+    },
+    {
+      "profile_id": "option_contract_identity",
+      "profile_version": "0.2.0",
+      "asset_class": "option",
+      "display_name": "期权调整合约身份核验",
+      "semantic_contract": {
+        "contract_id": "OptionContractIdentityContract",
+        "version": "0.2.0"
+      },
+      "declared_purposes": [
+        {
+          "purpose_id": "covered_position_and_exposure",
+          "label": "备兑持仓与敞口",
+          "target_decision": "判断调整合约身份及单位能否用于持仓覆盖与敞口计算",
+          "default_accountable_role": "衍生品风险负责人"
+        },
+        {
+          "purpose_id": "greeks",
+          "label": "希腊字母计算",
+          "target_decision": "判断合约版本参数能否进入希腊字母计算",
+          "default_accountable_role": "衍生品估值负责人"
+        },
+        {
+          "purpose_id": "margin_input",
+          "label": "保证金计算",
+          "target_decision": "判断调整合约单位能否进入保证金计算",
+          "default_accountable_role": "衍生品风险负责人"
+        }
+      ],
+      "evidence_requirements": [
+        {
+          "evidence_type": "option_contract_identity_bundle",
+          "min_count": 1,
+          "content_hash_required": true,
+          "description": "包含交易代码、合约代码、调整标记、行权价、单位与公告版本的不可变证据包"
+        }
+      ],
+      "accepted_evidence_types": [
+        "option_contract_identity_bundle",
+        "supporting_research_bundle"
+      ],
+      "required_outputs": [
+        "EvidenceResult",
+        "SemanticImpactResult",
+        "IndependentValidation",
+        "DataPassDraft",
+        "HumanDecision"
+      ],
+      "display_fields": [
+        {"field_id": "underlying", "label": "标的", "value_type": "string", "description": "期权合约对应的标的证券"},
+        {"field_id": "effective_date", "label": "调整生效日", "value_type": "date", "description": "调整合约参数开始生效的日期"},
+        {"field_id": "contract_identity", "label": "合约身份", "value_type": "string", "description": "合约代码、交易代码与调整版本的组合身份"},
+        {"field_id": "contract_unit", "label": "合约单位", "value_type": "number", "description": "当前调整版本适用的合约单位"},
+        {"field_id": "covered_shortfall", "label": "覆盖缺口", "value_type": "shares_per_contract", "description": "使用旧单位时产生的每张覆盖数量差异"},
+        {"field_id": "notional_impact", "label": "名义金额影响", "value_type": "currency", "description": "错误身份映射产生的反事实名义金额差异"}
+      ],
+      "profile_sha256": "efa48f935be60c83f4550ce6c41b7bd79c9c11f9401da87accd3e522135efbe8"
+    },
+    {
+      "profile_id": "fund_nav_admission",
+      "profile_version": "0.2.0",
+      "asset_class": "fund",
+      "display_name": "公募基金净值语义与用途核验",
+      "semantic_contract": {
+        "contract_id": "FundNetAssetValueContract",
+        "version": "0.2.0"
+      },
+      "declared_purposes": [
+        {
+          "purpose_id": "holding_valuation",
+          "label": "持仓估值",
+          "target_decision": "判断单位净值能否用于基金份额持仓估值",
+          "default_accountable_role": "基金估值负责人"
+        },
+        {
+          "purpose_id": "total_return_analysis",
+          "label": "累计收益分析",
+          "target_decision": "判断累计净值能否用于包含分红再投资影响的累计收益分析",
+          "default_accountable_role": "基金研究负责人"
+        },
+        {
+          "purpose_id": "subscription_redemption_review",
+          "label": "申赎状态核验",
+          "target_decision": "判断净值日期与申购赎回状态能否支持申赎业务判断",
+          "default_accountable_role": "基金运营负责人"
+        }
+      ],
+      "evidence_requirements": [
+        {
+          "evidence_type": "fund_nav_bundle",
+          "min_count": 1,
+          "content_hash_required": true,
+          "description": "包含基金代码、净值日期、单位净值、累计净值、前一日净值、申赎状态与来源版本的不可变证据包"
+        }
+      ],
+      "accepted_evidence_types": [
+        "fund_nav_bundle",
+        "supporting_research_bundle"
+      ],
+      "required_outputs": [
+        "EvidenceResult",
+        "SemanticImpactResult",
+        "IndependentValidation",
+        "DataPassDraft",
+        "HumanDecision"
+      ],
+      "display_fields": [
+        {"field_id": "instrument", "label": "基金代码", "value_type": "string", "description": "基金份额类别的公开代码"},
+        {"field_id": "nav_date", "label": "净值日期", "value_type": "date", "description": "本次单位净值与累计净值对应的业务日期"},
+        {"field_id": "unit_nav", "label": "单位净值", "value_type": "number", "description": "每一基金份额对应的当日净资产值"},
+        {"field_id": "cumulative_nav", "label": "累计净值", "value_type": "number", "description": "考虑历史分红等因素后用于累计表现分析的净值口径"},
+        {"field_id": "candidate_nav_field", "label": "候选净值字段", "value_type": "string", "description": "接入方案拟用于声明业务用途的净值字段"},
+        {"field_id": "impact_cny_per_10000_units", "label": "每万份确定性影响", "value_type": "currency", "description": "净值字段差异乘以一万份后得到的确定性金额影响"}
+      ],
+      "profile_sha256": "77aa014bde31bf2fb1863efc101834b95bd8c5359d35b5dd3eae4a65a7425878"
+    },
+    {
+      "profile_id": "research_material_rights",
+      "profile_version": "0.2.0",
+      "asset_class": "research",
+      "display_name": "研报资料来源、时点与权属核验",
+      "semantic_contract": {
+        "contract_id": "ResearchMaterialRightsContract",
+        "version": "0.2.0"
+      },
+      "declared_purposes": [
+        {
+          "purpose_id": "research_context",
+          "label": "投研上下文",
+          "target_decision": "判断研究资料能否作为本次分析的有时点证据",
+          "default_accountable_role": "投研数据负责人"
+        },
+        {
+          "purpose_id": "investment_research_support",
+          "label": "投资研究支持",
+          "target_decision": "判断研究资料能否在许可范围内支持投资研究",
+          "default_accountable_role": "研究平台主管"
+        },
+        {
+          "purpose_id": "evidence_corroboration",
+          "label": "证据交叉印证",
+          "target_decision": "判断资料来源、发布时间与权属能否用于交叉印证",
+          "default_accountable_role": "数据合规负责人"
+        }
+      ],
+      "evidence_requirements": [
+        {
+          "evidence_type": "research_material_bundle",
+          "min_count": 1,
+          "content_hash_required": true,
+          "description": "包含Provider、发布者、发布时间、原始响应哈希、权属状态与存储策略的不可变资料包"
+        }
+      ],
+      "accepted_evidence_types": [
+        "research_material_bundle",
+        "supporting_research_bundle"
+      ],
+      "required_outputs": [
+        "EvidenceResult",
+        "DataRightsReview",
+        "ResearchContextReview",
+        "IndependentValidation",
+        "DataPassDraft",
+        "HumanDecision"
+      ],
+      "display_fields": [
+        {"field_id": "research_item_id", "label": "资料标识", "value_type": "string", "description": "内容寻址的研究资料标识"},
+        {"field_id": "provider", "label": "数据提供方", "value_type": "string", "description": "资料采集所使用的Provider"},
+        {"field_id": "publisher", "label": "发布机构", "value_type": "string", "description": "研报、公告或宏观数据的原始发布者"},
+        {"field_id": "published_at", "label": "发布时间", "value_type": "datetime", "description": "用于防止未来信息泄漏的资料发布时间"},
+        {"field_id": "rights_state", "label": "权属状态", "value_type": "status", "description": "资料在声明用途下的许可与复用边界"},
+        {"field_id": "content_sha256", "label": "内容哈希", "value_type": "sha256", "description": "原始响应或受许可存储内容的完整性指纹"}
+      ],
+      "profile_sha256": "91a64c493f10078cc25e36a42b9658623c67edcfe15e95e8001d41804d191047"
+    }
+  ],
+  "registry_sha256": "01bc5ee9d5176823baba14691c2007388a1ee175dc1b18d6d6941d790c4eccb6"
+}

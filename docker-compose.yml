@@ -1,0 +1,17 @@
+services:
+  finflux-demo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PYTHON_IMAGE: ${FINFLUX_PYTHON_IMAGE:-python:3.12-slim}
+    image: finflux-demo:submission
+    ports:
+      - "${FINFLUX_PORT:-8768}:8768"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8768/api/status', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s

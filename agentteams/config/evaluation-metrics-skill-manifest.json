@@ -1,0 +1,28 @@
+{
+  "protocol": "FINFLUX_DETERMINISTIC_SKILL_MANIFEST_V1",
+  "skill_id": "calculate-evaluation-metrics",
+  "version": "1.0.0",
+  "entrypoint": "app/evaluation_metrics_skill.py",
+  "entrypoint_sha256": "873c7f08165d42a54ad6f6288e5c2bc15a8568ea9e8db0ccdc79a1d6f549c84b",
+  "owner": "FinFlux Evaluation Gateway",
+  "inputs": [
+    "seed_cases_jsonl_sha256",
+    "source_file_sha256_list",
+    "expected_route",
+    "expected_recommendation",
+    "manager_input_facts"
+  ],
+  "outputs": [
+    "route_accuracy",
+    "false_release_rate",
+    "false_block_rate",
+    "policy_latency_p95_ms",
+    "metric_denominators",
+    "input_sha256",
+    "output_sha256"
+  ],
+  "model_calls": 0,
+  "provider_tokens": 0,
+  "failure_policy": "FAIL_CLOSED_ON_SOURCE_OR_ENTRYPOINT_HASH_MISMATCH",
+  "reuse_value": "同一套指标契约可复用于规则、单Agent和AgentTeams的同标签对照评测"
+}

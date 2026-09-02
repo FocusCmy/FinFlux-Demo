@@ -1,0 +1,28 @@
+{
+  "protocol": "FINFLUX_WORKER_SKILL_MANIFEST_V1.0",
+  "role": "evidence-investigator",
+  "package_root": "..",
+  "entrypoint": {
+    "path": "bounded_worker_task.py",
+    "sha256": "6587802a3da60dc38ba76ea35fa755f0e7c649431b0d6e34f89680c03319a340"
+  },
+  "skills": [
+    {
+      "skill_id": "evidence-integrity",
+      "version": "1.0.0",
+      "callable": "skill_evidence_integrity",
+      "callable_sha256": "b117d30b0a6f7078449490da39de314a43a52e18ca0cd8cab87a9041f8aa294b",
+      "instruction_path": "agentteams-skills/evidence-integrity/SKILL.md",
+      "instruction_sha256": "08212a7015185bda003a96b63cc19cb25d6cd0412d363afce97d261f02218c6b"
+    },
+    {
+      "skill_id": "rights-gate",
+      "version": "1.0.0",
+      "callable": "skill_rights_gate",
+      "callable_sha256": "d4bd79843fb734035a5a2f208504e797c4591da5dd2993baebc612fc62da4d21",
+      "instruction_path": "agentteams-skills/rights-gate/SKILL.md",
+      "instruction_sha256": "b67bf00436c3c6ba5aee8725f3aa8fb3a13017a924fd608f3509c57e8f2380c6"
+    }
+  ],
+  "manifest_sha256": "41bb5747ecbc974cb6b1517b457c735fb33188f76ad2133c612c90b111cb4a75"
+}

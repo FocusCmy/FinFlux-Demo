@@ -1,0 +1,28 @@
+{
+  "protocol": "FINFLUX_WORKER_SKILL_MANIFEST_V1.0",
+  "role": "runtime-resilience-auditor",
+  "package_root": "..",
+  "entrypoint": {
+    "path": "bounded_worker_task.py",
+    "sha256": "6587802a3da60dc38ba76ea35fa755f0e7c649431b0d6e34f89680c03319a340"
+  },
+  "skills": [
+    {
+      "skill_id": "guard-execution-budget",
+      "version": "1.0.0",
+      "callable": "skill_guard_execution_budget",
+      "callable_sha256": "144b728324c8b7e8a39637cf7b2efd9dd2c6dc44342d21f42dc9ccd3ab038c4f",
+      "instruction_path": "agentteams-skills/guard-execution-budget/SKILL.md",
+      "instruction_sha256": "f616bacd3694d5ccb6c741af10a78880b7b3029c5f547a9a253b550a9657ee4a"
+    },
+    {
+      "skill_id": "audit-recovery-readiness",
+      "version": "1.0.0",
+      "callable": "skill_audit_recovery_readiness",
+      "callable_sha256": "f9da337a3a0e2f70892f8853ac2e8e21c78704cfce9e228738074cca287fb51c",
+      "instruction_path": "agentteams-skills/audit-recovery-readiness/SKILL.md",
+      "instruction_sha256": "4102ea7015927e5a9a6998844ceac1b80ad1158c4add336c2121725922b63e23"
+    }
+  ],
+  "manifest_sha256": "36b5dcd2e3a83e708939223cb908c4662681ee5b039a34015b239ca807411a4d"
+}

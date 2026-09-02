@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://finflux.local/schemas/case-envelope.schema.json",
+  "title": "FinFlux Bounded CaseEnvelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocol",
+    "case_id",
+    "source_case_id",
+    "run_id",
+    "asset_class",
+    "review_scenario",
+    "declared_downstream_use",
+    "trigger",
+    "evidence_handles",
+    "expected_route",
+    "execution_policy_id",
+    "dispatch_idempotency_key",
+    "precheck_attestation",
+    "required_outputs"
+  ],
+  "properties": {
+    "protocol": {"const": "FINFLUX_CASE_ENVELOPE_V0.1"},
+    "case_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "source_case_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "run_id": {"type": "string", "pattern": "^RUN-[A-Z]+-[0-9]{14}-[a-f0-9]{6}$"},
+    "asset_class": {"enum": ["equity", "futures", "option"]},
+    "review_scenario": {"enum": ["blocked", "admissible", "post_remediation_review"]},
+    "declared_downstream_use": {"type": "string", "minLength": 1, "maxLength": 128},
+    "trigger": {"type": "string", "minLength": 1, "maxLength": 500},
+    "evidence_handles": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["evidence_id", "path", "sha256_source"],
+        "properties": {
+          "evidence_id": {"type": "string", "minLength": 1, "maxLength": 128},
+          "path": {"type": "string", "minLength": 1, "maxLength": 500},
+          "sha256_source": {"type": "string", "minLength": 1, "maxLength": 500}
+        }
+      }
+    },
+    "expected_route": {"enum": ["CODE_ONLY_PASS", "HUMAN_REVIEW_WITHOUT_IMPACT", "FULL_TEAM_REVIEW", "POST_REMEDIATION_FULL_TEAM_REVIEW", "PRESERVE_DISPUTE_AND_ESCALATE"]},
+    "execution_policy_id": {"const": "FINFLUX-BOUNDED-EXECUTION-V0.1"},
+    "dispatch_idempotency_key": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "precheck_attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["protocol", "receipt_id", "case_id", "asset_class", "scenario", "datapass_sha256", "evidence_status", "completed_at_utc"],
+      "properties": {
+        "protocol": {"const": "FINFLUX_PRECHECK_RECEIPT_V0.1"},
+        "receipt_id": {"type": "string", "pattern": "^PCR-(EQUITY|FUTURES|OPTION)-[A-Za-z0-9_-]+$"},
+        "case_id": {"type": "string", "minLength": 1, "maxLength": 128},
+        "asset_class": {"enum": ["equity", "futures", "option"]},
+        "scenario": {"enum": ["blocked", "admissible", "post_remediation_review"]},
+        "datapass_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "evidence_status": {"const": "VERIFIED"},
+        "completed_at_utc": {"type": "string", "format": "date-time"}
+      }
+    },
+    "required_outputs": {
+      "type": "array",
+      "minItems": 3,
+      "uniqueItems": true,
+      "items": {"enum": ["EvidenceResult", "SemanticImpactResult", "IndependentValidation", "DataPassDraft", "HumanDecision"]}
+    }
+  }
+}

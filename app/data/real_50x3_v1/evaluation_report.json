@@ -1,0 +1,93 @@
+{
+  "protocol": "FINFLUX_SOURCE_BOUND_EVALUATION_V1",
+  "schema_version": "1.0.0",
+  "created_at_utc": "2026-09-01T18:51:15.359247+00:00",
+  "corpus": {
+    "case_count": 150,
+    "counts_by_asset": {
+      "futures": 50,
+      "equity": 50,
+      "fund": 50
+    },
+    "record_basis": "150_DISTINCT_SOURCE_ROWS",
+    "model_generated_records": 0,
+    "raw_market_data_mutated": false,
+    "manifest_sha256": "0994ee1963f463fc949c79ffbbab330b402b88835f78b4f3b2a4bd9718ec0ee1",
+    "records_merkle_sha256": "57ed96f1db258a1418c34e11e7b570bd882a8f6600889886feda91b018aa22a9"
+  },
+  "executed_pipeline": {
+    "system": "deterministic_source_precheck_v1",
+    "status": "EXECUTED",
+    "processed_count": 150,
+    "decision_counts": {
+      "PASS": 144,
+      "WAIT": 6,
+      "BLOCK": 0
+    },
+    "duration_ms": 18402.076,
+    "model_calls": 0,
+    "provider_tokens": 0,
+    "result_merkle_sha256": "1f47444a6f8fc01be294894f19992247c0554269dc581b1c9a35bb9f38366c3d"
+  },
+  "source_artifacts": [
+    {
+      "provider": "China Financial Futures Exchange",
+      "source_url": "http://www.cffex.com.cn/sj/hqsj/rtj/202608/13/20260813_1.csv",
+      "captured_at_utc": "2026-09-01T18:50:56.957118+00:00",
+      "adapter": "direct-http-byte-snapshot",
+      "artifact_path": "app/data/real_50x3_v1/raw/futures/cffex_20260813_raw.csv",
+      "artifact_sha256": "07967dd4c161c616e5e3f782e8a44eacb2edd6918c99c5c92a8b6ad290ab5ef3",
+      "rights_state": "REVIEW_REQUIRED",
+      "rights_note": "Publicly reachable source used only as a locally frozen POC evidence reference; redistribution and production use require provider review."
+    },
+    {
+      "provider": "China Financial Futures Exchange",
+      "source_url": "http://www.cffex.com.cn/sj/hqsj/rtj/202608/14/20260814_1.csv",
+      "captured_at_utc": "2026-09-01T18:50:56.957118+00:00",
+      "adapter": "direct-http-byte-snapshot",
+      "artifact_path": "app/data/real_50x3_v1/raw/futures/cffex_20260814_raw.csv",
+      "artifact_sha256": "085c9885190773a5c064e53c92916da590116e70a4d0a9550e2a94c4c21de542",
+      "rights_state": "REVIEW_REQUIRED",
+      "rights_note": "Publicly reachable source used only as a locally frozen POC evidence reference; redistribution and production use require provider review."
+    },
+    {
+      "provider": "EastMoney via AKShare",
+      "source_url": "https://data.eastmoney.com/yjfp/",
+      "captured_at_utc": "2026-09-01T18:50:56.957118+00:00",
+      "adapter": "akshare.stock_fhps_em@1.18.94; adapter-output snapshot",
+      "artifact_path": "app/data/real_50x3_v1/raw/equity/akshare_stock_fhps_em_20251231.csv",
+      "artifact_sha256": "934e441792b00997553105630782b02c9dfd0027143ea58b3525a8243acab3fb",
+      "rights_state": "REVIEW_REQUIRED",
+      "rights_note": "Publicly reachable source used only as a locally frozen POC evidence reference; redistribution and production use require provider review."
+    },
+    {
+      "provider": "EastMoney via AKShare",
+      "source_url": "https://fund.eastmoney.com/fund.html",
+      "captured_at_utc": "2026-09-01T18:50:56.957118+00:00",
+      "adapter": "akshare.fund_open_fund_daily_em@1.18.94; adapter-output snapshot",
+      "artifact_path": "app/data/real_50x3_v1/raw/fund/akshare_fund_open_fund_daily_em_2026-09-01.csv",
+      "artifact_sha256": "14872c5d12115596a63471318f2ab53e30f8bd03b97542d928e0da2edccf921e",
+      "rights_state": "REVIEW_REQUIRED",
+      "rights_note": "Publicly reachable source used only as a locally frozen POC evidence reference; redistribution and production use require provider review."
+    }
+  ],
+  "not_executed": [
+    {
+      "system": "AgentTeams representative-case evaluation",
+      "status": "NOT_EXECUTED",
+      "reason": "This phase freezes and prechecks 150 real rows; representative model Runs are a separate evidence stage."
+    },
+    {
+      "system": "financial-institution pilot metrics",
+      "status": "NOT_EXECUTED",
+      "reason": "No institution-labelled ground truth is available; false-release and false-block rates are therefore not reported."
+    }
+  ],
+  "limitations": [
+    "Rows are public-source observations, not institution-labelled production incidents.",
+    "AKShare CSV files are frozen adapter-output snapshots, not raw EastMoney HTTP bodies.",
+    "Public accessibility does not establish redistribution rights; production rights review remains required.",
+    "PASS means deterministic source fields align with the declared purpose; it is not Human approval."
+  ],
+  "report_sha256": "65543143aed8f078635469201d261ceb396211c878e4587887a16832e14f5c83"
+}

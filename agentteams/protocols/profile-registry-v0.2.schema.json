@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://finflux.local/schemas/profile-registry-v0.2.schema.json",
+  "title": "FinFlux Profile Registry V0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["protocol", "schema_version", "profiles", "registry_sha256"],
+  "properties": {
+    "protocol": {"const": "FINFLUX_PROFILE_REGISTRY_V0.2"},
+    "schema_version": {"const": "0.2.0"},
+    "profiles": {
+      "type": "array", "minItems": 5, "maxItems": 5,
+      "items": {"$ref": "#/$defs/profile"}
+    },
+    "registry_sha256": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "profile": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "profile_id", "profile_version", "asset_class", "display_name",
+        "semantic_contract", "declared_purposes", "evidence_requirements",
+        "accepted_evidence_types", "required_outputs", "display_fields", "profile_sha256"
+      ],
+      "properties": {
+        "profile_id": {"enum": ["equity_corporate_action", "futures_settlement", "option_contract_identity", "research_material_rights"]},
+        "profile_version": {"const": "0.2.0"},
+        "asset_class": {"enum": ["equity", "futures", "option", "research"]},
+        "display_name": {"type": "string", "minLength": 1},
+        "semantic_contract": {
+          "type": "object", "additionalProperties": false,
+          "required": ["contract_id", "version"],
+          "properties": {
+            "contract_id": {"type": "string", "minLength": 1},
+            "version": {"const": "0.2.0"}
+          }
+        },
+        "declared_purposes": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/purpose"}},
+        "evidence_requirements": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/evidenceRequirement"}},
+        "accepted_evidence_types": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "required_outputs": {"type": "array", "minItems": 3, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "display_fields": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/displayField"}},
+        "profile_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "purpose": {
+      "type": "object", "additionalProperties": false,
+      "required": ["purpose_id", "label", "target_decision", "default_accountable_role"],
+      "properties": {
+        "purpose_id": {"type": "string", "minLength": 1},
+        "label": {"type": "string", "minLength": 1},
+        "target_decision": {"type": "string", "minLength": 1},
+        "default_accountable_role": {"type": "string", "minLength": 1}
+      }
+    },
+    "evidenceRequirement": {
+      "type": "object", "additionalProperties": false,
+      "required": ["evidence_type", "min_count", "content_hash_required", "description"],
+      "properties": {
+        "evidence_type": {"type": "string", "minLength": 1},
+        "min_count": {"type": "integer", "minimum": 1},
+        "content_hash_required": {"const": true},
+        "description": {"type": "string", "minLength": 1}
+      }
+    },
+    "displayField": {
+      "type": "object", "additionalProperties": false,
+      "required": ["field_id", "label", "value_type", "description"],
+      "properties": {
+        "field_id": {"type": "string", "minLength": 1},
+        "label": {"type": "string", "minLength": 1},
+        "value_type": {"type": "string", "minLength": 1},
+        "description": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "project": "FinFlux",
+  "runtime": {
+    "required_platform": "AgentTeams",
+    "pinned_version": "v1.2.2",
+    "pinned_commit": "849182af8e017168a5a200a87b1062142caf462d",
+    "api_group": "agentteams.io/v1beta1",
+    "docker_context": "desktop-linux",
+    "manager_runtime_selector": "copaw",
+    "worker_runtime": "qwenpaw",
+    "model_configuration": "USER_SUPPLIED_AT_DEPLOY_TIME",
+    "model_routing": "DEFAULT_WITH_OPTIONAL_PER_ROLE_OVERRIDE"
+  },
+  "bounded_execution": {
+    "policy": "config/execution_policy.json",
+    "case_envelope_schema": "protocols/case-envelope.schema.json",
+    "fail_closed": true,
+    "manager_delegation_only": true,
+    "provider_usage_attribution": "NOT_YET_AVAILABLE"
+  },
+  "team": {
+    "name": "finchange-cross-asset-review",
+    "leader": "finchange-case-lead",
+    "human": "finchange-data-owner",
+    "workers": [
+      "evidence-investigator",
+      "semantic-impact-analyst",
+      "downstream-impact-analyst",
+      "data-rights-steward",
+      "research-context-analyst",
+      "runtime-resilience-auditor",
+      "independent-validator"
+      ,"result-composer"
+    ]
+  },
+  "responsibility_boundaries": {
+    "finchange-case-lead": {
+      "may": ["classify_case", "activate_workers", "preserve_disagreement", "request_human_decision"],
+      "must_not": ["invent_evidence", "perform_final_numerical_truth", "sign_release"]
+    },
+    "evidence-investigator": {
+      "may": ["read_evidence", "verify_source_metadata", "verify_sha256", "report_missing_evidence"],
+      "must_not": ["change_evidence", "select_financial_semantics", "sign_release"]
+    },
+    "semantic-impact-analyst": {
+      "may": ["resolve_versioned_contract", "run_deterministic_impact", "state_observed_vs_counterfactual"],
+      "must_not": ["change_raw_evidence", "hide_uncertainty", "sign_release"]
+    },
+    "downstream-impact-analyst": {
+      "may": ["read_change_set", "read_declared_lineage", "resolve_blast_radius", "preserve_unknown_impact"],
+      "must_not": ["invent_lineage", "change_raw_evidence", "decide_financial_truth", "sign_release"]
+    },
+    "data-rights-steward": {
+      "may": ["classify_declared_rights", "enforce_confidentiality_boundary", "request_rights_evidence"],
+      "must_not": ["provide_legal_advice", "invent_authority", "read_financial_truth", "sign_release"]
+    },
+    "research-context-analyst": {
+      "may": ["read_research_handles", "verify_research_bundle", "state_context_boundary"],
+      "must_not": ["open_ended_search", "override_deterministic_contract", "invent_research", "sign_release"]
+    },
+    "runtime-resilience-auditor": {
+      "may": ["verify_execution_budget", "verify_timeout_policy", "verify_checkpoint_requirement", "request_operational_hold"],
+      "must_not": ["claim_unexecuted_failover", "read_financial_truth", "change_runtime_policy", "sign_release"]
+    },
+    "independent-validator": {
+      "may": ["rerun_hash_check", "rerun_contract", "rerun_impact", "raise_disagreement"],
+      "must_not": ["read_primary_final_narrative_before_lock", "repair_evidence", "sign_release"]
+    },
+    "result-composer": {
+      "may": ["compact_structured_run_context", "select_zero_model_strategy", "generate_result_artifacts", "verify_artifact_hashes"],
+      "must_not": ["change_financial_values", "read_full_matrix_history", "sign_release", "invent_human_decision"]
+    },
+    "finchange-data-owner": {
+      "may": ["approve", "block", "request_evidence", "approve_skill_candidate"],
+      "must_not": ["erase_trace", "approve_without_evidence_quorum"]
+    }
+  },
+  "dynamic_activation": [
+    {
+      "when": "deterministic_low_risk_check_passes_and_no_semantic_change",
+      "activate": [],
+      "route": "CODE_ONLY_PASS"
+    },
+    {
+      "when": "missing_file_or_hash_mismatch",
+      "activate": ["evidence-investigator", "independent-validator"],
+      "route": "HUMAN_REVIEW_WITHOUT_IMPACT"
+    },
+    {
+      "when": "financial_semantic_change_or_cross_source_conflict",
+      "activate": ["evidence-investigator", "semantic-impact-analyst", "research-context-analyst", "runtime-resilience-auditor", "independent-validator"],
+      "route": "FULL_TEAM_REVIEW"
+    },
+    {
+      "when": "version_change_has_affected_or_unknown_downstream_tasks",
+      "activate": ["evidence-investigator", "downstream-impact-analyst", "semantic-impact-analyst", "research-context-analyst", "runtime-resilience-auditor", "independent-validator"],
+      "route": "BLAST_RADIUS_REVIEW"
+    },
+    {
+      "when": "non_public_or_rights_review_required_after_deterministic_rights_gate",
+      "activate": ["data-rights-steward"],
+      "route": "RIGHTS_AND_CONFIDENTIALITY_REVIEW"
+    },
+    {
+      "when": "prior_blocked_case_is_repaired_and_resubmitted",
+      "activate": ["evidence-investigator", "semantic-impact-analyst", "research-context-analyst", "runtime-resilience-auditor", "independent-validator"],
+      "route": "POST_REMEDIATION_FULL_TEAM_REVIEW"
+    },
+    {
+      "when": "worker_outputs_disagree",
+      "activate": ["independent-validator"],
+      "route": "PRESERVE_DISPUTE_AND_ESCALATE"
+    },
+    {
+      "when": "datapass_draft_is_ready_or_human_decision_is_recorded",
+      "activate": ["result-composer"],
+      "route": "ZERO_MODEL_RESULT_COMPOSITION"
+    }
+  ],
+  "allowed_terminal_states": ["PASS", "BLOCK", "NEEDS_EVIDENCE"],
+  "human_gate_required_when": [
+    "recommended_decision_is_block",
+    "worker_outputs_disagree",
+    "evidence_is_incomplete",
+    "skill_candidate_is_proposed",
+    "production_write_is_requested",
+    "prior_blocked_case_is_resubmitted"
+  ],
+  "skill_mapping": {
+    "evidence-investigator": ["verify-evidence-bundle", "reconcile-source-semantics"],
+    "semantic-impact-analyst": ["resolve-semantic-contract", "compute-financial-impact"],
+    "downstream-impact-analyst": ["resolve-downstream-lineage"],
+    "data-rights-steward": ["classify-data-rights", "enforce-confidentiality-boundary"],
+    "research-context-analyst": ["retrieve-research-context", "verify-research-context"],
+    "runtime-resilience-auditor": ["guard-execution-budget", "audit-recovery-readiness"],
+    "independent-validator": ["verify-evidence-bundle", "reconcile-source-semantics", "resolve-semantic-contract", "compute-financial-impact", "validate-admission-package"]
+    ,"result-composer": ["assemble-run-result-context", "select-token-budget-strategy", "compose-result-document", "verify-result-artifact"],
+    "context-gateway": ["build-run-context-capsule", "load-role-context-slice"]
+  }
+}

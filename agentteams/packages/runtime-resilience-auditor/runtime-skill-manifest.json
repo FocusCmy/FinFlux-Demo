@@ -1,0 +1,24 @@
+{
+  "protocol": "FINFLUX_WORKER_SKILL_MANIFEST_V1.0",
+  "role": "runtime-resilience-auditor",
+  "package_root": ".",
+  "entrypoint": {
+    "path": "bounded_worker_task.py",
+    "sha256": "29688f5f8c1989d4962d9879fa91aac09ec5da584153d58150c62ccf52479187"
+  },
+  "skills": [
+    {
+      "skill_id": "guard-execution-budget",
+      "version": "1.0.0",
+      "instruction_path": "skills/guard-execution-budget/SKILL.md",
+      "instruction_sha256": "f616bacd3694d5ccb6c741af10a78880b7b3029c5f547a9a253b550a9657ee4a"
+    },
+    {
+      "skill_id": "audit-recovery-readiness",
+      "version": "1.0.0",
+      "instruction_path": "skills/audit-recovery-readiness/SKILL.md",
+      "instruction_sha256": "4102ea7015927e5a9a6998844ceac1b80ad1158c4add336c2121725922b63e23"
+    }
+  ],
+  "manifest_sha256": "9754e30b6a6758ea6ed6a2e4cdc8517504001c11b395030d7284291ff4ac2f5a"
+}

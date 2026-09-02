@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "source": {
+    "project": "FinChange Gate",
+    "created_for": "AgentTeams v1.2.2"
+  },
+  "worker": {
+    "suggested_name": "evidence-investigator",
+    "runtime": "qwenpaw",
+    "pip_packages": [],
+    "npm_packages": [],
+    "apt_packages": []
+  }
+}

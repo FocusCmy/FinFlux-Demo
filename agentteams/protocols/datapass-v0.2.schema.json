@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://finflux.local/schemas/datapass-v0.2.schema.json",
+  "title": "FinFlux DataPass V0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocol", "schema_version", "datapass_id", "case_id", "run_id",
+    "envelope_sha256", "profile", "declared_purpose", "evidence_assessment",
+    "semantic_assessment", "impact_assessment", "machine_recommendation",
+    "reason_codes", "recommendation_summary", "workers", "skills", "human_gate",
+    "integrity", "status", "generated_at_utc", "legacy_reference", "datapass_sha256"
+  ],
+  "properties": {
+    "protocol": {"const": "FINFLUX_DATAPASS_V0.2"},
+    "schema_version": {"const": "0.2.0"},
+    "datapass_id": {"type": "string", "minLength": 1},
+    "case_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "envelope_sha256": {"$ref": "#/$defs/sha256"},
+    "profile": {"$ref": "#/$defs/profileRef"},
+    "declared_purpose": {
+      "type": "object", "additionalProperties": false,
+      "required": ["purpose_id", "target_decision"],
+      "properties": {
+        "purpose_id": {"type": "string", "minLength": 1},
+        "target_decision": {"type": "string", "minLength": 1}
+      }
+    },
+    "evidence_assessment": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "quorum_met", "evidence_sha256"],
+      "properties": {
+        "status": {"enum": ["VERIFIED", "INVALID", "PARTIAL", "NOT_AVAILABLE"]},
+        "quorum_met": {"type": "boolean"},
+        "evidence_sha256": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/sha256"}}
+      }
+    },
+    "semantic_assessment": {
+      "type": "object", "additionalProperties": false,
+      "required": ["contract_id", "version", "status"],
+      "properties": {
+        "contract_id": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "minLength": 1},
+        "status": {"enum": ["RESOLVED", "CONFLICT", "NOT_AVAILABLE"]}
+      }
+    },
+    "impact_assessment": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "facts_sha256", "metrics"],
+      "properties": {
+        "status": {"enum": ["COMPUTED", "COUNTERFACTUAL", "NOT_APPLICABLE", "NOT_AVAILABLE"]},
+        "facts_sha256": {"$ref": "#/$defs/sha256"},
+        "metrics": {"type": "array", "items": {"$ref": "#/$defs/metric"}}
+      }
+    },
+    "machine_recommendation": {"enum": ["PASS", "BLOCK", "NEEDS_EVIDENCE"]},
+    "reason_codes": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "recommendation_summary": {"type": "string", "minLength": 1},
+    "workers": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "required_worker_ids", "completed_worker_ids", "reported_required_count",
+        "reported_completed_count", "attestation_status", "receipts"
+      ],
+      "properties": {
+        "required_worker_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "completed_worker_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "reported_required_count": {"type": "integer", "minimum": 0},
+        "reported_completed_count": {"type": "integer", "minimum": 0},
+        "attestation_status": {"enum": ["VERIFIED", "PARTIAL", "NOT_AVAILABLE", "LEGACY_COUNT_ONLY"]},
+        "receipts": {"type": "array", "items": {"$ref": "#/$defs/workerReceipt"}}
+      }
+    },
+    "skills": {
+      "type": "object", "additionalProperties": false,
+      "required": ["required_skill_ids", "attestation_status", "invocations"],
+      "properties": {
+        "required_skill_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "attestation_status": {"enum": ["VERIFIED", "PARTIAL", "NOT_AVAILABLE"]},
+        "invocations": {"type": "array", "items": {"$ref": "#/$defs/skillInvocation"}}
+      }
+    },
+    "human_gate": {
+      "type": "object", "additionalProperties": false,
+      "required": ["required", "state", "decision", "actor_id", "decided_at_utc", "signature_sha256"],
+      "properties": {
+        "required": {"const": true},
+        "state": {"enum": ["NOT_OPENED", "AWAITING_HUMAN", "APPROVED", "REJECTED", "RETURNED"]},
+        "decision": {"type": ["string", "null"]},
+        "actor_id": {"type": ["string", "null"]},
+        "decided_at_utc": {"type": ["string", "null"], "format": "date-time"},
+        "signature_sha256": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/sha256"}]}
+      }
+    },
+    "integrity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["raw_evidence_mutated", "production_write_performed", "parent_datapass_sha256"],
+      "properties": {
+        "raw_evidence_mutated": {"type": "boolean"},
+        "production_write_performed": {"type": "boolean"},
+        "parent_datapass_sha256": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/sha256"}]}
+      }
+    },
+    "status": {"enum": ["DRAFT_CREATED", "AWAITING_HUMAN", "FINALIZED"]},
+    "generated_at_utc": {"type": "string", "format": "date-time"},
+    "legacy_reference": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["source_protocol", "source_sha256", "unresolved_fields"],
+          "properties": {
+            "source_protocol": {"type": "string", "minLength": 1},
+            "source_sha256": {"$ref": "#/$defs/sha256"},
+            "unresolved_fields": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+          }
+        }
+      ]
+    },
+    "datapass_sha256": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "profileRef": {
+      "type": "object", "additionalProperties": false,
+      "required": ["profile_id", "profile_version", "profile_sha256"],
+      "properties": {
+        "profile_id": {"enum": ["equity_corporate_action", "futures_settlement", "option_contract_identity", "research_material_rights"]},
+        "profile_version": {"const": "0.2.0"},
+        "profile_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "metric": {
+      "type": "object", "additionalProperties": false,
+      "required": ["metric_id", "label", "value", "unit", "source_kind"],
+      "properties": {
+        "metric_id": {"type": "string", "minLength": 1},
+        "label": {"type": "string", "minLength": 1},
+        "value": {"type": ["string", "number", "integer", "boolean"]},
+        "unit": {"type": "string"},
+        "source_kind": {"enum": ["OBSERVED", "DETERMINISTIC", "COUNTERFACTUAL"]}
+      }
+    },
+    "workerReceipt": {
+      "type": "object", "additionalProperties": false,
+      "required": ["worker_id", "status", "artifact_sha256"],
+      "properties": {
+        "worker_id": {"type": "string", "minLength": 1},
+        "status": {"enum": ["SEALED", "FAILED", "NOT_AVAILABLE"]},
+        "artifact_sha256": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/sha256"}]}
+      }
+    },
+    "skillInvocation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["skill_id", "version", "worker_id", "input_sha256", "output_sha256", "status"],
+      "properties": {
+        "skill_id": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "minLength": 1},
+        "worker_id": {"type": "string", "minLength": 1},
+        "input_sha256": {"$ref": "#/$defs/sha256"},
+        "output_sha256": {"$ref": "#/$defs/sha256"},
+        "status": {"enum": ["SUCCEEDED", "FAILED", "CACHE_HIT"]}
+      }
+    }
+  }
+}

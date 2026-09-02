@@ -1,0 +1,59 @@
+{
+  "policy_id": "FINFLUX-BOUNDED-EXECUTION-V0.1",
+  "version": "0.2.0",
+  "mode": "FAIL_CLOSED",
+  "run_limits": {
+    "max_active_runs": 1,
+    "max_wall_time_seconds": 600,
+    "max_matrix_events": 30,
+    "max_message_characters": 4000,
+    "max_observed_message_token_estimate": 10000
+  },
+  "role_limits": {
+    "manager": {"max_messages": 1, "max_output_tokens_per_response": 256},
+    "team_leader": {"max_messages": 8, "max_output_tokens_per_response": 1200},
+    "worker": {"max_messages": 6, "max_output_tokens_per_response": 1200},
+    "system_relay": {"max_messages": 3, "max_output_tokens_per_response": 400},
+    "human": {"max_messages": 2, "max_output_tokens_per_response": 400},
+    "unknown": {"max_messages": 0, "max_output_tokens_per_response": 0}
+  },
+  "manager_contract": {
+    "allowed_actions": ["validate_envelope", "delegate_to_team_leader", "report_dispatch_failure"],
+    "forbidden_actions": ["scan_workspace", "read_raw_evidence", "run_financial_calculation", "contact_specialist_worker", "sign_decision"],
+    "required_terminal_message": "DISPATCHED or DISPATCH_FAILED"
+  },
+  "deterministic_skill_allowlist": {
+    "evidence-investigator": ["verify-evidence-bundle", "reconcile-source-semantics"],
+    "semantic-impact-analyst": ["resolve-semantic-contract", "compute-financial-impact"],
+    "downstream-impact-analyst": ["resolve-downstream-lineage"],
+    "data-rights-steward": ["classify-data-rights", "enforce-confidentiality-boundary"],
+    "research-context-analyst": ["retrieve-research-context", "verify-research-context"],
+    "runtime-resilience-auditor": ["guard-execution-budget", "audit-recovery-readiness"],
+    "independent-validator": ["verify-evidence-bundle", "reconcile-source-semantics", "resolve-semantic-contract", "compute-financial-impact", "validate-admission-package"]
+  },
+  "stop_conditions": [
+    "provider_usage_unreadable",
+    "provider_token_hard_cap_exceeded",
+    "explicit_human_emergency_stop"
+  ],
+  "provider_usage_observation": {
+    "source": "QWENPAW_PROVIDER_USAGE_LOG",
+    "run_attribution": "CORRELATED_EXCLUSIVE_RUN_WINDOW",
+    "provider_token_hard_cap": 320000,
+    "daily_provider_token_hard_cap": 700000,
+    "pre_dispatch_reserve_tokens": 300000,
+    "pre_dispatch_reserve_basis": {
+      "type": "SEALED_RUN_EVIDENCE_PLUS_HEADROOM",
+      "sealed_run_max_tokens": 81412,
+      "headroom_tokens": 18588,
+      "statement": "Admission headroom only; this value does not truncate model context or model output. The 320000 per-Run limit is an anomaly fuse sized from an observed Manager, Case Lead, three independent model Workers and final aggregation Run; it is not a substitute for Agent reasoning. Role Context Slices, completed-Worker reuse and deterministic Skills reduce repeated context and calculation tokens."
+    },
+    "max_model_calls_per_run": 16,
+    "max_output_tokens_per_call": 2048,
+    "require_fail_closed_sidecar": true,
+    "guard_cache_seconds": 15,
+    "fail_closed_when_usage_unavailable": true,
+    "cost_calculation": "DISABLED_UNTIL_PRICE_VERSION_PINNED"
+  },
+  "truth_boundary": "The Run total is the same-UTC-day delta of QwenPaw token_usage.json captured before dispatch and after execution, and is attributable only while exactly one model-bearing Run exists and no counter regresses. Every provider request must also traverse the FinFlux sidecar, which rejects unreadable usage, excess request count, or maximum-exposure overflow before another response reaches AgentTeams. A final session usage line and character estimates are never used as provider or billed-token totals."
+}

@@ -1,0 +1,28 @@
+{
+  "protocol": "FINFLUX_WORKER_SKILL_MANIFEST_V1.0",
+  "role": "data-rights-steward",
+  "package_root": "..",
+  "entrypoint": {
+    "path": "bounded_worker_task.py",
+    "sha256": "6587802a3da60dc38ba76ea35fa755f0e7c649431b0d6e34f89680c03319a340"
+  },
+  "skills": [
+    {
+      "skill_id": "classify-data-rights",
+      "version": "1.0.0",
+      "callable": "skill_classify_data_rights",
+      "callable_sha256": "08403ee67b0828a047f559658d28aecad83976a9c681be01ad6ae949797fec2b",
+      "instruction_path": "agentteams-skills/classify-data-rights/SKILL.md",
+      "instruction_sha256": "44011a79e612d3e109c33ac71abbb10bb18847648ada57e9bdf2a3178a7d9aef"
+    },
+    {
+      "skill_id": "enforce-confidentiality-boundary",
+      "version": "1.0.0",
+      "callable": "skill_enforce_confidentiality_boundary",
+      "callable_sha256": "d980a3b60cb42ca2e81c250c01a3142000331b5bf53da4f8802d43fa512ac724",
+      "instruction_path": "agentteams-skills/enforce-confidentiality-boundary/SKILL.md",
+      "instruction_sha256": "43e22307b2175238843dc9747a4b6d0bd0068b209c6ef18ea1fdc27dd515b16a"
+    }
+  ],
+  "manifest_sha256": "8414774d14cd1e11a7f97d8cb83052f24f0855fbd6a93bb98178d1fb20d8bd00"
+}

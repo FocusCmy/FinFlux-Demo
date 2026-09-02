@@ -1,0 +1,28 @@
+{
+  "protocol": "FINFLUX_WORKER_SKILL_MANIFEST_V1.0",
+  "role": "semantic-impact-analyst",
+  "package_root": "..",
+  "entrypoint": {
+    "path": "bounded_worker_task.py",
+    "sha256": "6587802a3da60dc38ba76ea35fa755f0e7c649431b0d6e34f89680c03319a340"
+  },
+  "skills": [
+    {
+      "skill_id": "semantic-contract-resolver",
+      "version": "1.1.0",
+      "callable": "skill_semantic_contract_resolver",
+      "callable_sha256": "a74c7d00b387fdd27f827a7c9bb885508905adfd203fb2a8d978628f834a2b15",
+      "instruction_path": "agentteams-skills/semantic-contract-resolver/SKILL.md",
+      "instruction_sha256": "f1df32a7e547ce14d9e796e21a9ff66d1241713860e57a420372ef9f6339e0e2"
+    },
+    {
+      "skill_id": "financial-impact-calculator",
+      "version": "1.0.0",
+      "callable": "skill_financial_impact_calculator",
+      "callable_sha256": "8bd5c2386837295910b9a825be9b8379b4da59af03d6c4b9b4a14e503e9a4a52",
+      "instruction_path": "agentteams-skills/financial-impact-calculator/SKILL.md",
+      "instruction_sha256": "4089c88244efd3e064924e94126331917d9deb67755969a64b69fd9498879526"
+    }
+  ],
+  "manifest_sha256": "1a41b0fed93e7e45631bf27e36b1dfa5771b5bcb951b93dd4cac458501f39907"
+}

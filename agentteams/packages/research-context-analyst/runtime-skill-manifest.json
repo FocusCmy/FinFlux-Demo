@@ -1,0 +1,24 @@
+{
+  "protocol": "FINFLUX_WORKER_SKILL_MANIFEST_V1.0",
+  "role": "research-context-analyst",
+  "package_root": ".",
+  "entrypoint": {
+    "path": "bounded_worker_task.py",
+    "sha256": "29688f5f8c1989d4962d9879fa91aac09ec5da584153d58150c62ccf52479187"
+  },
+  "skills": [
+    {
+      "skill_id": "retrieve-research-context",
+      "version": "1.0.0",
+      "instruction_path": "skills/retrieve-research-context/SKILL.md",
+      "instruction_sha256": "ebf4ee0c85b555e12001ac98092986eb6bbc8f3a7246e016e350f1bd7fa6a35f"
+    },
+    {
+      "skill_id": "verify-research-context",
+      "version": "1.0.0",
+      "instruction_path": "skills/verify-research-context/SKILL.md",
+      "instruction_sha256": "91dad03c0c66aee53d645ce51467fd5c792df425c706a9d3c8dfaefc1cb9ddfc"
+    }
+  ],
+  "manifest_sha256": "a14f08d87568d788f782f826bc75fde0cd74a6c83c65207ff434be7985b76052"
+}
