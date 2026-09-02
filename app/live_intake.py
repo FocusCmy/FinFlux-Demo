@@ -4795,6 +4795,22 @@ class LiveIntakeRepository:
             run["state"] = state
             run["agentteams_run_id"] = run_id
             bootstrap_lifecycle(run)
+            dispatch_request = dict(run.get("dispatch_request") or {})
+            if dispatch_request and dispatch_request.get("status") in {
+                "QUEUED",
+                "RETRY_WAIT",
+            }:
+                dispatch_request.update(
+                    {
+                        "status": "DISPATCHED",
+                        "dispatched_at_utc": dispatch_request.get("dispatched_at_utc")
+                        or utc_now(),
+                        "agentteams_run_id": run_id,
+                        "last_error": None,
+                        "next_attempt_epoch": None,
+                    }
+                )
+                run["dispatch_request"] = dispatch_request
             agent_result = agent_run.get("agent_result") or {}
             run["agent_result"] = agent_result
             run["agentteams"] = {
@@ -4892,6 +4908,20 @@ class LiveIntakeRepository:
             recommendation = str(agent_result.get("leader_recommendation", "PENDING"))
             artifacts = agent_result.get("worker_artifacts", {}) or {}
             current_phase = str(run["lifecycle"]["current_phase"])
+            if current_phase == "FAILED_CLOSED" and state in {
+                "SUBMITTED",
+                "AGENTTEAMS_SUBMITTED",
+                "ACTIVE",
+                "RUNNING",
+            }:
+                record_transition(
+                    run,
+                    "READY_FOR_AGENTTEAMS",
+                    actor="run-supervisor",
+                    reason="Previously guarded queue was admitted after the active Run released occupancy",
+                    target_phase="READY_FOR_DISPATCH",
+                )
+                current_phase = "READY_FOR_DISPATCH"
             if current_phase == "READY_FOR_DISPATCH":
                 record_transition(
                     run,

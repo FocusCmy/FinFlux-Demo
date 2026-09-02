@@ -193,6 +193,16 @@
     dispatchRun: function (runId) {
       return request("/api/v1/runs/" + encodeURIComponent(runId) + "/dispatch", { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" }).then(function (res) { cache.workspace = null; return res; });
     },
+    releaseRunOccupancy: function (runId, reason) {
+      return request("/api/v1/runs/" + encodeURIComponent(runId) + "/release-occupancy", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          actor: "demo.operator",
+          reason: reason || "现场操作：占用Run长时间无Worker产物，终止为WAIT并释放单Run门禁"
+        })
+      }).then(function (res) { cache.workspace = null; return res; });
+    },
     repairRun: function (runId, reason) {
       return request("/api/v1/runs/" + encodeURIComponent(runId) + "/repair", {
         method: "POST",

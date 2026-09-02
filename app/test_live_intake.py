@@ -136,7 +136,12 @@ class LiveIntakePublicContractTests(unittest.TestCase):
                 "workers_completed": 3,
             },
         }
+        self.repo.request_dispatch(run["run_id"])
         synchronized = self.repo.sync_agentteams(run["run_id"], agent_run)
+        self.assertEqual(synchronized["dispatch_request"]["status"], "DISPATCHED")
+        self.assertEqual(
+            synchronized["dispatch_request"]["agentteams_run_id"], run["run_id"]
+        )
         self.assertEqual(synchronized["datapass"]["protocol"], DATAPASS_PROTOCOL)
         validate_datapass(
             synchronized["datapass"],

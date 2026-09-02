@@ -793,6 +793,22 @@ body {
 .run-next-action.next-stopped{border-color:rgba(248,113,113,.42);background:rgba(248,113,113,.055)}
 .run-next-action.next-stopped>i{color:var(--red);background:rgba(248,113,113,.1)}
 .run-next-action.next-queued{border-color:rgba(96,165,250,.4);background:rgba(96,165,250,.06)}
+.blocking-run-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:9px}
+.blocking-run-actions .btn{width:100%;min-height:42px}
+.blocking-run-detail{margin-top:9px;padding:12px;border:1px solid rgba(96,165,250,.3);border-radius:10px;background:rgba(4,13,31,.55)}
+.blocking-run-detail>b{display:block;margin-bottom:9px;color:#e5f7ff;font-size:11px}
+.blocking-run-detail-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.blocking-run-detail-grid span{display:flex;flex-direction:column;gap:4px;padding:8px;border:1px solid rgba(96,165,250,.16);border-radius:8px;color:var(--text-dim);font-size:9px}
+.blocking-run-detail-grid strong{color:#f3fbff;font-family:var(--mono);font-size:10px;overflow-wrap:anywhere}
+.blocking-run-detail p{margin:9px 0 0;color:var(--text-dim);font-size:9px;line-height:1.5}
+.release-occupancy-panel{display:grid;gap:10px;margin-top:9px;padding:13px;border:1px solid rgba(248,113,113,.5);border-radius:10px;background:rgba(127,29,29,.11)}
+.release-occupancy-panel>div:first-child{display:flex;flex-direction:column;gap:5px}
+.release-occupancy-panel>div:first-child b{color:#fecaca;font-size:11px}
+.release-occupancy-panel>div:first-child span{color:#fca5a5;font-size:9.5px;line-height:1.55}
+.release-occupancy-panel textarea{min-height:58px;margin-top:6px}
+.release-occupancy-actions{display:flex;justify-content:flex-end;gap:8px}
+.release-occupancy-panel[hidden],.blocking-run-detail[hidden]{display:none}
 .decision-route-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
 .decision-boundary-note{margin-top:12px!important;padding-top:10px;border-top:1px solid var(--border);color:var(--text-mute)!important;font-size:9.5px}
 @media(max-width:760px){.run-next-action{grid-template-columns:auto 1fr}.run-next-action>.btn{grid-column:1/-1}.decision-route-actions{flex-direction:column}.decision-route-actions .btn{width:100%}}
+@media(max-width:760px){.blocking-run-actions,.blocking-run-detail-grid{grid-template-columns:1fr}.release-occupancy-actions{flex-direction:column}.release-occupancy-actions .btn{width:100%}}

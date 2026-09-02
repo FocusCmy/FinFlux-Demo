@@ -76,6 +76,7 @@ class P0UIContractTests(unittest.TestCase):
     def test_navigation_exposes_exactly_four_primary_stages(self) -> None:
         html = (ROOT / "web" / "index.html").read_text(encoding="utf-8")
         self.assertEqual(html.count("data-stage-route="), 4)
+        self.assertIn("api.js?v=20260903-occupancy-control-2", html)
         for route in ("live", "collaboration", "evidence", "changes"):
             self.assertIn(f'data-stage-route="{route}"', html)
 
@@ -88,6 +89,11 @@ class P0UIContractTests(unittest.TestCase):
         self.assertIn("humanState === \"AWAITING_HUMAN\"", source)
         self.assertNotIn('id="btn-open-blocking-run"', source)
         self.assertIn("本页不会自动跳转", source)
+        self.assertIn('id="btn-open-release-occupancy"', source)
+        self.assertIn("releaseRunOccupancy(runId, reason)", source)
+        self.assertIn("不会生成PASS、DataPass或Human签署", source)
+        self.assertIn("scheduleLivePoll", source)
+        self.assertIn("RunSupervisor 正在接管本Run", source)
 
     def test_missing_profile_is_not_returned_as_a_definition(self) -> None:
         self.assertIsNone(get_profile("does-not-exist"))

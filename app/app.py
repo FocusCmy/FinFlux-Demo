@@ -172,6 +172,86 @@ def dispatch_queued_live_run(run_id: str) -> dict[str, Any]:
     }
 
 
+def release_active_run_occupancy(
+    run_id: str, *, actor: str, reason: str
+) -> dict[str, Any]:
+    """Fail-close one active Run so the durable queue can continue.
+
+    This is an explicit operator control-plane action.  It never changes a
+    financial recommendation into PASS, never creates a DataPass or Human
+    decision, and never creates the next Run.  RunSupervisor owns the later
+    dispatch of the already queued Run.
+    """
+
+    actor = str(actor or "").strip()
+    reason = str(reason or "").strip()
+    if not actor:
+        raise ValueError("释放占用必须记录操作者")
+    if len(reason) < 8:
+        raise ValueError("释放原因至少需要8个字符")
+    active = get_active_agent_run()
+    if not isinstance(active, dict):
+        queued = LIVE_REPOSITORY.next_dispatch_request()
+        return {
+            "protocol": "FINFLUX_OPERATOR_OCCUPANCY_RELEASE_V1",
+            "status": "ALREADY_FREE",
+            "released_run_id": None,
+            "released_run_state": None,
+            "next_queued_run_id": (queued or {}).get("run_id"),
+            "supervisor_dispatch_eta_seconds": RUN_SUPERVISOR.interval_seconds,
+            "model_called_by_release": False,
+            "datapass_created_by_release": False,
+            "human_decision_created_by_release": False,
+        }
+    active_run_id = str(active.get("run_id") or "")
+    if active_run_id != run_id:
+        raise ValueError(
+            f"占用Run已变化：当前为{active_run_id or 'UNKNOWN'}，请刷新后重试"
+        )
+    active_state = str(active.get("state") or "UNKNOWN")
+    if active_state == "AWAITING_HUMAN":
+        raise ValueError("该Run已有DataPass并等待Human，请到Human Gate处理，不能作为卡死Run释放")
+    if active_state in {
+        "COMPLETED",
+        "STOPPED_BY_GATE",
+        "BUDGET_EXCEEDED",
+        "FAILED_CLOSED",
+        "CANCELLED_BY_SESSION_RESET",
+        "MODEL_CONTROL_CLEANUP_FAILED",
+    }:
+        raise ValueError(f"该Run已处于终态{active_state}，无需释放")
+
+    stopped = stop_agent_run_to_wait(
+        run_id,
+        requested_by=actor,
+        reason=reason,
+        reason_codes=[
+            "OPERATOR_RELEASE_OCCUPANCY",
+            "QUEUED_RUN_WAITING",
+        ],
+    )
+    projected = LIVE_REPOSITORY.sync_agentteams(run_id, stopped)
+    queued = LIVE_REPOSITORY.next_dispatch_request()
+    return {
+        "protocol": "FINFLUX_OPERATOR_OCCUPANCY_RELEASE_V1",
+        "status": "RELEASED_TO_WAIT",
+        "released_run_id": run_id,
+        "released_run_state": projected.get("state"),
+        "release_record_sha256": (
+            stopped.get("emergency_stop_record") or {}
+        ).get("record_sha256"),
+        "next_queued_run_id": (queued or {}).get("run_id"),
+        "supervisor_dispatch_eta_seconds": RUN_SUPERVISOR.interval_seconds,
+        "model_called_by_release": False,
+        "datapass_created_by_release": False,
+        "human_decision_created_by_release": False,
+        "truth_boundary": (
+            "仅终止占用Run并关闭其模型网关账本；不生成PASS、DataPass或Human决定。"
+            "下一条既有排队Run由RunSupervisor独立派发。"
+        ),
+    }
+
+
 RUN_SUPERVISOR = RunSupervisor(
     repository=LIVE_REPOSITORY,
     get_active_run=get_active_agent_run,
@@ -1904,6 +1984,19 @@ class DemoHandler(BaseHTTPRequestHandler):
                     LIVE_REPOSITORY.record_dispatch_failure(run_id, str(exc))
                     raise
                 self.send_json(run, status=HTTPStatus.ACCEPTED)
+                return
+            if self.path.startswith("/api/v1/runs/") and self.path.endswith(
+                "/release-occupancy"
+            ):
+                run_id = self.path[
+                    len("/api/v1/runs/") : -len("/release-occupancy")
+                ].rstrip("/")
+                receipt = release_active_run_occupancy(
+                    run_id,
+                    actor=str(payload.get("actor") or "demo.operator"),
+                    reason=str(payload.get("reason") or ""),
+                )
+                self.send_json(receipt, status=HTTPStatus.ACCEPTED)
                 return
             if self.path.startswith("/api/v1/runs/") and self.path.endswith("/repair"):
                 run_id = self.path[len("/api/v1/runs/") : -len("/repair")].rstrip("/")

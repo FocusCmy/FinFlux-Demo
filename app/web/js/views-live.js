@@ -2,6 +2,49 @@
 (function () {
   "use strict";
 
+  var livePollTimer = null;
+
+  function liveStateSignature(ws, guard) {
+    var run = (ws && ws.run) || {}, request = run.dispatch_request || {}, supervisor = (ws && ws.run_supervisor) || {};
+    var result = run.agent_result || {}, usage = run.provider_usage || {};
+    return JSON.stringify({
+      run_id: run.run_id || "",
+      state: run.state || "",
+      agentteams_run_id: run.agentteams_run_id || "",
+      dispatch_status: request.status || "",
+      workers_completed: result.workers_completed || 0,
+      workers_required: result.workers_required || 0,
+      provider_calls: usage.call_count || 0,
+      provider_tokens: usage.total_tokens || 0,
+      active_run_ids: ((guard && guard.active_run_ids) || []).slice().sort(),
+      supervisor_run_id: supervisor.run_id || "",
+      supervisor_run_state: supervisor.run_state || "",
+      supervisor_action: supervisor.last_action || "",
+      supervisor_recoveries: supervisor.recovery_count || 0
+    });
+  }
+
+  function scheduleLivePoll(host, signature) {
+    window.clearTimeout(livePollTimer);
+    livePollTimer = window.setTimeout(function pollLiveRun() {
+      if (String(window.location.hash || "").indexOf("#/live") !== 0 || !host.isConnected) return;
+      var activeElement = document.activeElement;
+      var editing = activeElement && host.contains(activeElement) && /^(INPUT|TEXTAREA|SELECT)$/.test(activeElement.tagName);
+      var selectedFile = host.querySelector("#live-file");
+      if (editing || (selectedFile && selectedFile.files && selectedFile.files.length)) {
+        scheduleLivePoll(host, signature);
+        return;
+      }
+      Promise.all([window.FinfluxAPI.getWorkspace(true), window.FinfluxAPI.getTokenGuard()]).then(function (values) {
+        var nextSignature = liveStateSignature(values[0], values[1]);
+        if (nextSignature !== signature) return render(host, true);
+        scheduleLivePoll(host, signature);
+      }).catch(function () {
+        scheduleLivePoll(host, signature);
+      });
+    }, 5000);
+  }
+
   function esc(value) { return window.FinfluxUI.esc(value == null ? "" : value); }
   function short(value) { return window.FinfluxUI.shaShort(value || "", 16, 6); }
   function profileById(registry, profileId) {
@@ -144,6 +187,8 @@
     var repairs = (run.self_healing_attempts || []).concat(run.supervisor_recovery_attempts || []);
     var stopReason = ((run.emergency_stop || {}).reason || (run.supervisor_outcome || {}).reason || ((run.dispatch_guard || {}).reasons || []).join(" · ") || "");
     var state = String(run.state || "UNKNOWN");
+    var dispatchRequestState = String(((run.dispatch_request || {}).status) || "");
+    var waitingForSupervisor = !run.agentteams_run_id && ["QUEUED", "RETRY_WAIT"].indexOf(dispatchRequestState) >= 0;
     var stateGuide = state === "AWAITING_HUMAN"
       ? '<div class="run-next-action next-human"><i class="ri-user-follow-line"></i><div><b>DataPass草案已形成，下一步在 Human Gate</b><span>只有此状态才允许Human签署；进入后可批准、隔离或退回补证。</span></div><a class="btn btn-primary" href="#/human-gate">进入 Human Gate</a></div>'
       : (state === "RUNNING" || (run.agentteams_run_id && !terminal)
@@ -158,8 +203,15 @@
         (!terminal ? '<button id="btn-repair-agentteams" class="btn btn-outline btn-xl" type="button"><i class="ri-restart-line"></i> 请求 AgentTeams 同Run自愈</button>' : '')
       : (blockedByActiveRun
         ? '<div class="run-next-action next-queued"><i class="ri-list-check-2"></i><div><b>当前请求已进入后台队列</b><span>占用Run：' + esc(activeBlocker) + ' · ' + esc(blockerState) + (blockerRunning ? ' · Worker ' + esc(blocker.workers_completed || 0) + '/' + esc(blocker.workers_required || 0) : '') + '。' + (blockerHuman ? '该Run确实在等待Human签署。' : (blockerRunning ? '该Run仍在多Agent执行或恢复中，并非等待Human。' : '点击后会先核验真实状态，再进入正确页面。')) + '</span></div></div>' +
-          '<button id="btn-resolve-blocking-run" data-run-id="' + esc(activeBlocker) + '" class="btn btn-primary btn-xl" type="button"><i class="' + (blockerHuman ? 'ri-user-follow-line' : (blockerRunning ? 'ri-node-tree' : 'ri-pulse-line')) + '"></i> ' + (blockerHuman ? '前往 Human Gate 处理' : (blockerRunning ? '查看占用Run的协作进度' : '查看占用Run的状态与原因')) + '</button>'
-        : '<button id="btn-dispatch-agentteams" class="btn btn-outline btn-xl" type="button" ' + (canDispatch ? '' : 'disabled') + '><i class="ri-node-tree"></i> ' + dispatchLabel + '</button>');
+          (blockerHuman
+            ? '<button id="btn-resolve-blocking-run" data-run-id="' + esc(activeBlocker) + '" class="btn btn-primary btn-xl" type="button"><i class="ri-user-follow-line"></i> 前往 Human Gate 处理</button>'
+            : '<div class="blocking-run-actions"><button id="btn-inspect-blocking-run" data-run-id="' + esc(activeBlocker) + '" class="btn btn-outline" type="button"><i class="ri-pulse-line"></i> 展开占用Run状态</button>' +
+              (blockerRunning ? '<button id="btn-open-release-occupancy" data-run-id="' + esc(activeBlocker) + '" data-queued-run-id="' + esc(run.run_id) + '" class="btn btn-danger" type="button"><i class="ri-stop-circle-line"></i> 人工释放占用</button>' : '') + '</div>' +
+              '<div id="blocking-run-detail" class="blocking-run-detail" hidden></div>' +
+              (blockerRunning ? '<div id="release-occupancy-panel" class="release-occupancy-panel" hidden><div><b>终止占用Run并继续当前队列</b><span>该操作把占用Run正式终止为WAIT并关闭其模型网关账本；不会生成PASS、DataPass或Human签署。</span></div><label class="form-label">审计原因<textarea id="release-occupancy-reason" rows="2">现场操作：占用Run长时间无Worker产物，终止为WAIT并释放单Run门禁</textarea></label><div class="release-occupancy-actions"><button id="btn-cancel-release-occupancy" class="btn btn-ghost" type="button">取消</button><button id="btn-confirm-release-occupancy" class="btn btn-danger" type="button"><i class="ri-stop-circle-line"></i> 确认终止并释放</button></div></div>' : ''))
+        : (waitingForSupervisor
+          ? '<div class="run-next-action next-queued"><i class="ri-loader-4-line ri-spin"></i><div><b>RunSupervisor 正在接管本Run</b><span>占用已释放；无需再次点击或创建新Run，后台将在下一轮同步中完成真实AgentTeams派发。</span></div></div>'
+          : '<button id="btn-dispatch-agentteams" class="btn btn-outline btn-xl" type="button" ' + (canDispatch ? '' : 'disabled') + '><i class="ri-node-tree"></i> ' + dispatchLabel + '</button>'));
     var repairNote = repairs.length ? '<div class="same-run-repair-note"><b>同Run恢复 ' + esc(repairs.length) + '/3</b><span>' + esc(repairs[repairs.length - 1].status) + (repairs[repairs.length - 1].classification ? ' · ' + esc(repairs[repairs.length - 1].classification) : '') + '</span></div>' : '';
     return '<div class="card run-result"><div class="card-head"><i class="ri-pulse-line card-icon"></i><h4>当前受控Run</h4>' + window.FinfluxUI.badge(run.state) + '</div>' + window.FinfluxUI.kv("Run ID", '<span class="mono">' + esc(run.run_id) + '</span>' + window.FinfluxUI.copyBtn(run.run_id)) + window.FinfluxUI.kv("预检建议", window.FinfluxUI.badge(p.machine_recommendation || "PENDING")) + '<p class="card-note"><i class="ri-information-line"></i> ' + esc(tokenNote) + '</p>' + repairNote + (!run.agentteams_run_id ? stateGuide : '') + dispatch + '<p class="card-note"><i class="ri-shield-keyhole-line"></i> Worker中断、工具超时、传输截断可同Run恢复；预算硬超限和代码包错误必须封存，由Human重新授权，Agent不得绕过。</p></div>';
   }
@@ -298,10 +350,38 @@
         });
       }).catch(function (err) { window.FinfluxUI.toast(err.message, "error"); restore(blocking); });
     });
+    var inspectBlocking = host.querySelector("#btn-inspect-blocking-run"); if (inspectBlocking) inspectBlocking.addEventListener("click", function () {
+      var runId = inspectBlocking.getAttribute("data-run-id"), detail = host.querySelector("#blocking-run-detail");
+      busy(inspectBlocking, "读取占用Run快照…");
+      window.FinfluxAPI.getRunStatus(runId).then(function (status) {
+        var progress = status.worker_progress || {}, supervisor = status.run_supervisor || {}, usage = status.provider_usage || {};
+        detail.hidden = false;
+        detail.innerHTML = '<b>占用Run控制面快照</b><div class="blocking-run-detail-grid"><span>Run状态<strong>' + esc(status.execution_state || "UNKNOWN") + '</strong></span><span>Worker产物<strong>' + esc(progress.completed || 0) + '/' + esc(progress.required || 0) + '</strong></span><span>恢复次数<strong>' + esc(supervisor.run_id === runId ? (supervisor.recovery_count || 0) : "—") + '/3</strong></span><span>真实Token<strong>' + esc((usage.total_tokens == null ? "未归集" : window.FinfluxUI.fmtNum(usage.total_tokens))) + '</strong></span></div><p>Supervisor：' + esc(supervisor.run_id === runId ? (supervisor.last_action || "观察中") : "当前快照未由Supervisor占用") + '。此处只展示状态，不会切换当前排队Run。</p>';
+        restore(inspectBlocking);
+      }).catch(function (err) { window.FinfluxUI.toast(err.message, "error"); restore(inspectBlocking); });
+    });
+    var openRelease = host.querySelector("#btn-open-release-occupancy"), releasePanel = host.querySelector("#release-occupancy-panel");
+    if (openRelease && releasePanel) openRelease.addEventListener("click", function () { releasePanel.hidden = false; openRelease.disabled = true; host.querySelector("#release-occupancy-reason").focus(); });
+    var cancelRelease = host.querySelector("#btn-cancel-release-occupancy"); if (cancelRelease && releasePanel && openRelease) cancelRelease.addEventListener("click", function () { releasePanel.hidden = true; openRelease.disabled = false; });
+    var confirmRelease = host.querySelector("#btn-confirm-release-occupancy"); if (confirmRelease && openRelease) confirmRelease.addEventListener("click", function () {
+      var runId = openRelease.getAttribute("data-run-id"), queuedRunId = openRelease.getAttribute("data-queued-run-id"), reason = host.querySelector("#release-occupancy-reason").value.trim();
+      if (reason.length < 8) { window.FinfluxUI.toast("请填写至少8个字符的释放原因，写入审计链", "error"); return; }
+      busy(confirmRelease, "正在终止占用并关闭网关…");
+      window.FinfluxAPI.releaseRunOccupancy(runId, reason).then(function (receipt) {
+        var nextRunId = receipt.next_queued_run_id || queuedRunId;
+        window.FinfluxUI.toast(receipt.status === "ALREADY_FREE" ? "占用已释放；Supervisor将接管排队Run" : "占用Run已终止为WAIT；当前Run将在Supervisor下一轮启动", "success");
+        return window.FinfluxAPI.selectRun(nextRunId).then(function () {
+          window.FinfluxUI.refreshTopbar();
+          return render(host, true).then(function () {
+            window.setTimeout(function () { render(host, true); }, Math.max(1500, Number(receipt.supervisor_dispatch_eta_seconds || 5) * 1000 + 500));
+          });
+        });
+      }).catch(function (err) { window.FinfluxUI.toast("释放未执行：" + err.message, "error"); restore(confirmRelease); });
+    });
     var repair = host.querySelector("#btn-repair-agentteams"); if (repair && ws.run) repair.addEventListener("click", function () { busy(repair, "AgentTeams诊断同Run失败…"); window.FinfluxAPI.repairRun(ws.run.run_id).then(function (receipt) { var ok = ["CASE_LEAD_RECOVERY_REVIEW", "MISSING_WORKERS_REAWAKENED", "REQUESTED"].indexOf(receipt.status) >= 0; var message = receipt.status === "MISSING_WORKERS_REAWAKENED" ? "Case Lead授权已复用；仅缺失Worker被重新唤醒" : (ok ? "Case Lead已收到同Run恢复任务" : "恢复未越过门禁：" + receipt.status); window.FinfluxUI.toast(message, ok ? "success" : "warning"); return render(host, true); }).catch(function (err) { window.FinfluxUI.toast(err.message, "error"); return render(host, true); }); });
     var reconcile = host.querySelector("#btn-reconcile"); if (reconcile) reconcile.addEventListener("click", function () { busy(reconcile, "检查中…"); window.FinfluxAPI.reconcileControlPlane().then(function (res) { window.FinfluxUI.toast("控制面快照已固化 · " + short(res.snapshot_sha256), "success"); return render(host, true); }).catch(function (err) { window.FinfluxUI.toast(err.message, "error"); restore(reconcile); }); });
   }
 
-  function render(host, refresh) { return Promise.all([window.FinfluxAPI.getWorkspace(Boolean(refresh)), window.FinfluxAPI.getIntakeCapabilities(), window.FinfluxAPI.getTokenGuard(), window.FinfluxAPI.getProfiles()]).then(function (values) { var ws = values[0], capabilities = values[1], guard = values[2], registry = values[3]; ws.token_guard = guard; host.innerHTML = '<div class="truth-banner"><i class="ri-shield-check-line"></i><b>工业接入边界</b><span>' + esc(capabilities.truth_boundary) + ' · ' + esc(registry.count) + '个版本化Profile驱动当前界面</span></div><div class="unified-intake-layout">' + intakeWorkbench(capabilities) + submissionCard(ws, registry) + runtimeColumn(ws, guard) + '</div>'; bind(host, ws, registry); }); }
+  function render(host, refresh) { return Promise.all([window.FinfluxAPI.getWorkspace(Boolean(refresh)), window.FinfluxAPI.getIntakeCapabilities(), window.FinfluxAPI.getTokenGuard(), window.FinfluxAPI.getProfiles()]).then(function (values) { var ws = values[0], capabilities = values[1], guard = values[2], registry = values[3]; ws.token_guard = guard; host.innerHTML = '<div class="truth-banner"><i class="ri-shield-check-line"></i><b>工业接入边界</b><span>' + esc(capabilities.truth_boundary) + ' · ' + esc(registry.count) + '个版本化Profile驱动当前界面</span></div><div class="unified-intake-layout">' + intakeWorkbench(capabilities) + submissionCard(ws, registry) + runtimeColumn(ws, guard) + '</div>'; bind(host, ws, registry); scheduleLivePoll(host, liveStateSignature(ws, guard)); }); }
   window.FinfluxViews = window.FinfluxViews || {}; window.FinfluxViews.live = render;
 })();
