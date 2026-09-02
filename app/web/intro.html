@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>FinFlux · 金融语义准入与受控演化引擎</title>
+  <style>
+    :root {
+      --bg: #050b18;
+      --panel: rgba(13, 27, 50, .78);
+      --panel-strong: rgba(14, 31, 57, .96);
+      --line: rgba(114, 169, 224, .19);
+      --line-strong: rgba(55, 220, 255, .45);
+      --text: #f4f9ff;
+      --muted: #91a9c4;
+      --cyan: #2cddff;
+      --blue: #4d84ff;
+      --green: #48e3ad;
+      --amber: #ffbd65;
+      --violet: #997cff;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { margin: 0; min-height: 100%; }
+
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 76% 38%, rgba(76, 126, 255, .18), transparent 34%),
+        radial-gradient(circle at 24% 86%, rgba(27, 215, 203, .11), transparent 34%),
+        linear-gradient(145deg, #050a15 0%, #071225 48%, #050916 100%);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .52;
+      background-image:
+        linear-gradient(rgba(91, 142, 195, .055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(91, 142, 195, .055) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to bottom, black, transparent 92%);
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      width: 42vw;
+      height: 42vw;
+      right: -14vw;
+      top: -20vw;
+      border-radius: 50%;
+      border: 1px solid rgba(80, 150, 255, .2);
+      box-shadow: 0 0 100px rgba(52, 133, 255, .15), inset 0 0 100px rgba(52, 133, 255, .06);
+      pointer-events: none;
+    }
+
+    .stage {
+      position: relative;
+      z-index: 1;
+      width: min(1760px, calc(100vw - 84px));
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: clamp(24px, 3.2vh, 42px) 0 clamp(22px, 3vh, 36px);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: clamp(24px, 3.2vh, 42px);
+    }
+
+    .topbar,
+    .brand,
+    .runtime,
+    .actions,
+    .proof-strip,
+    .proof,
+    .flow-head,
+    .flow-node,
+    .node-title,
+    .legend {
+      display: flex;
+      align-items: center;
+    }
+
+    .topbar { justify-content: space-between; }
+
+    .brand { gap: 14px; }
+
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(54, 220, 255, .48);
+      border-radius: 14px;
+      background: linear-gradient(145deg, rgba(36, 221, 255, .22), rgba(74, 120, 255, .12));
+      box-shadow: 0 0 32px rgba(44, 221, 255, .12);
+    }
+
+    .brand-mark svg { width: 27px; height: 27px; }
+
+    .brand-copy strong {
+      display: block;
+      font-size: 21px;
+      letter-spacing: -.02em;
+    }
+
+    .brand-copy span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .runtime {
+      gap: 11px;
+      min-height: 42px;
+      padding: 0 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: var(--muted);
+      background: rgba(9, 19, 37, .7);
+      font-size: 12px;
+      letter-spacing: .08em;
+    }
+
+    .runtime-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--amber);
+      box-shadow: 0 0 13px currentColor;
+    }
+
+    .runtime.connected .runtime-dot { background: var(--green); }
+    .runtime.offline .runtime-dot { background: #ff7386; }
+
+    .hero {
+      align-self: center;
+      display: grid;
+      grid-template-columns: minmax(0, 1.04fr) minmax(470px, .76fr);
+      gap: clamp(54px, 6vw, 110px);
+      align-items: center;
+    }
+
+    .eyebrow {
+      margin: 0 0 22px;
+      color: var(--cyan);
+      font: 700 12px/1.4 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .19em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(66px, 7vw, 118px);
+      line-height: .9;
+      letter-spacing: -.065em;
+      text-shadow: 0 0 44px rgba(210, 237, 255, .08);
+    }
+
+    h1 em {
+      font-style: normal;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(125, 199, 255, .78);
+    }
+
+    h2 {
+      margin: 24px 0 0;
+      max-width: 830px;
+      font-size: clamp(28px, 3.2vw, 52px);
+      line-height: 1.18;
+      letter-spacing: -.035em;
+    }
+
+    .lead {
+      position: relative;
+      max-width: 780px;
+      margin: 28px 0 0;
+      padding-left: 20px;
+      color: #b9cbe0;
+      font-size: clamp(16px, 1.35vw, 22px);
+      line-height: 1.75;
+    }
+
+    .lead::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .28em;
+      bottom: .28em;
+      width: 3px;
+      border-radius: 3px;
+      background: linear-gradient(var(--cyan), var(--blue));
+      box-shadow: 0 0 20px rgba(44, 221, 255, .35);
+    }
+
+    .lead strong { color: #fff; font-weight: 720; }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 26px;
+    }
+
+    .chip {
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: #a8c0dc;
+      background: rgba(10, 23, 43, .68);
+      font-size: 12px;
+    }
+
+    .chip b { color: var(--cyan); margin-right: 6px; }
+
+    .actions { gap: 12px; margin-top: 34px; }
+
+    .button {
+      min-height: 48px;
+      padding: 0 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 1px solid rgba(79, 141, 255, .4);
+      border-radius: 12px;
+      color: #dceaff;
+      background: rgba(15, 32, 58, .72);
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .button:hover { transform: translateY(-2px); border-color: var(--cyan); }
+
+    .button.primary {
+      border-color: rgba(63, 209, 255, .62);
+      color: #04121f;
+      background: linear-gradient(100deg, var(--cyan), #5da3ff);
+      box-shadow: 0 12px 36px rgba(47, 178, 255, .22);
+    }
+
+    .button svg { width: 17px; height: 17px; }
+
+    .flow {
+      position: relative;
+      min-height: 530px;
+      padding: 26px;
+      border: 1px solid rgba(91, 149, 211, .23);
+      border-radius: 26px;
+      background:
+        linear-gradient(155deg, rgba(16, 34, 62, .9), rgba(7, 17, 34, .8)),
+        radial-gradient(circle at 90% 0, rgba(66, 205, 255, .2), transparent 35%);
+      box-shadow: 0 28px 80px rgba(0, 0, 0, .28), inset 0 1px rgba(255, 255, 255, .025);
+      overflow: hidden;
+    }
+
+    .flow::before {
+      content: "";
+      position: absolute;
+      left: 57px;
+      top: 102px;
+      bottom: 54px;
+      width: 1px;
+      background: linear-gradient(var(--cyan), var(--blue) 52%, var(--green));
+      opacity: .48;
+    }
+
+    .flow::after {
+      content: "";
+      position: absolute;
+      left: 54px;
+      top: 102px;
+      width: 7px;
+      height: 38px;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 0 9px #fff, 0 0 22px var(--cyan), 0 0 40px var(--blue);
+      animation: travel 4.8s ease-in-out infinite;
+    }
+
+    @keyframes travel {
+      0%, 7% { transform: translateY(0); opacity: 0; }
+      14% { opacity: 1; }
+      84% { opacity: 1; }
+      94%, 100% { transform: translateY(360px); opacity: 0; }
+    }
+
+    .flow-head { justify-content: space-between; margin-bottom: 18px; }
+
+    .flow-head span {
+      color: #a7bdd6;
+      font: 700 11px/1.4 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .13em;
+    }
+
+    .flow-head b {
+      padding: 6px 9px;
+      border: 1px solid rgba(72, 227, 173, .3);
+      border-radius: 999px;
+      color: var(--green);
+      background: rgba(72, 227, 173, .07);
+      font-size: 10px;
+      letter-spacing: .08em;
+    }
+
+    .flow-list { display: grid; gap: 10px; }
+
+    .flow-node {
+      position: relative;
+      min-height: 76px;
+      gap: 16px;
+      padding: 12px 15px 12px 10px;
+      border: 1px solid rgba(102, 157, 211, .16);
+      border-radius: 15px;
+      background: rgba(7, 19, 38, .66);
+      backdrop-filter: blur(8px);
+      transform: translateX(0);
+      transition: transform .25s ease, border-color .25s ease, background .25s ease;
+    }
+
+    .flow-node:hover {
+      transform: translateX(-4px);
+      border-color: rgba(44, 221, 255, .42);
+      background: rgba(10, 27, 51, .88);
+    }
+
+    .node-index {
+      position: relative;
+      z-index: 2;
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(66, 207, 255, .35);
+      border-radius: 12px;
+      color: var(--cyan);
+      background: #0a1d36;
+      font: 800 11px/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+      box-shadow: 0 0 18px rgba(44, 221, 255, .08);
+    }
+
+    .node-copy { min-width: 0; }
+
+    .node-title { gap: 9px; }
+
+    .node-title strong { font-size: 15px; letter-spacing: -.01em; }
+
+    .node-title small {
+      color: #6f8dab;
+      font: 700 9px/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+
+    .node-copy p {
+      margin: 5px 0 0;
+      overflow: hidden;
+      color: #829bb7;
+      font-size: 12px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .node-state {
+      margin-left: auto;
+      color: var(--green);
+      font: 700 10px/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+    }
+
+    .proof-strip {
+      min-height: 88px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr) auto;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(8, 19, 36, .72);
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+    }
+
+    .proof {
+      gap: 13px;
+      padding: 17px 22px;
+      border-right: 1px solid var(--line);
+    }
+
+    .proof-icon {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 32px;
+      border-radius: 10px;
+      color: var(--cyan);
+      background: rgba(44, 221, 255, .09);
+      font-weight: 900;
+    }
+
+    .proof strong { display: block; font-size: 13px; }
+    .proof span { display: block; margin-top: 3px; color: #748da8; font-size: 11px; }
+
+    .legend {
+      gap: 10px;
+      padding: 0 22px;
+      color: #7890aa;
+      font: 700 10px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .legend i { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); }
+
+    @media (max-width: 1080px) {
+      body { overflow: auto; }
+      .stage { width: min(920px, calc(100vw - 40px)); }
+      .hero { grid-template-columns: 1fr; }
+      .flow { min-height: auto; }
+      .proof-strip { grid-template-columns: 1fr; }
+      .proof { border-right: 0; border-bottom: 1px solid var(--line); }
+      .legend { min-height: 58px; }
+    }
+
+    @media (max-height: 760px) and (min-width: 1081px) {
+      .stage { gap: 18px; padding-top: 18px; padding-bottom: 18px; }
+      .hero { gap: 44px; }
+      .eyebrow { margin-bottom: 14px; }
+      h1 { font-size: 70px; }
+      h2 { margin-top: 16px; font-size: 32px; }
+      .lead { margin-top: 18px; font-size: 15px; }
+      .chips { margin-top: 18px; }
+      .actions { margin-top: 20px; }
+      .flow { min-height: 455px; padding: 20px; }
+      .flow::before { top: 85px; bottom: 42px; }
+      .flow::after { top: 85px; animation-name: travel-short; }
+      .flow-node { min-height: 64px; }
+      .proof-strip { min-height: 70px; }
+      .proof { padding: 12px 18px; }
+      @keyframes travel-short {
+        0%, 7% { transform: translateY(0); opacity: 0; }
+        14% { opacity: 1; }
+        84% { opacity: 1; }
+        94%, 100% { transform: translateY(300px); opacity: 0; }
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="stage">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none">
+            <path d="M16 2.8 27 9.2v13.6L16 29.2 5 22.8V9.2L16 2.8Z" stroke="#62e5ff" stroke-width="1.5"/>
+            <path d="m9.5 18.8 4.1-7.2 4.7 8.2 4.2-7.2" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="9.5" cy="18.8" r="1.6" fill="#46e2b0"/>
+            <circle cx="22.5" cy="12.6" r="1.6" fill="#8d7cff"/>
+          </svg>
+        </span>
+        <span class="brand-copy">
+          <strong>FinFlux</strong>
+          <span>Financial Semantic Control Plane</span>
+        </span>
+      </div>
+      <div class="runtime" id="runtime" aria-live="polite">
+        <span class="runtime-dot"></span>
+        <span id="runtime-text">正在读取系统状态</span>
+      </div>
+    </header>
+
+    <section class="hero" aria-label="FinFlux产品简介">
+      <div class="hero-copy">
+        <p class="eyebrow">GOAI · Agent Infra / Financial Data Governance</p>
+        <h1>Fin<em>Flux</em></h1>
+        <h2>金融语义准入<br>与受控演化引擎</h2>
+        <p class="lead">
+          金融数据字段存在，<strong>不代表业务含义正确。</strong><br>
+          在数据进入结算、估值、风控与研究系统之前，FinFlux通过确定性Skill、多Agent专业复核及Human Gate，生成可追溯、可签署、可回放的准入结果。
+        </p>
+        <div class="chips" aria-label="核心能力">
+          <span class="chip"><b>01</b>证据固化</span>
+          <span class="chip"><b>02</b>语义核验</span>
+          <span class="chip"><b>03</b>影响复算</span>
+          <span class="chip"><b>04</b>责任签署</span>
+        </div>
+        <div class="actions">
+          <a class="button primary" href="/#/live">
+            进入现场演示
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <button class="button" id="fullscreen" type="button">全屏录制</button>
+        </div>
+      </div>
+
+      <aside class="flow" aria-label="FinFlux责任链">
+        <div class="flow-head">
+          <span>ONE RUN · ONE RESPONSIBILITY CHAIN</span>
+          <b>FAIL CLOSED</b>
+        </div>
+        <div class="flow-list">
+          <article class="flow-node">
+            <span class="node-index">01</span>
+            <div class="node-copy"><div class="node-title"><strong>EvidenceBundle</strong><small>Immutable</small></div><p>固化原始资料、来源声明、时间与SHA-256</p></div>
+            <span class="node-state">SEALED</span>
+          </article>
+          <article class="flow-node">
+            <span class="node-index">02</span>
+            <div class="node-copy"><div class="node-title"><strong>Deterministic Skills</strong><small>Truth</small></div><p>契约解析、证据核验与金融影响复算</p></div>
+            <span class="node-state">VERIFIED</span>
+          </article>
+          <article class="flow-node">
+            <span class="node-index">03</span>
+            <div class="node-copy"><div class="node-title"><strong>AgentTeams</strong><small>Collaboration</small></div><p>Manager动态路由，Case Lead按需派发专业Worker</p></div>
+            <span class="node-state">REVIEW</span>
+          </article>
+          <article class="flow-node">
+            <span class="node-index">04</span>
+            <div class="node-copy"><div class="node-title"><strong>Human Gate</strong><small>Authority</small></div><p>机器只给建议，责任人决定批准、等待或阻断</p></div>
+            <span class="node-state">SIGN</span>
+          </article>
+          <article class="flow-node">
+            <span class="node-index">05</span>
+            <div class="node-copy"><div class="node-title"><strong>DataPass</strong><small>Auditable</small></div><p>结果、证据、Skill、Token与签署绑定同一Run</p></div>
+            <span class="node-state">TRACE</span>
+          </article>
+        </div>
+      </aside>
+    </section>
+
+    <footer class="proof-strip">
+      <div class="proof"><span class="proof-icon">≠</span><div><strong>接口成功 ≠ 金融语义正确</strong><span>把错误拦在生产系统之前</span></div></div>
+      <div class="proof"><span class="proof-icon">#</span><div><strong>金融数值不由模型编造</strong><span>确定性计算与来源哈希共同验证</span></div></div>
+      <div class="proof"><span class="proof-icon">✓</span><div><strong>Agent建议不替代Human批准</strong><span>高责任决策保留清晰责任边界</span></div></div>
+      <div class="legend"><i></i> Evidence → Decision → Accountability</div>
+    </footer>
+  </main>
+
+  <script>
+    (function () {
+      "use strict";
+      var runtime = document.getElementById("runtime");
+      var runtimeText = document.getElementById("runtime-text");
+      fetch("/api/status", { cache: "no-store" })
+        .then(function (response) { if (!response.ok) throw new Error("status unavailable"); return response.json(); })
+        .then(function (data) {
+          var agentteams = data.agentteams || {};
+          var team = agentteams.team || {};
+          if (agentteams.connected) {
+            runtime.classList.add("connected");
+            runtimeText.textContent = "AgentTeams 已连接 · " + (team.ready_workers || 0) + "/" + (team.total_workers || 0) + " Worker Ready";
+          } else {
+            runtime.classList.add("offline");
+            runtimeText.textContent = "Runtime未连接 · 确定性预检可用";
+          }
+        })
+        .catch(function () {
+          runtime.classList.add("offline");
+          runtimeText.textContent = "状态暂不可读 · 可进入控制台检查";
+        });
+
+      document.getElementById("fullscreen").addEventListener("click", function () {
+        if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen();
+        } else if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key.toLowerCase() === "f") document.getElementById("fullscreen").click();
+        if (event.key === "Enter") window.location.href = "/#/live";
+      });
+    }());
+  </script>
+</body>
+</html>
+
+

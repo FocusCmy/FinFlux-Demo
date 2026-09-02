@@ -58,7 +58,7 @@ cd FinFlux-Demo
 docker compose up --build -d
 ```
 
-访问 <http://127.0.0.1:8768>，健康检查：
+先访问16:9产品开场页 <http://127.0.0.1:8768/intro.html>，再进入现场Case工作台；主应用仍位于 <http://127.0.0.1:8768>。健康检查：
 
 ```powershell
 Invoke-RestMethod http://127.0.0.1:8768/api/status

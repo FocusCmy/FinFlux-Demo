@@ -62,7 +62,7 @@ cd FinFlux-Demo
 docker compose up --build -d
 ```
 
-Open <http://127.0.0.1:8768>. Check health with:
+Open the 16:9 product introduction at <http://127.0.0.1:8768/intro.html>, then enter the live Case workbench. The main application remains available at <http://127.0.0.1:8768>. Check health with:
 
 ```powershell
 Invoke-RestMethod http://127.0.0.1:8768/api/status
