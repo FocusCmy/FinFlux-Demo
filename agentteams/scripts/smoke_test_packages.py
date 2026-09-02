@@ -75,13 +75,21 @@ def read_json(path: Path) -> dict[str, Any]:
 
 
 def run_checked(command: list[str], *, env: dict[str, str] | None = None) -> str:
+    child_env = os.environ.copy()
+    if env:
+        child_env.update(env)
+    # GitHub Windows runners may expose cp1252 as the child-process console
+    # encoding. Worker receipts contain legitimate Chinese business text, so
+    # force a deterministic UTF-8 transport instead of escaping or dropping it.
+    child_env["PYTHONUTF8"] = "1"
+    child_env["PYTHONIOENCODING"] = "utf-8"
     completed = subprocess.run(
         command,
         check=False,
         capture_output=True,
         text=True,
         encoding="utf-8",
-        env=env,
+        env=child_env,
     )
     if completed.returncode != 0:
         raise RuntimeError(

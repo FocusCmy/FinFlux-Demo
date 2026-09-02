@@ -7,6 +7,9 @@ on:
 jobs:
   validate:
     runs-on: windows-latest
+    env:
+      PYTHONUTF8: "1"
+      PYTHONIOENCODING: "utf-8"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -15,4 +18,3 @@ jobs:
       - run: pip install -r requirements.txt
       - shell: pwsh
         run: ./scripts/FinFlux.ps1 -Action Validate
-
