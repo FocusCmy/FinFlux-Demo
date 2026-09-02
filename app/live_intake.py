@@ -4030,9 +4030,55 @@ class LiveIntakeRepository:
             run = self.get_run(run_id)
             if run.get("agentteams_run_id"):
                 return run
+            now = time.time()
+            superseded_run_ids: list[str] = []
+            # A new, explicit operator request must not wait behind historical
+            # Runs that never reached AgentTeams.  Preserve every old Run and
+            # its evidence, but retire its unstarted queue intent.  Active or
+            # already-dispatched Runs are deliberately outside this operation.
+            for path in self.runs.glob("RUN-*.json"):
+                queued = self._cached_json_read(path)
+                if not isinstance(queued, dict):
+                    continue
+                queued_run_id = str(queued.get("run_id") or "")
+                if not queued_run_id or queued_run_id == run_id:
+                    continue
+                if queued.get("agentteams_run_id"):
+                    continue
+                queued_request = dict(queued.get("dispatch_request") or {})
+                if queued_request.get("status") not in {"QUEUED", "RETRY_WAIT"}:
+                    continue
+                if str(queued.get("state") or "") not in {
+                    "READY_FOR_AGENTTEAMS",
+                    "DISPATCH_GUARDED",
+                    "AGENTTEAMS_DISPATCH_FAILED",
+                }:
+                    continue
+                queued_request.update(
+                    {
+                        "status": "SUPERSEDED",
+                        "superseded_by_run_id": run_id,
+                        "superseded_at_utc": utc_now(),
+                        "next_attempt_epoch": None,
+                    }
+                )
+                queued["dispatch_request"] = queued_request
+                queued.setdefault("events", []).append(
+                    self._event(
+                        len(queued.get("events") or []) + 1,
+                        queued_run_id,
+                        "旧派发请求已由最新操作替代",
+                        f"未启动的排队请求由{run_id}替代；Run证据仍完整保留",
+                        "SUPERSEDED",
+                    )
+                )
+                queued["updated_at"] = utc_now()
+                _json_atomic(path, queued)
+                self._invalidate_json_cache(path)
+                superseded_run_ids.append(queued_run_id)
+
             request = dict(run.get("dispatch_request") or {})
             if request.get("status") not in {"QUEUED", "RETRY_WAIT"}:
-                now = time.time()
                 request = {
                     "protocol": "FINFLUX_BACKGROUND_DISPATCH_REQUEST_V1",
                     "status": "QUEUED",
@@ -4054,9 +4100,29 @@ class LiveIntakeRepository:
                 )
             else:
                 request["status"] = "QUEUED"
+                request["requested_by"] = str(requested_by or "demo.operator")
+                request["requested_at_utc"] = utc_now()
+                request["requested_epoch"] = now
                 request["next_attempt_epoch"] = min(
                     float(request.get("next_attempt_epoch") or time.time()),
                     time.time(),
+                )
+            if superseded_run_ids:
+                request["superseded_request_count"] = len(superseded_run_ids)
+                request["superseded_run_ids_sha256"] = canonical_sha256(
+                    sorted(superseded_run_ids)
+                )
+                run.setdefault("events", []).append(
+                    self._event(
+                        len(run.get("events") or []) + 1,
+                        run_id,
+                        "最新操作已取得派发队列优先权",
+                        (
+                            f"已将{len(superseded_run_ids)}个未启动旧请求标记为"
+                            "SUPERSEDED；未删除任何Run或证据"
+                        ),
+                        "QUEUED",
+                    )
                 )
             run["dispatch_request"] = request
             self._persist_run(run)
@@ -4085,7 +4151,10 @@ class LiveIntakeRepository:
             candidates.append((float(request.get("requested_epoch") or 0), run))
         if not candidates:
             return None
-        candidates.sort(key=lambda item: item[0])
+        # Prefer the latest explicit operator intent.  request_dispatch also
+        # retires older unstarted requests; reverse ordering keeps pre-upgrade
+        # backlogs from delaying the current on-site demonstration.
+        candidates.sort(key=lambda item: item[0], reverse=True)
         return copy.deepcopy(candidates[0][1])
 
     def record_dispatch_retry(
