@@ -1,84 +1,92 @@
-# FinFlux：金融语义准入与受控演化引擎
+# FinFlux: Financial Semantic Admission and Controlled Evolution Engine
 
-[![CI](https://github.com/FocusCmy/FinFlux-Demo/actions/workflows/ci.yml/badge.svg)](https://github.com/FocusCmy/FinFlux-Demo/actions/workflows/ci.yml)
+**English** | [简体中文](README.zh-CN.md)
+
+[![CI](https://github.com/FocusCmy/FinFlux-Demo/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/FocusCmy/FinFlux-Demo/actions/workflows/ci.yml?query=branch%3Amain)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
-FinFlux在金融数据进入估值、结算、风控、研究或回测系统之前，完成来源固化、业务语义核验、多Agent专业复核、DataPass生成和Human签署。系统不把“接口返回成功”当成“金融含义正确”，也不允许模型直接改写金融数值或替代责任人批准。
+FinFlux verifies financial data before it enters valuation, settlement, risk, research, or backtesting systems. It seals the source evidence, validates the intended business meaning, coordinates specialist review through AgentTeams, produces a DataPass, and preserves the final Human decision. An HTTP success response is never treated as proof that the financial semantics are correct. Models cannot rewrite financial values or grant final admission.
 
-![FinFlux数据接入](docs/screenshots/01-live-intake.png)
+![FinFlux live intake](docs/screenshots/01-live-intake.png)
 
-## 核心运行链
+## Why FinFlux
 
-1. 用户上传文件、粘贴金融文本或提供公开URL，并用自然语言说明下游用途。
-2. 后端固化原始字节、来源声明和SHA256，形成不可变EvidenceBundle。
-3. 确定性Profile先识别可验证字段；未知或证据不足的数据返回`WAIT`及补充项，不编造结论。
-4. RunSupervisor在后台推进同一个Run：Manager动态路由，Case Lead派发按需Worker，Worker运行时发现并执行带版本的Skill。
-5. Worker产物汇聚成DataPassDraft；`PASS`、`WAIT`、`BLOCK`都必须进入Human Gate，由责任人批准、退回或确认拦截。
-6. 最终导出MD、PDF、JSON和审计ZIP；Trace关联模型输入输出、工具I/O、Skill版本、哈希、Token账本与人工签署。
+Financial data failures are often semantic rather than syntactic: a field is populated and technically valid, but represents the wrong business concept for the downstream task. FinFlux makes that decision inspectable and accountable by separating deterministic calculation, model-assisted professional review, immutable evidence, and human authorization.
 
-![AgentTeams协作](docs/screenshots/02-agentteams-collaboration.png)
+The runtime follows one auditable chain:
 
-## 界面预览与短演示
+1. A user uploads a file, pastes financial text, or provides a public URL, then describes the downstream purpose in natural language.
+2. The backend seals the original bytes, source declaration, and SHA-256 digest into an immutable `EvidenceBundle`.
+3. A deterministic Profile extracts verifiable facts. Unknown or insufficient evidence returns `WAIT` with explicit missing items instead of a fabricated conclusion.
+4. `RunSupervisor` advances the same Run in the background: the Manager selects a route, the Case Lead dispatches only the required Workers, and each Worker discovers and executes versioned Skills at runtime.
+5. Sealed Worker artifacts are composed into a `DataPassDraft`. Every `PASS`, `WAIT`, or `BLOCK` recommendation reaches the Human Gate for approval, return, or confirmed rejection.
+6. The signed result is exported as Markdown, PDF, JSON, and an audit ZIP. One Trace links model I/O, tool I/O, Skill versions and hashes, the provider Token ledger, and the Human signature.
 
-下图为5个真实前端页面组成的约8秒界面导览，方便首次了解操作顺序；它是截图轮播，不作为模型已经运行的证明。真实多Agent执行以同一Run的Matrix事件、Worker产物、Skill回执、模型网关Token账本及Human签署为准。
+![AgentTeams collaboration](docs/screenshots/02-agentteams-collaboration.png)
 
-![FinFlux约8秒界面导览](docs/demo/finflux-ui-walkthrough.gif)
+## Interface tour
 
-| 数据接入 | AgentTeams协作 |
+The animation below is an approximately eight-second tour assembled from five real UI pages. It helps reviewers understand the operating sequence, but it is not presented as proof of model execution. A real multi-Agent Run is evidenced by Matrix events, sealed Worker artifacts, Skill receipts, provider Token records, and the Human signature bound to the same Run.
+
+![FinFlux UI walkthrough](docs/demo/finflux-ui-walkthrough.gif)
+
+| Live intake | AgentTeams collaboration |
 | --- | --- |
-| [![数据接入](docs/screenshots/01-live-intake.png)](docs/screenshots/01-live-intake.png) | [![AgentTeams协作](docs/screenshots/02-agentteams-collaboration.png)](docs/screenshots/02-agentteams-collaboration.png) |
-| DataPass与Human Gate | 评测与运行观测 |
-| [![DataPass与Human Gate](docs/screenshots/03-datapass-human.png)](docs/screenshots/03-datapass-human.png) | [![评测与运行观测](docs/screenshots/04-evaluation.png)](docs/screenshots/04-evaluation.png) |
+| [![Live intake](docs/screenshots/01-live-intake.png)](docs/screenshots/01-live-intake.png) | [![AgentTeams collaboration](docs/screenshots/02-agentteams-collaboration.png)](docs/screenshots/02-agentteams-collaboration.png) |
+| DataPass and Human Gate | Evaluation and observability |
+| [![DataPass and Human Gate](docs/screenshots/03-datapass-human.png)](docs/screenshots/03-datapass-human.png) | [![Evaluation and observability](docs/screenshots/04-evaluation.png)](docs/screenshots/04-evaluation.png) |
 
-完整Trace与恢复页面：[查看原图](docs/screenshots/05-trace-recovery.png)。现场真实运行录像建议上传到该仓库的GitHub Release，再把附件链接补充到本节，避免把较大的MP4写入Git历史。
+See the full [Trace and recovery view](docs/screenshots/05-trace-recovery.png). A real execution video should be attached to a GitHub Release and linked here rather than committing a large MP4 into Git history.
 
-## 公开仓库边界
+## Public repository boundary
 
-本仓库包含应用源码、必要测试、AgentTeams部署/Agent/Skill定义、协议、Docker文件和150条来源绑定记录的Manifest。`app/data/real_50x3_v1/manifest.json`记录期货、股票、基金各50条的来源URL、采集时间、来源文件SHA256、记录SHA256和权属状态。
+This repository includes the application source, required tests, AgentTeams deployment definitions, Agent and Skill packages, protocols, Docker files, and a source-bound 150-record manifest. `app/data/real_50x3_v1/manifest.json` contains 50 futures, 50 equity, and 50 fund records with source URLs, capture timestamps, source-file SHA-256 values, record SHA-256 values, and rights status.
 
-以下内容故意不进入Git：API Key、Human凭据、运行时状态、Prompt/Token账本、历史Run、审计ZIP、视频、第三方原始行情以及内嵌AgentTeams源码。Manifest中的数据源均标记`REVIEW_REQUIRED`；评委或开发者应上传自己有权处理的数据进行现场复现。
+The following are intentionally excluded from Git: API keys, Human credentials, runtime state, prompt and Token ledgers, historical Runs, audit ZIP files, videos, third-party raw market data, and embedded AgentTeams source code. Manifest sources are marked `REVIEW_REQUIRED`; evaluators and developers should upload data they are authorized to process when reproducing a live Run.
 
-## 环境要求
+## Requirements
 
-- Windows 10/11 + PowerShell 5.1/7，或Linux/macOS + Bash；
-- Python 3.10–3.13（Docker镜像固定为Python 3.12）；
-- Docker Desktop / Docker Engine 24+，支持`docker compose`；
-- 完整多Agent演示需可拉取AgentTeams v1.2.2镜像并拥有一个OpenAI兼容模型API；
-- 浏览器访问端口`8768`，AgentTeams默认使用`18080/18001/18088/18888`。
+- Windows 10/11 with PowerShell 5.1/7, or Linux/macOS with Bash;
+- Python 3.10–3.13; the Docker image is pinned to Python 3.12;
+- Docker Desktop or Docker Engine 24+ with `docker compose`;
+- the complete multi-Agent demonstration requires access to the AgentTeams v1.2.2 image and an OpenAI-compatible model API;
+- the web application uses port `8768`; AgentTeams defaults to `18080`, `18001`, `18088`, and `18888`.
 
-## 方式一：30秒启动前端和确定性内核
+## Quick start: UI and deterministic core
 
-无需模型密钥，适合检查上传、EvidenceBundle、Profile预检、页面和API：
+No model credentials are required. This mode validates upload, EvidenceBundle sealing, Profile precheck, the UI, and the public API.
 
 ```powershell
 git clone https://github.com/FocusCmy/FinFlux-Demo.git
-cd FinFlux_demo
+cd FinFlux-Demo
 docker compose up --build -d
 ```
 
-访问 <http://127.0.0.1:8768>，健康检查：
+Open <http://127.0.0.1:8768>. Check health with:
 
 ```powershell
 Invoke-RestMethod http://127.0.0.1:8768/api/status
 docker compose ps
 ```
 
-停止：
+Stop the service with:
 
 ```powershell
 docker compose down
 ```
 
-此模式没有伪装成AgentTeams运行：Runtime未部署时，模型链严格显示未就绪；确定性预检仍可运行。
+This mode does not impersonate AgentTeams. If the Runtime is absent, the model path is shown as not ready while deterministic precheck remains available.
 
-如果构建停在`failed to fetch anonymous token`，表示主机无法访问Docker Hub鉴权服务。请先配置Docker Desktop代理或镜像加速，并确认能够拉取`python:3.12-slim`，再重新执行`docker compose up --build -d`；不要把该网络错误解释成FinFlux运行成功。也可以从可访问的镜像仓库替换基础镜像：
+If the build stops at `failed to fetch anonymous token`, the host cannot reach Docker Hub authentication. Configure the Docker Desktop proxy or a registry mirror, verify that `python:3.12-slim` can be pulled, and retry. A reachable compatible base image can also be selected explicitly:
 
 ```powershell
-$env:FINFLUX_PYTHON_IMAGE = '<可访问镜像仓库>/library/python:3.12-slim'
+$env:FINFLUX_PYTHON_IMAGE = '<reachable-registry>/library/python:3.12-slim'
 docker compose up --build -d
 ```
 
-## 方式二：源码启动和自检
+## Source startup and validation
+
+Windows:
 
 ```powershell
 python -m venv .venv
@@ -89,7 +97,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\FinFlux.ps1 -Action Validate
 powershell -ExecutionPolicy Bypass -File .\scripts\FinFlux.ps1 -Action Start
 ```
 
-Linux/macOS：
+Linux/macOS:
 
 ```bash
 python3 -m venv .venv
@@ -98,16 +106,16 @@ pip install -r requirements.txt
 bash scripts/start-local-demo.sh
 ```
 
-## 方式三：完整AgentTeams v1.2.2现场链
+## Full AgentTeams v1.2.2 live chain
 
-凭据必须保存在仓库外。先复制模板：
+Credentials must stay outside the repository. Copy the template first:
 
 ```powershell
 Copy-Item .\agentteams\.env.example C:\finflux-runtime.env
 notepad C:\finflux-runtime.env
 ```
 
-至少填写以下内容；模型名称按供应商实际支持值填写：
+Configure at least the following values. Use a model identifier supported by the selected provider:
 
 ```dotenv
 AGENTTEAMS_LLM_PROVIDER=openai-compat
@@ -117,7 +125,7 @@ AGENTTEAMS_LLM_API_KEY=<api-key>
 AGENTTEAMS_ADMIN_PASSWORD=<strong-local-password>
 ```
 
-先拉取并校验官方AgentTeams源码（写入已忽略的`.cache`，不会提交），再构建八个可路由Worker包、完成本地冷启动、部署Runtime并启动FinFlux：
+Fetch and verify the official AgentTeams source into the ignored `.cache` directory, build the eight routable Worker packages, perform a clean cold start, deploy the Runtime, and start FinFlux:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\FinFlux.ps1 -Action BootstrapAgents
@@ -127,70 +135,61 @@ powershell -ExecutionPolicy Bypass -File .\scripts\FinFlux.ps1 -Action Deploy -R
 powershell -ExecutionPolicy Bypass -File .\scripts\FinFlux.ps1 -Action Start -RuntimeEnvFile C:\finflux-runtime.env
 ```
 
-`ColdStart`证明干净副本能从空状态启动Web/API并读取150条Manifest；`Deploy`的预检和Runtime状态页负责证明AgentTeams资源真实Ready。任一步失败，系统都不会生成假的Worker结果。若Human账号由CR生成，再执行：
+`ColdStart` proves that a clean checkout can boot the Web/API layer and read the 150-record manifest. `Deploy` checks that the AgentTeams resources are genuinely ready. A failed step never generates fake Worker output.
+
+If the Human account is generated by a custom resource, retrieve it with:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\agentteams\scripts\Show-AgentTeamsHumanCredential.ps1
 ```
 
-把得到的Human用户名和密码写入仓库外的`C:\finflux-runtime.env`，重启FinFlux。不要把该文件复制回项目。
+Store the returned username and password in `C:\finflux-runtime.env`, restart FinFlux, and never copy that file into the repository.
 
-## 现场操作
+## Live demonstration
 
-1. 打开“数据接入”，拖入CSV/JSON/PDF/文本，或填写公开URL。
-2. 业务目标写清“用于什么系统、什么日期、需要核验什么语义”，例如：`核验这份期货数据是否可用于每日盈亏结算，并说明候选字段的语义依据。`
-3. 点击“一键启动真实AgentTeams核验”。浏览器只观察；RunSupervisor在后台持续同步Matrix、Worker产物和模型网关账本。
-4. 在“AgentTeams协作”查看Manager路由、Case Lead派发、Worker和Skill版本；在“Trace”展开模型、工具和Token证据。
-5. Run到达`AWAITING_HUMAN`后进入“Human Gate”：批准、补充材料后再判断，或确认拦截。Agent建议不能自行变成最终批准。
-6. 签署后导出最终报告和审计ZIP。
+1. Open **Live Intake** and upload CSV, JSON, PDF, or text, paste financial text, or enter a public URL.
+2. State the business purpose precisely: the target system, effective date, and semantic question. Example: `Verify whether this futures dataset is suitable for daily settlement P&L and explain the semantic basis for the selected field.`
+3. Select **Start real AgentTeams review**. The browser only observes; `RunSupervisor` continues synchronizing Matrix, Worker artifacts, and the model-gateway ledger in the background.
+4. Open **AgentTeams** to inspect Manager routing, Case Lead dispatch, Workers, and Skill versions. Open **Trace** for model, tool, and Token evidence.
+5. When the Run reaches `AWAITING_HUMAN`, open **Human Gate** and approve, request additional evidence, or confirm the block. An Agent recommendation cannot authorize itself.
+6. After signing, export the final report and audit ZIP.
 
-![DataPass与Human Gate](docs/screenshots/03-datapass-human.png)
+![DataPass and Human Gate](docs/screenshots/03-datapass-human.png)
 
-## 状态含义
+## State model
 
-- `PASS`：证据和契约支持进入人工批准候选，不代表Agent已经批准。
-- `WAIT`：用途、来源、权属、时间或证据不足；界面列出必须补充的内容。
-- `BLOCK`：已观察到确定性冲突或可量化影响；界面给出依据和修订建议，Human可退回形成Child Run复核。
-- `AWAITING_HUMAN`：多Agent核验已经结束，等待有责任权限的人作最终决定。
+- `PASS`: evidence and contract support admission as a Human-approval candidate; it does not mean an Agent granted approval.
+- `WAIT`: purpose, source, rights, effective time, or evidence is insufficient; the UI lists the required additions.
+- `BLOCK`: a deterministic conflict or quantified impact has been observed; the UI presents evidence and a revision path. Human return creates a Child Run for review.
+- `AWAITING_HUMAN`: multi-Agent review is complete and a responsible Human must make the final decision.
 
-## 验证与GitHub提交
+## Validation and contribution
 
-提交前执行：
+Run the complete zero-model submission gate before committing:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\FinFlux.ps1 -Action Validate
 git status --short
 ```
 
-该门禁执行Worker包构建、AgentTeams配置校验、Skill烟测、核心单元测试和前端JavaScript语法检查。它不调用模型，不产生费用。完整模型链由现场上传数据触发，Token必须来自模型网关账本，不能由前端估算。
+The gate builds Worker packages, validates AgentTeams configuration, smoke-tests Skills, runs the public core test suite, and parses the frontend JavaScript. It does not call a model or incur provider cost. A live uploaded case triggers the full model chain; displayed Token usage must come from the provider gateway ledger and is never estimated by the frontend.
 
-初始化自己的GitHub仓库：
-
-```powershell
-git init
-git add .
-git commit -m "feat: publish FinFlux runnable demo"
-git branch -M main
-git remote add origin https://github.com/FocusCmy/FinFlux-Demo.git
-git push -u origin main
-```
-
-## 目录
+## Repository layout
 
 ```text
-app/                         后端、前端、RunSupervisor、协议与必要测试
-app/agentteams-skills/       可运行、带版本和哈希的Skill
-app/data/real_50x3_v1/       150条Manifest和聚合评测；不含第三方原始快照
-app/data/research_data_layer_v1/ 研报/宏观资料元数据、来源链接与哈希；不含原始正文
-agentteams/                  Agent/Skill包、CR配置及部署/恢复脚本
-scripts/                     统一启动与验收入口
-docs/screenshots/            精选真实界面截图
-Dockerfile                   FinFlux应用镜像
-docker-compose.yml           单机Web/确定性内核启动
-LICENSE                      Apache-2.0
-THIRD_PARTY_NOTICES.md       AgentTeams及金融数据边界
+app/                             Backend, frontend, RunSupervisor, protocols, and tests
+app/agentteams-skills/           Executable, versioned, hash-bound Skills
+app/data/real_50x3_v1/           150-record manifest and aggregate evaluation; no raw snapshots
+app/data/research_data_layer_v1/ Research and macro metadata, source links, and hashes; no raw text
+agentteams/                      Agent/Skill packages, custom resources, deployment/recovery scripts
+scripts/                         Unified startup and validation entry points
+docs/screenshots/                Curated interface screenshots
+Dockerfile                       FinFlux application image
+docker-compose.yml               Local Web/deterministic-core startup
+LICENSE                          Apache License 2.0
+THIRD_PARTY_NOTICES.md           AgentTeams and financial-data boundaries
 ```
 
-## 许可证
+## License
 
-FinFlux代码采用[Apache License 2.0](LICENSE)。第三方项目和金融数据不因本许可证获得再授权，详见[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
+FinFlux source code is licensed under the [Apache License 2.0](LICENSE). Third-party software and financial data are not relicensed by this repository; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
