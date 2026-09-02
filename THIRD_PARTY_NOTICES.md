@@ -12,6 +12,16 @@ FinFlux integrates with the official AgentScope AgentTeams runtime:
 
 Deployment scripts use the pinned v1.2.2 runtime images and FinFlux CR/configuration. FinFlux-specific adapters, contracts, Skills and Demo code are distinct submission work; interoperability does not imply upstream endorsement.
 
+## PyMuPDF
+
+FinFlux uses PyMuPDF to create the immutable PDF copy of a signed result:
+
+- Project: <https://pymupdf.readthedocs.io/>
+- Package: `PyMuPDF==1.28.0`
+- License: GNU Affero General Public License v3.0 or a commercial Artifex license
+
+PyMuPDF remains a separately distributed dependency and is not relicensed by FinFlux's Apache-2.0 license. Deployers are responsible for selecting and complying with the applicable PyMuPDF license. The MD and JSON result formats remain inspectable without granting Agent authority to sign a decision.
+
 ## Public financial-data evidence
 
 The reproducibility evidence refers to public information collected through or compared across:
