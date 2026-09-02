@@ -58,6 +58,20 @@ class AgentTeamsAdapterPublicContractTests(unittest.TestCase):
             result = AgentTeamsService(store).provider_guard()
             self.assertFalse(result["allowed"])
             self.assertEqual(result["active_run_count"], 1)
+            self.assertEqual(
+                result["active_runs"],
+                [
+                    {
+                        "run_id": "RUN-LIVE-TEST-0002",
+                        "case_id": None,
+                        "state": "RUNNING",
+                        "human_state": None,
+                        "agentteams_bound": False,
+                        "workers_completed": 0,
+                        "workers_required": 0,
+                    }
+                ],
+            )
 
 
 if __name__ == "__main__":

@@ -107,7 +107,10 @@
   }
 
   function submissionCard(ws, registry) {
-    var s = ws.latest_submission || ws.submission;
+    // When the operator selects an older/guarding Run, show the evidence that
+    // is actually bound to that Run.  Falling back to the latest Submission
+    // used to hide the selected Run and made the following page look empty.
+    var s = ws.run_submission || ws.latest_submission || ws.submission;
     if (!s) return '<section class="intake-output"><div class="col-title"><span class="col-num">2</span><div><p class="eyebrow">NO EVIDENCE</p><h2>等待真实资料</h2></div></div><div class="card empty-card"><i class="ri-inbox-archive-line"></i><h3>选择左侧任一入口</h3><p>系统接受原始表格、文本、网页或Provider记录，并按内容哈希登记其原始版本。</p></div></section>';
     var f = s.file, ready = s.execution_readiness === "AGENTTEAMS_EXECUTABLE", waiting = /^WAIT_/.test(s.execution_readiness || ""), caseInput = s.case_input || {}, hasIntent = Boolean(caseInput.task_instruction);
     var run = ws.run && ws.run.submission_id === s.submission_id ? ws.run : null;
@@ -129,20 +132,36 @@
     var tokenNote = run.agentteams_run_id ? (providerReported ? "供应商真实usage：" + window.FinfluxUI.fmtNum(tokenLedger.reported) + " Token。" : "已进入AgentTeams；供应商usage尚未归集，不用字符估算冒充Token。") : "仅执行确定性Skill，模型调用0次、Token=0。";
     var activeIds = (guard && guard.active_run_ids) || [];
     var activeBlocker = activeIds.filter(function (id) { return id && id !== run.run_id; })[0] || null;
+    var activeRuns = (guard && guard.active_runs) || [];
+    var blocker = activeRuns.filter(function (item) { return item && item.run_id === activeBlocker; })[0] || {};
+    var blockerState = String(blocker.state || "状态读取中");
+    var blockerHuman = blockerState === "AWAITING_HUMAN" || blocker.human_state === "AWAITING_HUMAN";
+    var blockerRunning = ["RUNNING", "AGENTTEAMS_RUNNING", "MANAGER_AUTHORIZED", "WORKERS_RUNNING"].indexOf(blockerState) >= 0;
     var blockedByActiveRun = Boolean(activeBlocker && ((guard && guard.reasons) || []).some(function (reason) { return String(reason).indexOf('ACTIVE_RUN_LIMIT') === 0; }));
     var canDispatch = runtime && runtime.connected && guard && guard.allowed;
     var dispatchLabel = !runtime || !runtime.connected ? 'Runtime离线，禁止派发' : (!guard || !guard.allowed ? (blockedByActiveRun ? '已有Run待处理' : '运行门禁未放行') : '提交真实AgentTeams');
     var terminal = ["COMPLETED", "AWAITING_HUMAN", "STOPPED_BY_GATE", "BUDGET_EXCEEDED", "MODEL_CONTROL_CLEANUP_FAILED", "CANCELLED_BY_SESSION_RESET"].indexOf(String(run.state)) >= 0;
     var repairs = (run.self_healing_attempts || []).concat(run.supervisor_recovery_attempts || []);
+    var stopReason = ((run.emergency_stop || {}).reason || (run.supervisor_outcome || {}).reason || ((run.dispatch_guard || {}).reasons || []).join(" · ") || "");
+    var state = String(run.state || "UNKNOWN");
+    var stateGuide = state === "AWAITING_HUMAN"
+      ? '<div class="run-next-action next-human"><i class="ri-user-follow-line"></i><div><b>DataPass草案已形成，下一步在 Human Gate</b><span>只有此状态才允许Human签署；进入后可批准、隔离或退回补证。</span></div><a class="btn btn-primary" href="#/human-gate">进入 Human Gate</a></div>'
+      : (state === "RUNNING" || (run.agentteams_run_id && !terminal)
+        ? '<div class="run-next-action next-running"><i class="ri-node-tree"></i><div><b>AgentTeams正在后台运行</b><span>浏览器可以关闭；到“多Agent决策台”查看Manager、Case Lead和Worker产物。</span></div><a class="btn btn-primary" href="#/collaboration">查看协作进度</a></div>'
+        : (["STOPPED_BY_GATE", "BUDGET_EXCEEDED", "MODEL_CONTROL_CLEANUP_FAILED", "CANCELLED_BY_SESSION_RESET"].indexOf(state) >= 0
+          ? '<div class="run-next-action next-stopped"><i class="ri-error-warning-line"></i><div><b>本Run已停止，尚无DataPass可签署</b><span>' + esc(stopReason || "请在Trace中查看停止原因；Human Gate不会为缺失的Agent结论生成审批项。") + '</span></div><a class="btn btn-outline" href="#/trace">查看原因与恢复记录</a></div>'
+          : (state === "DISPATCH_GUARDED"
+            ? '<div class="run-next-action next-queued"><i class="ri-time-line"></i><div><b>本Run已排队，尚未调用模型</b><span>后台会在占用Run结束后派发；本页保留当前状态，不会自动跳到无内容页面。</span></div></div>'
+            : '')));
     var dispatch = run.agentteams_run_id
-      ? '<p class="card-note"><i class="ri-checkbox-circle-line"></i> 已绑定真实AgentTeams Run；修复不会创建新Run或更换证据哈希。</p>' +
-        '<button id="btn-repair-agentteams" class="btn btn-outline btn-xl" type="button"><i class="ri-restart-line"></i> ' + (terminal ? '诊断终态并生成Human处置项' : '请求 AgentTeams 同Run自愈') + '</button>'
+      ? stateGuide + '<p class="card-note"><i class="ri-checkbox-circle-line"></i> 已绑定真实AgentTeams Run；恢复只作用于同一Run，不更换证据哈希。</p>' +
+        (!terminal ? '<button id="btn-repair-agentteams" class="btn btn-outline btn-xl" type="button"><i class="ri-restart-line"></i> 请求 AgentTeams 同Run自愈</button>' : '')
       : (blockedByActiveRun
-        ? '<div class="same-run-repair-note"><b>当前请求已由后台保留</b><span>上一条Run正在等待Human；关闭后Supervisor会自动派发本Run。</span></div>' +
-          '<button id="btn-open-blocking-run" data-run-id="' + esc(activeBlocker) + '" class="btn btn-primary btn-xl" type="button"><i class="ri-user-follow-line"></i> 处理待签署Run并释放队列</button>'
+        ? '<div class="run-next-action next-queued"><i class="ri-list-check-2"></i><div><b>当前请求已进入后台队列</b><span>占用Run：' + esc(activeBlocker) + ' · ' + esc(blockerState) + (blockerRunning ? ' · Worker ' + esc(blocker.workers_completed || 0) + '/' + esc(blocker.workers_required || 0) : '') + '。' + (blockerHuman ? '该Run确实在等待Human签署。' : (blockerRunning ? '该Run仍在多Agent执行或恢复中，并非等待Human。' : '点击后会先核验真实状态，再进入正确页面。')) + '</span></div></div>' +
+          '<button id="btn-resolve-blocking-run" data-run-id="' + esc(activeBlocker) + '" class="btn btn-primary btn-xl" type="button"><i class="' + (blockerHuman ? 'ri-user-follow-line' : (blockerRunning ? 'ri-node-tree' : 'ri-pulse-line')) + '"></i> ' + (blockerHuman ? '前往 Human Gate 处理' : (blockerRunning ? '查看占用Run的协作进度' : '查看占用Run的状态与原因')) + '</button>'
         : '<button id="btn-dispatch-agentteams" class="btn btn-outline btn-xl" type="button" ' + (canDispatch ? '' : 'disabled') + '><i class="ri-node-tree"></i> ' + dispatchLabel + '</button>');
     var repairNote = repairs.length ? '<div class="same-run-repair-note"><b>同Run恢复 ' + esc(repairs.length) + '/3</b><span>' + esc(repairs[repairs.length - 1].status) + (repairs[repairs.length - 1].classification ? ' · ' + esc(repairs[repairs.length - 1].classification) : '') + '</span></div>' : '';
-    return '<div class="card run-result"><div class="card-head"><i class="ri-pulse-line card-icon"></i><h4>当前受控Run</h4>' + window.FinfluxUI.badge(run.state) + '</div>' + window.FinfluxUI.kv("Run ID", '<span class="mono">' + esc(run.run_id) + '</span>' + window.FinfluxUI.copyBtn(run.run_id)) + window.FinfluxUI.kv("预检建议", window.FinfluxUI.badge(p.machine_recommendation || "PENDING")) + '<p class="card-note"><i class="ri-information-line"></i> ' + esc(tokenNote) + '</p>' + repairNote + dispatch + '<p class="card-note"><i class="ri-shield-keyhole-line"></i> Worker中断、工具超时、传输截断可同Run恢复；预算硬超限和代码包错误必须封存，由Human重新授权，Agent不得绕过。</p></div>';
+    return '<div class="card run-result"><div class="card-head"><i class="ri-pulse-line card-icon"></i><h4>当前受控Run</h4>' + window.FinfluxUI.badge(run.state) + '</div>' + window.FinfluxUI.kv("Run ID", '<span class="mono">' + esc(run.run_id) + '</span>' + window.FinfluxUI.copyBtn(run.run_id)) + window.FinfluxUI.kv("预检建议", window.FinfluxUI.badge(p.machine_recommendation || "PENDING")) + '<p class="card-note"><i class="ri-information-line"></i> ' + esc(tokenNote) + '</p>' + repairNote + (!run.agentteams_run_id ? stateGuide : '') + dispatch + '<p class="card-note"><i class="ri-shield-keyhole-line"></i> Worker中断、工具超时、传输截断可同Run恢复；预算硬超限和代码包错误必须封存，由Human重新授权，Agent不得绕过。</p></div>';
   }
 
   function runtimeColumn(ws, guard) {
@@ -175,11 +194,10 @@
       var dispatched = Boolean(run.agentteams_run_id);
       window.FinfluxUI.refreshTopbar();
       if (dispatched) {
-        window.FinfluxUI.toast("真实 AgentTeams 已启动 · Manager 正在路由多Agent · " + run.run_id, "success");
-        window.location.hash = "#/collaboration";
-        return run;
+        window.FinfluxUI.toast("真实 AgentTeams 已在后台启动；本页不会自动跳转，请按当前Run卡片查看处理位置 · " + run.run_id, "success");
+        return render(host, true).then(function () { return run; });
       }
-      window.FinfluxUI.toast("Run已固化，但未派发模型：请按页面显示处理Runtime或Token门禁 · " + run.run_id, "warning");
+      window.FinfluxUI.toast("Run已固化；如被门禁排队，本页会显示占用Run的真实状态和正确处理入口 · " + run.run_id, "warning");
       return render(host, true).then(function () { return run; });
     });
   }
@@ -257,7 +275,29 @@
     var catalogForm = host.querySelector("#intake-catalog-form"); if (catalogForm) catalogForm.addEventListener("submit", function (event) { event.preventDefault(); if (!selected.length) return; var btn = host.querySelector("#btn-catalog-pack"); busy(btn, "组装与识别证据包中…"); window.FinfluxAPI.createResearchEvidence({ research_item_ids: selected, metadata: { declared_purpose: "research_review", asset_class: "research", entity_query: host.querySelector("#catalog-query").value, task_instruction: host.querySelector("#catalog-instruction").value.trim(), input_mode: "RESEARCH_CATALOG_PLUS_INTENT" } }).then(function (res) { window.FinfluxUI.toast("真实资料包已生成，等待确认 · " + res.inspection_id, "success"); bindInspectionCommit(host.querySelector("#catalog-inspection-result"), res, "#catalog-instruction", true); }).catch(function (err) { window.FinfluxUI.toast(err.message, "error"); }).finally(function () { restore(btn); }); });
     var start = host.querySelector("#btn-fresh-run"), currentSubmission = ws.latest_submission || ws.submission; if (start && currentSubmission) start.addEventListener("click", function () { busy(start, "创建Case并检查Token Guard…"); window.FinfluxAPI.startRun(currentSubmission.submission_id).then(function (run) { return window.FinfluxAPI.selectRun(run.run_id).then(function () { window.FinfluxUI.toast("Run已创建 · " + run.run_id, "success"); window.FinfluxUI.refreshTopbar(); return render(host, true); }); }).catch(function (err) { window.FinfluxUI.toast(err.message, "error"); restore(start); }); });
     var dispatch = host.querySelector("#btn-dispatch-agentteams"); if (dispatch && ws.run) dispatch.addEventListener("click", function () { busy(dispatch, "Matrix派发中…"); window.FinfluxAPI.dispatchRun(ws.run.run_id).then(function () { window.FinfluxUI.toast("已提交真实AgentTeams", "success"); return render(host, true); }).catch(function (err) { window.FinfluxUI.toast(err.message, "error"); return render(host, true); }); });
-    var blocking = host.querySelector("#btn-open-blocking-run"); if (blocking) blocking.addEventListener("click", function () { var runId = blocking.getAttribute("data-run-id"); busy(blocking, "打开Human Gate…"); window.FinfluxAPI.selectRun(runId).then(function () { window.location.hash = "#/human-gate"; }).catch(function (err) { window.FinfluxUI.toast(err.message, "error"); restore(blocking); }); });
+    var blocking = host.querySelector("#btn-resolve-blocking-run"); if (blocking) blocking.addEventListener("click", function () {
+      var runId = blocking.getAttribute("data-run-id"); busy(blocking, "核验占用Run真实状态…");
+      window.FinfluxAPI.getRunStatus(runId).then(function (status) {
+        return window.FinfluxAPI.selectRun(runId).then(function () {
+          var executionState = String(status.execution_state || "UNKNOWN");
+          var humanState = String(status.human_state || "NOT_OPENED");
+          window.FinfluxUI.refreshTopbar();
+          if (humanState === "AWAITING_HUMAN") {
+            window.FinfluxUI.toast("该Run已有DataPass，进入Human Gate进行签署", "success");
+            window.location.hash = "#/human-gate";
+            return;
+          }
+          if (status.agentteams_bound && ["RUNNING", "AGENTTEAMS_RUNNING", "MANAGER_AUTHORIZED", "WORKERS_RUNNING"].indexOf(executionState) >= 0) {
+            window.FinfluxUI.toast("该Run仍由AgentTeams执行；进入多Agent决策台查看进度，不进入Human Gate", "warning");
+            window.location.hash = "#/collaboration";
+            return;
+          }
+          window.FinfluxUI.toast("该Run状态为 " + executionState + "，尚无DataPass，不能签署；已切换到该Run并显示处理原因", "warning");
+          window.location.hash = "#/live";
+          return render(host, true);
+        });
+      }).catch(function (err) { window.FinfluxUI.toast(err.message, "error"); restore(blocking); });
+    });
     var repair = host.querySelector("#btn-repair-agentteams"); if (repair && ws.run) repair.addEventListener("click", function () { busy(repair, "AgentTeams诊断同Run失败…"); window.FinfluxAPI.repairRun(ws.run.run_id).then(function (receipt) { var ok = ["CASE_LEAD_RECOVERY_REVIEW", "MISSING_WORKERS_REAWAKENED", "REQUESTED"].indexOf(receipt.status) >= 0; var message = receipt.status === "MISSING_WORKERS_REAWAKENED" ? "Case Lead授权已复用；仅缺失Worker被重新唤醒" : (ok ? "Case Lead已收到同Run恢复任务" : "恢复未越过门禁：" + receipt.status); window.FinfluxUI.toast(message, ok ? "success" : "warning"); return render(host, true); }).catch(function (err) { window.FinfluxUI.toast(err.message, "error"); return render(host, true); }); });
     var reconcile = host.querySelector("#btn-reconcile"); if (reconcile) reconcile.addEventListener("click", function () { busy(reconcile, "检查中…"); window.FinfluxAPI.reconcileControlPlane().then(function (res) { window.FinfluxUI.toast("控制面快照已固化 · " + short(res.snapshot_sha256), "success"); return render(host, true); }).catch(function (err) { window.FinfluxUI.toast(err.message, "error"); restore(reconcile); }); });
   }

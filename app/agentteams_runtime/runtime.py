@@ -171,12 +171,29 @@ def provider_guard(store: RunStore, force: bool = False) -> dict[str, Any]:
     policy = execution_policy()
     maximum = int((policy.get("run_limits") or {}).get("max_active_runs", 1))
     allowed = len(active) < maximum
+    active_runs = [
+        {
+            "run_id": item.get("run_id"),
+            "case_id": item.get("case_id"),
+            "state": item.get("state"),
+            "human_state": (item.get("human_gate") or {}).get("state"),
+            "agentteams_bound": bool(item.get("agentteams_run_id")),
+            "workers_completed": int(
+                ((item.get("agent_result") or {}).get("workers_completed") or 0)
+            ),
+            "workers_required": int(
+                ((item.get("agent_result") or {}).get("workers_required") or 0)
+            ),
+        }
+        for item in active
+    ]
     return {
         "protocol": "FINFLUX_PROVIDER_DISPATCH_GUARD_V2",
         "status": "READY" if allowed else "BLOCKED",
         "allowed": allowed,
         "active_run_count": len(active),
         "active_run_ids": [item.get("run_id") for item in active],
+        "active_runs": active_runs,
         "provider_usage_captured": all(bool(item.get("provider_usage")) for item in active),
         "reasons": [] if allowed else [f"ACTIVE_RUN_LIMIT:{len(active)}>={maximum}"],
         "captured_at_utc": datetime.now(timezone.utc).isoformat(),

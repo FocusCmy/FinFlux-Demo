@@ -29,9 +29,17 @@
   }
 
   function plainFinding(res) {
-    var ui = UI(), view = res.presentation || {}, result = view.result || {}, impact = view.impact || {}, available = Boolean(res.datapass && res.datapass.available);
+    var ui = UI(), view = res.presentation || {}, result = view.result || {}, impact = view.impact || {}, available = Boolean(res.datapass && res.datapass.available), run = res.run || {};
     if (!available) {
-      return '<div class="decision-hero decision-neutral"><div class="decision-icon"><i class="ri-information-line"></i></div><div><p class="eyebrow">AGENT DECISION NOT AVAILABLE</p><h2>' + ui.esc(result.title || "尚未形成多Agent DataPass") + '</h2><p>' + ui.esc(result.summary || "当前仅有确定性预检，Human Gate尚未开启。") + '</p></div></div>';
+      var state = String(run.state || "NO_LIVE_RUN");
+      var stopped = ["STOPPED_BY_GATE", "BUDGET_EXCEEDED", "MODEL_CONTROL_CLEANUP_FAILED", "CANCELLED_BY_SESSION_RESET"].indexOf(state) >= 0;
+      var running = Boolean(run.agentteams_run_id) && !stopped;
+      var reason = ((run.emergency_stop || {}).reason || (run.supervisor_outcome || {}).reason || result.summary || "当前没有可供Human签署的多Agent DataPass。");
+      var title = stopped ? "本Run已停止，Human Gate尚未开启" : (running ? "AgentTeams仍在运行，暂不能人工签署" : (result.title || "尚未形成多Agent DataPass"));
+      var next = stopped
+        ? '<a class="btn btn-primary" href="#/trace"><i class="ri-pulse-line"></i> 查看停止原因与恢复记录</a><a class="btn btn-outline" href="#/live"><i class="ri-arrow-left-line"></i> 返回Case工作台</a>'
+        : (running ? '<a class="btn btn-primary" href="#/collaboration"><i class="ri-node-tree"></i> 查看多Agent协作进度</a><a class="btn btn-outline" href="#/live"><i class="ri-arrow-left-line"></i> 返回Case工作台</a>' : '<a class="btn btn-primary" href="#/live"><i class="ri-arrow-left-line"></i> 返回Case工作台处理</a>');
+      return '<div class="decision-hero decision-neutral"><div class="decision-icon"><i class="ri-information-line"></i></div><div><p class="eyebrow">HUMAN GATE NOT OPENED</p><h2>' + ui.esc(title) + '</h2><p>' + ui.esc(reason) + '</p><div class="decision-route-actions">' + next + '</div><p class="decision-boundary-note">只有状态达到 AWAITING_HUMAN 且DataPass存在时，本页才显示批准、隔离和退回补证选项。</p></div></div>';
     }
     var rec = String(res.datapass.machine_recommendation || "PENDING");
     var blocked = rec === "BLOCK", waiting = rec === "NEEDS_EVIDENCE";

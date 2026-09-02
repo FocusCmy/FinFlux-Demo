@@ -16,13 +16,17 @@
 
   function runSelector(ws) {
     var items = ws.run_catalog || [], judge = ws.judge_run || {};
+    var selected = items.filter(function (item) { return item.run_id === ws.selected_run_id; })[0] || {};
     var options = items.map(function (item) {
       return '<option value="' + esc(item.run_id) + '" title="审计ID：' + esc(item.audit_run_id || item.run_id) + '" ' + (item.run_id === ws.selected_run_id ? 'selected' : '') + '>' +
         esc(item.display_run_id || item.run_id) + ' · ' + esc(item.route || item.state) + ' · ' + esc(item.worker_progress) +
       '</option>';
     }).join('');
     var frozen = Boolean(judge.persisted && judge.run_id === ws.selected_run_id);
-    return '<div class="judge-run-bar"><div><p class="eyebrow">JUDGE RUN CONTEXT</p><h3>' + esc(judge.display_run_id || judge.run_id || "尚无合格裁判Run") + '</h3>' + (judge.run_id ? '<p class="mono">审计ID：' + esc(judge.audit_run_id || judge.run_id) + '</p>' : '') + '<p>这是演示与验收上下文，不等于 Human 业务签署。</p></div><div class="judge-run-actions"><select id="run-context-select">' + options + '</select><button id="btn-select-run" class="btn btn-outline" type="button">切换查看</button><button id="btn-freeze-judge" class="btn btn-primary" type="button" ' + (judge.eligible && !frozen ? '' : 'disabled') + '><i class="ri-pushpin-line"></i> ' + (frozen ? '裁判Run已冻结' : '冻结为裁判Run') + '</button></div></div>';
+    var judgeNote = judge.persisted
+      ? '已冻结裁判Run：' + esc(judge.display_run_id || judge.run_id) + '；当前页面仍以所选Run为准。'
+      : '尚未冻结裁判Run；当前查看不等于Human业务签署。';
+    return '<div class="judge-run-bar"><div><p class="eyebrow">CURRENT RUN CONTEXT</p><h3>' + esc(selected.display_run_id || ws.selected_run_id || "尚未选择Run") + '</h3>' + (ws.selected_run_id ? '<p class="mono">审计ID：' + esc(selected.audit_run_id || ws.selected_run_id) + '</p>' : '') + '<p>' + judgeNote + '</p></div><div class="judge-run-actions"><select id="run-context-select">' + options + '</select><button id="btn-select-run" class="btn btn-outline" type="button">切换查看</button><button id="btn-freeze-judge" class="btn btn-primary" type="button" ' + (selected.eligible && !frozen ? '' : 'disabled') + '><i class="ri-pushpin-line"></i> ' + (frozen ? '裁判Run已冻结' : '冻结为裁判Run') + '</button></div></div>';
   }
 
   function managerCard(run, route) {

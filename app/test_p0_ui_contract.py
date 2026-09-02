@@ -79,6 +79,16 @@ class P0UIContractTests(unittest.TestCase):
         for route in ("live", "collaboration", "evidence", "changes"):
             self.assertIn(f'data-stage-route="{route}"', html)
 
+    def test_live_launch_does_not_blindly_redirect_to_human_or_collaboration(self) -> None:
+        source = (ROOT / "web" / "js" / "views-live.js").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("ws.run_submission || ws.latest_submission", source)
+        self.assertIn("getRunStatus(runId)", source)
+        self.assertIn("humanState === \"AWAITING_HUMAN\"", source)
+        self.assertNotIn('id="btn-open-blocking-run"', source)
+        self.assertIn("本页不会自动跳转", source)
+
     def test_missing_profile_is_not_returned_as_a_definition(self) -> None:
         self.assertIsNone(get_profile("does-not-exist"))
 
