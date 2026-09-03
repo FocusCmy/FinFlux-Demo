@@ -10,6 +10,7 @@ from profile_registry import (
     list_profiles,
 )
 from app import compact_provider_usage
+from agentteams_runtime.config import CORE_WORKERS
 
 
 ROOT = Path(__file__).resolve().parent
@@ -76,9 +77,22 @@ class P0UIContractTests(unittest.TestCase):
     def test_navigation_exposes_exactly_four_primary_stages(self) -> None:
         html = (ROOT / "web" / "index.html").read_text(encoding="utf-8")
         self.assertEqual(html.count("data-stage-route="), 4)
-        self.assertIn("api.js?v=20260903-occupancy-control-2", html)
+        self.assertIn("api.js?v=20260903-multi-agent-proof-2", html)
         for route in ("live", "collaboration", "evidence", "changes"):
             self.assertIn(f'data-stage-route="{route}"', html)
+
+    def test_live_run_proves_at_least_three_distinct_core_workers(self) -> None:
+        source = (ROOT / "web" / "js" / "views-live.js").read_text(
+            encoding="utf-8"
+        )
+        self.assertGreaterEqual(len(CORE_WORKERS), 3)
+        self.assertEqual(len(CORE_WORKERS), len(set(CORE_WORKERS)))
+        self.assertIn("plannedWorkerCount >= 3", source)
+        self.assertIn("completedWorkerCount >= 3", source)
+        self.assertIn("核心Worker产物", source)
+        self.assertIn("协作Agent职责", source)
+        self.assertIn("它不是Agent数量", source)
+        self.assertNotIn("</b>同Run恢复</span>", source)
 
     def test_live_launch_does_not_blindly_redirect_to_human_or_collaboration(self) -> None:
         source = (ROOT / "web" / "js" / "views-live.js").read_text(
