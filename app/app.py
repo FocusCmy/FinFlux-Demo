@@ -71,6 +71,7 @@ from profile_registry import list_profiles as list_profile_definitions
 from control_plane import ControlPlaneSupervisor
 from evaluation_metrics_skill import execute_evaluation_metrics_skill
 from run_supervisor import RunSupervisor
+from runtime_supervisor import RuntimeOperations, RuntimeSupervisor
 from unified_intake import (
     MAX_TEXT_BYTES,
     fetch_public_url,
@@ -112,6 +113,17 @@ CONTROL_PLANE = ControlPlaneSupervisor(RUNTIME_ROOT)
 
 def dispatch_queued_live_run(run_id: str) -> dict[str, Any]:
     """Accept one durable one-click request when the single-Run gate becomes free."""
+
+    runtime_admission = RUNTIME_SUPERVISOR.status()
+    if not runtime_admission.get("gate_open"):
+        return {
+            "status": "BACKGROUND_RUNTIME_WAIT",
+            "run_id": run_id,
+            "run_state": "DISPATCH_GUARDED",
+            "attempt_count": 0,
+            "reason": "RuntimeSupervisor cold-start admission is not READY",
+            "runtime_supervisor": runtime_admission,
+        }
 
     run = LIVE_REPOSITORY.get_run(run_id)
     if run.get("agentteams_run_id"):
@@ -262,6 +274,16 @@ RUN_SUPERVISOR = RunSupervisor(
     get_queued_run=LIVE_REPOSITORY.next_dispatch_request,
     dispatch_queued_run=dispatch_queued_live_run,
 )
+RUNTIME_SUPERVISOR = RuntimeSupervisor(
+    operations=RuntimeOperations(DEMO_ROOT.parent),
+    state_root=RUNTIME_ROOT / "runtime_supervisor",
+    interval_seconds=float(os.environ.get("FINFLUX_RUNTIME_SUPERVISOR_INTERVAL_SECONDS", "5")),
+    expensive_interval_seconds=float(
+        os.environ.get("FINFLUX_RUNTIME_FULL_CHECK_INTERVAL_SECONDS", "60")
+    ),
+    max_repairs=int(os.environ.get("FINFLUX_RUNTIME_MAX_REPAIRS", "3")),
+    active_business_run=get_active_agent_run,
+)
 _RUNTIME_STATUS_CACHE: dict[str, Any] = {
     "captured_at": 0.0,
     "payload": None,
@@ -286,6 +308,19 @@ def agentteams_runtime_status() -> dict[str, Any]:
         if isinstance(payload, dict) and now - captured < 2.0:
             return copy.deepcopy(payload)
     payload = _agentteams_runtime_status()
+    supervisor = RUNTIME_SUPERVISOR.status()
+    transport_connected = bool(payload.get("connected"))
+    admission_ready = bool(transport_connected and supervisor.get("gate_open"))
+    payload["transport_connected"] = transport_connected
+    payload["admission_ready"] = admission_ready
+    payload["connected"] = admission_ready
+    payload["runtime_supervisor"] = supervisor
+    if transport_connected and not admission_ready:
+        payload["status"] = str(supervisor.get("state") or "RUNTIME_CHECKING")
+        payload["truthful_note"] = (
+            "AgentTeams传输可达，但RuntimeSupervisor尚未完成端口、8/8 Worker、"
+            "8090路由、包摘要和真实模型canary；禁止创建Run。"
+        )
     with _RUNTIME_STATUS_CACHE_LOCK:
         _RUNTIME_STATUS_CACHE["payload"] = copy.deepcopy(payload)
         _RUNTIME_STATUS_CACHE["captured_at"] = time.monotonic()
@@ -1346,6 +1381,7 @@ class DemoHandler(BaseHTTPRequestHandler):
                         runtime_snapshot["runtime"], live_run, runtime_snapshot["token_guard"]
                     ),
                     "run_supervisor": supervisor_status,
+                    "runtime_supervisor": RUNTIME_SUPERVISOR.status(),
                     "mode": "LIVE",
                     "truthful_boundary": (
                         "现场上传、服务端哈希、确定性预检和事件流来自真实后端；"
@@ -1393,6 +1429,9 @@ class DemoHandler(BaseHTTPRequestHandler):
             return
         if parsed.path == "/api/v1/run-supervisor":
             self.send_json(RUN_SUPERVISOR.status())
+            return
+        if parsed.path == "/api/v1/runtime-supervisor":
+            self.send_json(RUNTIME_SUPERVISOR.status())
             return
         if parsed.path == "/api/v1/intake/research-catalog":
             query = urllib.parse.parse_qs(parsed.query)
@@ -1822,6 +1861,15 @@ class DemoHandler(BaseHTTPRequestHandler):
                     status=HTTPStatus.ACCEPTED,
                 )
                 return
+            if self.path == "/api/v1/runtime-supervisor/repair":
+                self.send_json(
+                    RUNTIME_SUPERVISOR.request_repair(
+                        actor=str(payload.get("actor") or "demo.operator"),
+                        reason=str(payload.get("reason") or "一键修复运行环境"),
+                    ),
+                    status=HTTPStatus.ACCEPTED,
+                )
+                return
             if self.path == "/api/v1/change-bundles":
                 baseline_id = str(payload.get("baseline_submission_id", "")).strip()
                 candidate_id = str(payload.get("candidate_submission_id", "")).strip()
@@ -1850,6 +1898,17 @@ class DemoHandler(BaseHTTPRequestHandler):
             if self.path.startswith("/api/v1/change-bundles/") and self.path.endswith(
                 "/runs"
             ):
+                runtime_admission = RUNTIME_SUPERVISOR.status()
+                if not runtime_admission.get("gate_open"):
+                    self.send_json(
+                        {
+                            "error": "runtime_admission_closed",
+                            "detail": "RuntimeSupervisor未通过冷启动验收，禁止创建Change Run。",
+                            "runtime_supervisor": runtime_admission,
+                        },
+                        status=HTTPStatus.SERVICE_UNAVAILABLE,
+                    )
+                    return
                 change_bundle_id = self.path[
                     len("/api/v1/change-bundles/") : -len("/runs")
                 ].rstrip("/")
@@ -1879,6 +1938,21 @@ class DemoHandler(BaseHTTPRequestHandler):
                 submission_id = str(payload.get("submission_id", "")).strip()
                 if not submission_id:
                     raise ValueError("submission_id is required")
+                runtime_admission = RUNTIME_SUPERVISOR.status()
+                if not runtime_admission.get("gate_open"):
+                    self.send_json(
+                        {
+                            "error": "runtime_admission_closed",
+                            "detail": (
+                                "RuntimeSupervisor未完成冷启动验收，未创建Run。"
+                                "请按前端明确修复项执行‘一键修复运行环境’。"
+                            ),
+                            "runtime_supervisor": runtime_admission,
+                            "business_run_created": False,
+                        },
+                        status=HTTPStatus.SERVICE_UNAVAILABLE,
+                    )
+                    return
                 client_key = str(
                     payload.get("client_idempotency_key", "") or ""
                 ).strip()
@@ -1944,6 +2018,17 @@ class DemoHandler(BaseHTTPRequestHandler):
                 return
             if self.path.startswith("/api/v1/runs/") and self.path.endswith("/dispatch"):
                 run_id = self.path[len("/api/v1/runs/") : -len("/dispatch")].rstrip("/")
+                runtime_admission = RUNTIME_SUPERVISOR.status()
+                if not runtime_admission.get("gate_open"):
+                    self.send_json(
+                        {
+                            "error": "runtime_admission_closed",
+                            "detail": "RuntimeSupervisor未通过，禁止派发AgentTeams。",
+                            "runtime_supervisor": runtime_admission,
+                        },
+                        status=HTTPStatus.SERVICE_UNAVAILABLE,
+                    )
+                    return
                 run = LIVE_REPOSITORY.get_run(run_id)
                 if run.get("agentteams_run_id"):
                     self.send_json(run)
@@ -2366,15 +2451,13 @@ def main() -> None:
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8765)
     args = parser.parse_args()
-    if not EVALUATION_MANIFEST_PATH.is_file():
-        raise SystemExit(
-            f"Public source-bound manifest not found: {EVALUATION_MANIFEST_PATH}"
-        )
-    if not WEB_ROOT.is_dir():
-        raise SystemExit(f"Web application not found: {WEB_ROOT}")
+    if not EVIDENCE_ROOT.exists():
+        raise SystemExit(f"Evidence root not found: {EVIDENCE_ROOT}")
     server = ExclusiveThreadingHTTPServer((args.host, args.port), DemoHandler)
+    RUNTIME_SUPERVISOR.start()
     RUN_SUPERVISOR.start()
     print(f"FinFlux demo: http://{args.host}:{args.port}")
+    print("RuntimeSupervisor: cold-start admission and self-healing enabled")
     print("RunSupervisor: background progression enabled; browser is read-only")
     try:
         server.serve_forever()
@@ -2382,6 +2465,7 @@ def main() -> None:
         pass
     finally:
         RUN_SUPERVISOR.stop()
+        RUNTIME_SUPERVISOR.stop()
         server.server_close()
 
 

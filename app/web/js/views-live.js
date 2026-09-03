@@ -5,7 +5,7 @@
   var livePollTimer = null;
 
   function liveStateSignature(ws, guard) {
-    var run = (ws && ws.run) || {}, request = run.dispatch_request || {}, supervisor = (ws && ws.run_supervisor) || {};
+    var run = (ws && ws.run) || {}, request = run.dispatch_request || {}, supervisor = (ws && ws.run_supervisor) || {}, runtimeSupervisor = (ws && ws.runtime_supervisor) || {};
     var result = run.agent_result || {}, usage = run.provider_usage || {};
     return JSON.stringify({
       run_id: run.run_id || "",
@@ -20,7 +20,11 @@
       supervisor_run_id: supervisor.run_id || "",
       supervisor_run_state: supervisor.run_state || "",
       supervisor_action: supervisor.last_action || "",
-      supervisor_recoveries: supervisor.recovery_count || 0
+      supervisor_recoveries: supervisor.recovery_count || 0,
+      runtime_state: runtimeSupervisor.state || "",
+      runtime_gate_open: Boolean(runtimeSupervisor.gate_open),
+      runtime_action: runtimeSupervisor.last_action || "",
+      runtime_check_signature: (runtimeSupervisor.checks || []).map(function (item) { return item.check_id + ":" + item.status; }).join("|")
     });
   }
 
@@ -56,8 +60,14 @@
     }, source);
   }
 
-  function intakeWorkbench(capabilities) {
+  function runtimeGateReady(ws) {
+    return Boolean(ws && ws.runtime_supervisor && ws.runtime_supervisor.gate_open);
+  }
+
+  function intakeWorkbench(capabilities, runtimeSupervisor) {
     var count = capabilities ? capabilities.catalog_real_item_count : 0;
+    var runtimeReady = Boolean(runtimeSupervisor && runtimeSupervisor.gate_open);
+    var runtimeLabel = runtimeReady ? "一键启动真实 AgentTeams 核验" : "Runtime冷启动验收未通过，暂不可创建Run";
     return '<section class="intake-workbench">' +
       '<div class="col-title"><span class="col-num">1</span><div><p class="eyebrow">UNIFIED FINANCIAL INTAKE</p><h2>提交核验任务与金融资料</h2></div></div>' +
       '<div class="card intake-card">' +
@@ -70,7 +80,7 @@
         '<form id="intake-file-form" class="live-form intake-pane active" data-intake-pane="file">' +
           '<label class="form-label intent-field"><span>业务核验目标</span><textarea id="case-instruction" class="intake-textarea" rows="4" maxlength="2000" placeholder="例如：核验这份金融资料能否用于声明的下游业务；识别语义冲突，复算确定性影响，并给出可审计的DataPass建议。" required></textarea><small>业务目标与证据分别登记，并共同绑定到同一次受控运行。</small></label>' +
           '<label id="smart-drop-zone" class="drop-zone smart-drop" for="live-file"><i class="ri-sparkling-2-line"></i><b>补充金融资料（可选）</b><span>拖入资料，或复用右侧已登记的EvidenceBundle</span><small>支持表格、文本、网页、PDF及压缩证据包 · 最大10MB</small><input id="live-file" name="file" type="file" accept=".csv,.json,.txt,.md,.xml,.html,.htm,.xlsx,.pdf,.zip"></label>' +
-          '<div class="case-compose-actions"><button class="btn btn-primary btn-xl" type="submit"><i class="ri-node-tree"></i> 一键启动真实 AgentTeams 核验</button><span>点击后依次完成上传、固化、创建Run和多Agent派发；只在来源、用途或权属无法确认时暂停为WAIT。</span></div>' +
+          '<div class="case-compose-actions"><button class="btn btn-primary btn-xl" type="submit" ' + (runtimeReady ? '' : 'disabled') + '><i class="ri-node-tree"></i> ' + esc(runtimeLabel) + '</button><span>' + (runtimeReady ? '点击后依次完成上传、固化、创建Run和多Agent派发；只在来源、用途或权属无法确认时暂停为WAIT。' : '先在下方高可用协作控制面查看失败项，或执行“一键修复运行环境”。证据仍可检查，但不会创建Run。') + '</span></div>' +
           '<div id="file-inspection-result" class="inspection-result" aria-live="polite"><p class="card-note"><i class="ri-magic-line"></i> 金融资料、业务目标和来源声明将分别登记，并组合为同一CaseEnvelope。</p></div>' +
         '</form>' +
 
@@ -217,12 +227,23 @@
   }
 
   function runtimeColumn(ws, guard) {
-    var r = ws.runtime || {}, cp = ws.control_plane || {}, supervisor = ws.run_supervisor || {}, connected = Boolean(r.connected), topology = {}, mc = r.model_connection || {}, active = ws.run || {}, usage = active.provider_usage || {}, ledger = usage.model_gateway_ledger || {};
+    var r = ws.runtime || {}, cp = ws.control_plane || {}, supervisor = ws.run_supervisor || {}, runtimeSupervisor = ws.runtime_supervisor || {}, connected = Boolean(r.connected), topology = {}, mc = r.model_connection || {}, active = ws.run || {}, usage = active.provider_usage || {}, ledger = usage.model_gateway_ledger || {};
     (r.topology || []).forEach(function (item) { topology[item.name] = item; });
     var workers = (r.topology || []).filter(function (item) { return item.role === "worker" || item.role === "post_processor"; });
     guard = guard || { status: "UNKNOWN", daily: {}, reasons: ["尚未获取后台usage"] };
     var daily = guard.daily || {}, remaining = daily.remaining_tokens;
+    var runtimeChecks = runtimeSupervisor.checks || [], runtimeErrors = runtimeSupervisor.errors || [], remediation = runtimeSupervisor.remediation_actions || [];
+    var runtimeReady = Boolean(runtimeSupervisor.gate_open), runtimeBusy = ["STARTING", "CHECKING", "REPAIRING"].indexOf(String(runtimeSupervisor.state || "")) >= 0;
+    var checkLabels = { docker_ports: "Docker与端口", worker_quorum: "AgentTeams 8/8", ai_proxy_route: "AI Proxy → 8090", worker_packages: "Worker包摘要", model_canary: "真实模型Canary" };
+    var checkRows = runtimeChecks.map(function (item) {
+      var detail = item.detail || {}, proof = item.check_id === "model_canary" && item.status === "PASS" ? (window.FinfluxUI.fmtNum(detail.provider_call_count || 0) + "次 · " + window.FinfluxUI.fmtNum(detail.total_tokens || 0) + " Token") : item.summary;
+      return '<div class="runtime-check ' + String(item.status || "WAIT").toLowerCase() + '"><i class="' + (item.status === "PASS" ? 'ri-checkbox-circle-line' : (item.status === "FAIL" ? 'ri-close-circle-line' : 'ri-time-line')) + '"></i><span><b>' + esc(checkLabels[item.check_id] || item.check_id) + '</b><small>' + esc(proof || "等待检查") + '</small></span><em>' + esc(item.status || "WAIT") + '</em></div>';
+    }).join('');
     return '<section class="runtime-column"><div class="col-title"><span class="col-num">3</span><div><p class="eyebrow">RESILIENT AGENT CONTROL</p><h2>高可用协作控制面</h2></div></div>' +
+      '<div class="card runtime-admission-card ' + (runtimeReady ? 'ready' : 'waiting') + '"><div class="card-head"><i class="ri-shield-check-line card-icon"></i><h4>RuntimeSupervisor 冷启动准入</h4>' + window.FinfluxUI.badge(runtimeSupervisor.state || "STARTING") + '</div><div class="runtime-check-list">' + (checkRows || '<div class="runtime-check wait"><i class="ri-loader-4-line ri-spin"></i><span><b>正在建立验收快照</b><small>一键启动在五项检查完成前保持关闭</small></span><em>WAIT</em></div>') + '</div>' +
+        (runtimeErrors.length ? '<div class="runtime-ops-wait"><b>运维 WAIT</b><p>' + esc(runtimeErrors.join(' · ')) + '</p>' + (remediation.length ? '<ul>' + remediation.map(function (item) { return '<li>' + esc(item) + '</li>'; }).join('') + '</ul>' : '') + '<small>日志：' + esc(runtimeSupervisor.log_path || "app/runtime/runtime_supervisor/events.jsonl") + '</small></div>' : '') +
+        '<p class="card-note"><i class="ri-information-line"></i> ' + esc(runtimeReady ? '冷启动验收完成：新Run准入已开放；后台仍每5秒监测，Worker异常只重建同角色容器。' : (runtimeSupervisor.last_action || '正在执行冷启动验收；不会创建业务Run。')) + '</p>' +
+        '<button id="btn-repair-runtime" class="btn ' + (runtimeReady ? 'btn-outline' : 'btn-primary') + ' btn-xl" type="button" ' + (runtimeBusy ? 'disabled' : '') + '><i class="ri-tools-line"></i> ' + (runtimeBusy ? '运行环境检查/修复中…' : '一键修复运行环境') + '</button></div>' +
       '<div class="card model-connection-card"><div class="card-head"><i class="ri-plug-2-line card-icon"></i><h4>现场拟接入配置</h4>' + window.FinfluxUI.badge(connected && mc.api_key_configured ? "READY" : "CONFIG_REQUIRED") + '</div>' +
         window.FinfluxUI.kv("Agent编排", '<b class="mono">AgentTeams ' + esc(r.platform_version || "v1.2.2") + '</b> · Manager → Case Lead → 按需Worker') +
         window.FinfluxUI.kv("模型提供方", '<b class="mono">' + esc(mc.provider || "NOT_CONFIGURED") + '</b> · ' + esc(mc.default_model || "NOT_CONFIGURED")) +
@@ -260,7 +281,9 @@
     function bindInspectionCommit(box, result, instructionSelector, autoContinue) {
       inspection = result; renderInspection(box, result, registry);
       var commit = box.querySelector("#btn-commit-inspection");
+      if (!runtimeGateReady(ws)) { commit.disabled = true; commit.title = "Runtime冷启动验收未通过，禁止创建Run"; }
       function continuePipeline() {
+        if (!runtimeGateReady(ws)) { window.FinfluxUI.toast("Runtime冷启动验收未通过；请先执行一键修复运行环境", "error"); return; }
         if (commit.dataset.running === "true") return;
         var confirmations = {};
         box.querySelectorAll("[data-confirm]").forEach(function (input) { confirmations[input.getAttribute("data-confirm")] = input.type === "number" ? Number(input.value) : input.value.trim(); });
@@ -299,6 +322,7 @@
     }
     if (fileForm) fileForm.addEventListener("submit", function (event) {
       event.preventDefault();
+      if (!runtimeGateReady(ws)) { window.FinfluxUI.toast("Runtime冷启动验收未通过；当前不会创建Run", "error"); return; }
       var instruction = host.querySelector("#case-instruction").value.trim();
       if (!instruction) { window.FinfluxUI.toast("请先说明希望AgentTeams完成什么", "error"); return; }
       if (fileInput.files[0]) {
@@ -325,8 +349,8 @@
     var urlForm = host.querySelector("#intake-url-form"); if (urlForm) urlForm.addEventListener("submit", function (event) { event.preventDefault(); var btn = urlForm.querySelector("button[type=submit]"); var instruction = host.querySelector("#url-instruction").value.trim(); if (!instruction) { window.FinfluxUI.toast("请先说明希望AgentTeams核验什么", "error"); return; } busy(btn, "受控采集与识别中…"); var meta = { profile: "auto", rights_basis: "公开URL；提交人声明按来源许可用于本次核验", task_instruction: instruction, input_mode: "PUBLIC_URL_PLUS_INTENT", permitted_usage_scope: "EVALUATION_ONLY", research_context_required: false, operational_risk_review_required: false }; window.FinfluxAPI.createUrlEvidence({ url: host.querySelector("#url-value").value, metadata: meta }).then(function (res) { window.FinfluxUI.toast("公开资料已采集，等待确认 · " + res.inspection_id, "success"); bindInspectionCommit(host.querySelector("#url-inspection-result"), res, "#url-instruction", true); }).catch(function (err) { window.FinfluxUI.toast(err.message, "error"); }).finally(function () { restore(btn); }); });
     var search = host.querySelector("#btn-catalog-search"), selected = []; if (search) search.addEventListener("click", function () { busy(search, "检索中…"); window.FinfluxAPI.searchResearchCatalog(host.querySelector("#catalog-query").value, host.querySelector("#catalog-provider").value, "").then(function (res) { selected = []; var box = host.querySelector("#catalog-results"); box.innerHTML = res.items.length ? res.items.map(function (item) { return '<label class="catalog-item"><input type="checkbox" value="' + esc(item.research_item_id) + '"><span><b>' + esc(item.title) + '</b><small>' + esc(item.provider_id) + ' · ' + esc(item.publisher) + ' · ' + esc(item.published_at) + '</small></span><em>' + esc(item.rights_state) + '</em></label>'; }).join('') : '<p class="card-note">未找到匹配记录。请尝试证券代码、机构或主题。</p>'; box.querySelectorAll("input[type=checkbox]").forEach(function (input) { input.addEventListener("change", function () { selected = Array.from(box.querySelectorAll("input:checked")).map(function (node) { return node.value; }); host.querySelector("#btn-catalog-pack").disabled = !selected.length; }); }); }).catch(function (err) { window.FinfluxUI.toast(err.message, "error"); }).finally(function () { restore(search); }); });
     var catalogForm = host.querySelector("#intake-catalog-form"); if (catalogForm) catalogForm.addEventListener("submit", function (event) { event.preventDefault(); if (!selected.length) return; var btn = host.querySelector("#btn-catalog-pack"); busy(btn, "组装与识别证据包中…"); window.FinfluxAPI.createResearchEvidence({ research_item_ids: selected, metadata: { declared_purpose: "research_review", asset_class: "research", entity_query: host.querySelector("#catalog-query").value, task_instruction: host.querySelector("#catalog-instruction").value.trim(), input_mode: "RESEARCH_CATALOG_PLUS_INTENT" } }).then(function (res) { window.FinfluxUI.toast("真实资料包已生成，等待确认 · " + res.inspection_id, "success"); bindInspectionCommit(host.querySelector("#catalog-inspection-result"), res, "#catalog-instruction", true); }).catch(function (err) { window.FinfluxUI.toast(err.message, "error"); }).finally(function () { restore(btn); }); });
-    var start = host.querySelector("#btn-fresh-run"), currentSubmission = ws.latest_submission || ws.submission; if (start && currentSubmission) start.addEventListener("click", function () { busy(start, "创建Case并检查Token Guard…"); window.FinfluxAPI.startRun(currentSubmission.submission_id).then(function (run) { return window.FinfluxAPI.selectRun(run.run_id).then(function () { window.FinfluxUI.toast("Run已创建 · " + run.run_id, "success"); window.FinfluxUI.refreshTopbar(); return render(host, true); }); }).catch(function (err) { window.FinfluxUI.toast(err.message, "error"); restore(start); }); });
-    var dispatch = host.querySelector("#btn-dispatch-agentteams"); if (dispatch && ws.run) dispatch.addEventListener("click", function () { busy(dispatch, "Matrix派发中…"); window.FinfluxAPI.dispatchRun(ws.run.run_id).then(function () { window.FinfluxUI.toast("已提交真实AgentTeams", "success"); return render(host, true); }).catch(function (err) { window.FinfluxUI.toast(err.message, "error"); return render(host, true); }); });
+    var start = host.querySelector("#btn-fresh-run"), currentSubmission = ws.latest_submission || ws.submission; if (start && currentSubmission) start.addEventListener("click", function () { if (!runtimeGateReady(ws)) { window.FinfluxUI.toast("Runtime尚未准入，未创建Run", "error"); return; } busy(start, "创建Case并检查Token Guard…"); window.FinfluxAPI.startRun(currentSubmission.submission_id).then(function (run) { return window.FinfluxAPI.selectRun(run.run_id).then(function () { window.FinfluxUI.toast("Run已创建 · " + run.run_id, "success"); window.FinfluxUI.refreshTopbar(); return render(host, true); }); }).catch(function (err) { window.FinfluxUI.toast(err.message, "error"); restore(start); }); });
+    var dispatch = host.querySelector("#btn-dispatch-agentteams"); if (dispatch && ws.run) dispatch.addEventListener("click", function () { if (!runtimeGateReady(ws)) { window.FinfluxUI.toast("Runtime尚未准入，禁止派发", "error"); return; } busy(dispatch, "Matrix派发中…"); window.FinfluxAPI.dispatchRun(ws.run.run_id).then(function () { window.FinfluxUI.toast("已提交真实AgentTeams", "success"); return render(host, true); }).catch(function (err) { window.FinfluxUI.toast(err.message, "error"); return render(host, true); }); });
     var blocking = host.querySelector("#btn-resolve-blocking-run"); if (blocking) blocking.addEventListener("click", function () {
       var runId = blocking.getAttribute("data-run-id"); busy(blocking, "核验占用Run真实状态…");
       window.FinfluxAPI.getRunStatus(runId).then(function (status) {
@@ -380,8 +404,9 @@
     });
     var repair = host.querySelector("#btn-repair-agentteams"); if (repair && ws.run) repair.addEventListener("click", function () { busy(repair, "AgentTeams诊断同Run失败…"); window.FinfluxAPI.repairRun(ws.run.run_id).then(function (receipt) { var ok = ["CASE_LEAD_RECOVERY_REVIEW", "MISSING_WORKERS_REAWAKENED", "REQUESTED"].indexOf(receipt.status) >= 0; var message = receipt.status === "MISSING_WORKERS_REAWAKENED" ? "Case Lead授权已复用；仅缺失Worker被重新唤醒" : (ok ? "Case Lead已收到同Run恢复任务" : "恢复未越过门禁：" + receipt.status); window.FinfluxUI.toast(message, ok ? "success" : "warning"); return render(host, true); }).catch(function (err) { window.FinfluxUI.toast(err.message, "error"); return render(host, true); }); });
     var reconcile = host.querySelector("#btn-reconcile"); if (reconcile) reconcile.addEventListener("click", function () { busy(reconcile, "检查中…"); window.FinfluxAPI.reconcileControlPlane().then(function (res) { window.FinfluxUI.toast("控制面快照已固化 · " + short(res.snapshot_sha256), "success"); return render(host, true); }).catch(function (err) { window.FinfluxUI.toast(err.message, "error"); restore(reconcile); }); });
+    var repairRuntime = host.querySelector("#btn-repair-runtime"); if (repairRuntime) repairRuntime.addEventListener("click", function () { busy(repairRuntime, "正在修复端口、容器、路由与包摘要…"); window.FinfluxAPI.repairRuntime("现场操作：修复Runtime冷启动验收失败项").then(function () { window.FinfluxUI.toast("RuntimeSupervisor已接管修复；完成真实模型canary后才会开放Run", "success"); return render(host, true); }).catch(function (err) { window.FinfluxUI.toast("修复请求失败：" + err.message, "error"); restore(repairRuntime); }); });
   }
 
-  function render(host, refresh) { return Promise.all([window.FinfluxAPI.getWorkspace(Boolean(refresh)), window.FinfluxAPI.getIntakeCapabilities(), window.FinfluxAPI.getTokenGuard(), window.FinfluxAPI.getProfiles()]).then(function (values) { var ws = values[0], capabilities = values[1], guard = values[2], registry = values[3]; ws.token_guard = guard; host.innerHTML = '<div class="truth-banner"><i class="ri-shield-check-line"></i><b>工业接入边界</b><span>' + esc(capabilities.truth_boundary) + ' · ' + esc(registry.count) + '个版本化Profile驱动当前界面</span></div><div class="unified-intake-layout">' + intakeWorkbench(capabilities) + submissionCard(ws, registry) + runtimeColumn(ws, guard) + '</div>'; bind(host, ws, registry); scheduleLivePoll(host, liveStateSignature(ws, guard)); }); }
+  function render(host, refresh) { return Promise.all([window.FinfluxAPI.getWorkspace(Boolean(refresh)), window.FinfluxAPI.getIntakeCapabilities(), window.FinfluxAPI.getTokenGuard(), window.FinfluxAPI.getProfiles()]).then(function (values) { var ws = values[0], capabilities = values[1], guard = values[2], registry = values[3]; ws.token_guard = guard; host.innerHTML = '<div class="truth-banner"><i class="ri-shield-check-line"></i><b>工业接入边界</b><span>' + esc(capabilities.truth_boundary) + ' · ' + esc(registry.count) + '个版本化Profile驱动当前界面</span></div><div class="unified-intake-layout">' + intakeWorkbench(capabilities, ws.runtime_supervisor) + submissionCard(ws, registry) + runtimeColumn(ws, guard) + '</div>'; bind(host, ws, registry); scheduleLivePoll(host, liveStateSignature(ws, guard)); }); }
   window.FinfluxViews = window.FinfluxViews || {}; window.FinfluxViews.live = render;
 })();

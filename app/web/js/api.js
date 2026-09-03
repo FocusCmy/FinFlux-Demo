@@ -169,6 +169,14 @@
       return request("/api/v1/intake/research-items", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) }).then(function (res) { cache.workspace = null; return res; });
     },
     getControlPlane: function () { return request("/api/v1/control-plane/status"); },
+    getRuntimeSupervisor: function () { return request("/api/v1/runtime-supervisor"); },
+    repairRuntime: function (reason) {
+      return request("/api/v1/runtime-supervisor/repair", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ actor: "demo.operator", reason: reason || "一键修复运行环境" })
+      }).then(function (res) { cache.workspace = null; return res; });
+    },
     reconcileControlPlane: function () {
       return request("/api/v1/control-plane/reconcile", { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" }).then(function (res) { cache.workspace = null; return res; });
     },

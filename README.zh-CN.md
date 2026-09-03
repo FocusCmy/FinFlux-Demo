@@ -129,7 +129,9 @@ powershell -ExecutionPolicy Bypass -File .\scripts\FinFlux.ps1 -Action Deploy -R
 powershell -ExecutionPolicy Bypass -File .\scripts\FinFlux.ps1 -Action Start -RuntimeEnvFile C:\finflux-runtime.env
 ```
 
-`ColdStart`证明干净副本能从空状态启动Web/API并读取150条Manifest；`Deploy`的预检和Runtime状态页负责证明AgentTeams资源真实Ready。任一步失败，系统都不会生成假的Worker结果。若Human账号由CR生成，再执行：
+`ColdStart`证明干净副本能从空状态启动Web/API并读取150条Manifest；`Deploy`负责部署真实AgentTeams。执行`Start`后，RuntimeSupervisor在以下五项全部通过前关闭Run创建：Docker端口无冲突、Team严格`8/8`、认证回读AI Proxy确实固定到受控`8090`路由、容器内Worker包与仓库逐字节摘要一致，以及一次真实供应商canary并从网关账本取得Token。任一步失败，系统都不会生成假的Worker结果。
+
+机器可读状态位于`GET /api/v1/runtime-supervisor`，数据接入页同步显示五项凭据。进入`OPERATIONAL_WAIT`时，点击“一键修复运行环境”或调用`POST /api/v1/runtime-supervisor/repair`；修复最多三次，只重建异常角色Worker，不创建业务Run。运行日志写入已被Git忽略的`app/runtime/runtime_supervisor/`。若Human账号由CR生成，再执行：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\agentteams\scripts\Show-AgentTeamsHumanCredential.ps1
