@@ -4031,6 +4031,29 @@ class LiveIntakeRepository:
             if run.get("agentteams_run_id"):
                 return run
             now = time.time()
+            if str(run.get("state") or "") == "RUNTIME_UNAVAILABLE":
+                # The operator's one-click intent must survive a temporary
+                # AgentTeams outage.  Move the unstarted Run into the durable
+                # dispatch queue so RunSupervisor can retry this exact Run
+                # after the runtime recovers; no browser refresh or new Run is
+                # required.
+                record_transition(
+                    run,
+                    "READY_FOR_AGENTTEAMS",
+                    actor="demo.operator",
+                    reason="Durable one-click dispatch requested after a temporary runtime outage",
+                    target_phase="READY_FOR_DISPATCH",
+                )
+                run["state"] = "DISPATCH_GUARDED"
+                run.setdefault("events", []).append(
+                    self._event(
+                        len(run.get("events") or []) + 1,
+                        run_id,
+                        "Runtime暂不可用，已转后台派发队列",
+                        "保留同一CaseEnvelope与Run；RunSupervisor将在Runtime恢复后继续派发",
+                        "QUEUED",
+                    )
+                )
             superseded_run_ids: list[str] = []
             # A new, explicit operator request must not wait behind historical
             # Runs that never reached AgentTeams.  Preserve every old Run and

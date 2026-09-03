@@ -78,6 +78,30 @@ class LiveDispatchQueueTests(unittest.TestCase):
             self.assertIsNotNone(selected)
             self.assertEqual(selected["run_id"], newest["run_id"])
 
+    def test_runtime_unavailable_one_click_enters_durable_queue(self):
+        with tempfile.TemporaryDirectory() as temp:
+            repository = LiveIntakeRepository(Path(temp))
+            run = {
+                "run_id": "RUN-LIVE-RUNTIME-RECOVERY",
+                "submission_id": "SUB-RUNTIME-RECOVERY",
+                "state": "RUNTIME_UNAVAILABLE",
+                "events": [],
+            }
+            repository.get_run = Mock(return_value=copy.deepcopy(run))
+            repository._persist_run = Mock()
+
+            queued = repository.request_dispatch(run["run_id"], "test.operator")
+
+            self.assertEqual(queued["state"], "DISPATCH_GUARDED")
+            self.assertEqual(
+                queued["lifecycle"]["current_phase"], "READY_FOR_DISPATCH"
+            )
+            self.assertEqual(queued["dispatch_request"]["status"], "QUEUED")
+            self.assertEqual(queued["dispatch_request"]["attempt_count"], 0)
+            self.assertTrue(
+                any("后台派发队列" in event["title"] for event in queued["events"])
+            )
+
 
 if __name__ == "__main__":
     unittest.main()

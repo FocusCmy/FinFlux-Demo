@@ -1902,16 +1902,23 @@ class DemoHandler(BaseHTTPRequestHandler):
                 creation_response = copy.deepcopy(
                     run.get("run_creation_response") or {}
                 )
-                if (
-                    runtime.get("connected")
-                    and run.get("state") == "READY_FOR_AGENTTEAMS"
-                    and not run.get("agentteams_run_id")
-                    and run.get("root_route_decision", {}).get("route")
+                requires_agentteams = (
+                    run.get("root_route_decision", {}).get("route")
                     in {"FULL_TEAM_REVIEW", "BLAST_RADIUS_REVIEW"}
-                ):
+                )
+                if not run.get("agentteams_run_id") and requires_agentteams:
+                    # One click is a durable dispatch intent even when the
+                    # runtime is temporarily unavailable.  RunSupervisor owns
+                    # the later retry of this same Run; the browser never has
+                    # to click a second dispatch button.
                     run = LIVE_REPOSITORY.request_dispatch(
                         run["run_id"], "demo.operator"
                     )
+                if (
+                    runtime.get("connected")
+                    and not run.get("agentteams_run_id")
+                    and requires_agentteams
+                ):
                     submission = LIVE_REPOSITORY.get_submission(submission_id)
                     guard = provider_token_guard_snapshot(force=True)
                     if not guard.get("allowed"):
