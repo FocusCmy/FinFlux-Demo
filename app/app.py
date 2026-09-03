@@ -620,7 +620,12 @@ def consume_precheck_receipt(receipt_id: str) -> None:
 
 
 def status_payload() -> dict[str, Any]:
-    manifest = read_json(MANIFEST_PATH, {"files": []})
+    # The public submission intentionally does not redistribute the legacy
+    # raw evidence tree referenced by ``finchange_gate_core.MANIFEST_PATH``.
+    # Report readiness from the source-bound 50/50/50 manifest that is
+    # actually shipped in the repository, so a clean clone can boot without
+    # depending on a private sibling directory.
+    manifest = read_json(EVALUATION_MANIFEST_PATH, {"records": []})
     decisions = read_json(DECISIONS_PATH, [])
     agentteams = agentteams_runtime_status()
     return {
@@ -629,7 +634,7 @@ def status_payload() -> dict[str, Any]:
         "agentteams": agentteams,
         "metrics": {
             "asset_packs": 3,
-            "evidence_files": len(manifest["files"]),
+            "evidence_files": len(manifest.get("records", [])),
             "hash_mismatches": 0,
             "executable_skills": 5,
             "human_decisions": len(decisions),
@@ -2451,8 +2456,11 @@ def main() -> None:
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8765)
     args = parser.parse_args()
-    if not EVIDENCE_ROOT.exists():
-        raise SystemExit(f"Evidence root not found: {EVIDENCE_ROOT}")
+    if not EVALUATION_MANIFEST_PATH.exists():
+        raise SystemExit(
+            "Source-bound evaluation manifest not found: "
+            f"{EVALUATION_MANIFEST_PATH}"
+        )
     server = ExclusiveThreadingHTTPServer((args.host, args.port), DemoHandler)
     RUNTIME_SUPERVISOR.start()
     RUN_SUPERVISOR.start()

@@ -9,7 +9,7 @@ from profile_registry import (
     get_profile,
     list_profiles,
 )
-from app import compact_provider_usage
+from app import EVALUATION_MANIFEST_PATH, compact_provider_usage, status_payload
 from agentteams_runtime.config import CORE_WORKERS
 
 
@@ -129,6 +129,12 @@ class P0UIContractTests(unittest.TestCase):
         self.assertEqual(compact["model_gateway_ledger"]["record_count"], 2)
         self.assertNotIn("records", compact["model_gateway_ledger"])
         self.assertFalse(compact["model_gateway_ledger"]["records_included"])
+
+    def test_public_cold_start_uses_packaged_source_bound_manifest(self) -> None:
+        self.assertTrue(EVALUATION_MANIFEST_PATH.is_file())
+        status = status_payload()
+        self.assertEqual(status["project"], "FinFlux")
+        self.assertEqual(status["metrics"]["evidence_files"], 150)
 
 
 if __name__ == "__main__":
