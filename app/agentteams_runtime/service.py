@@ -448,12 +448,21 @@ class AgentTeamsService:
 
     @staticmethod
     def _leader_recommendation(trace: list[dict[str, Any]]) -> str:
+        protocol = re.compile(
+            r"^DATAPASS_DRAFT\s+CASE_ID=\S+\s+RUN_ID=\S+\s+"
+            r"RECOMMENDATION=(PASS|BLOCK|NEEDS_EVIDENCE)$",
+            re.IGNORECASE,
+        )
         for item in reversed(trace):
-            body = item["body"].upper()
-            if item["actor"]["role"] == "team_leader" and "DATAPASS_DRAFT" in body:
-                for value in ("NEEDS_EVIDENCE", "BLOCK", "PASS"):
-                    if re.search(rf"\b{value}\b", body):
-                        return value
+            if item["actor"]["role"] != "team_leader":
+                continue
+            for line in str(item.get("body") or "").splitlines():
+                normalized = re.sub(
+                    r"^(?:[-*+]\s+|\d+[.)]\s+)", "", line.strip()
+                )
+                match = protocol.fullmatch(normalized)
+                if match:
+                    return match.group(1).upper()
         return "PENDING"
 
     def _result(

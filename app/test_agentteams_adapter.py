@@ -49,6 +49,30 @@ class AgentTeamsAdapterPublicContractTests(unittest.TestCase):
         self.assertFalse(result["model_called"])
         self.assertEqual(result["provider_tokens"], 0)
 
+    def test_leader_recommendation_requires_exact_protocol_line(self) -> None:
+        planning = [
+            {
+                "actor": {"role": "team_leader"},
+                "body": (
+                    "I will later produce DATAPASS_DRAFT after reviewing "
+                    "whether the result is PASS or BLOCK."
+                ),
+            }
+        ]
+        self.assertEqual(
+            AgentTeamsService._leader_recommendation(planning), "PENDING"
+        )
+        exact = planning + [
+            {
+                "actor": {"role": "team_leader"},
+                "body": (
+                    "- DATAPASS_DRAFT CASE_ID=CASE-1 RUN_ID=RUN-1 "
+                    "RECOMMENDATION=PASS"
+                ),
+            }
+        ]
+        self.assertEqual(AgentTeamsService._leader_recommendation(exact), "PASS")
+
     @patch("agentteams_runtime.runtime.execution_policy")
     def test_provider_guard_blocks_second_active_run(self, policy) -> None:
         policy.return_value = {"run_limits": {"max_active_runs": 1}}
